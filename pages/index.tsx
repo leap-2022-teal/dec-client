@@ -1,5 +1,7 @@
-import React from "react";
+import NavBar from "@/components/navbar/Navbar";
 
-export default function Home() {
-  return <div style={{ color: "red" }}>Hello World!</div>;
+export default function Page(){
+  return(<>
+  <NavBar/>
+  </>)
 }
