@@ -2,8 +2,22 @@ import Layout from "@/layout/layout";
 import Head from "next/head";
 import Link from "next/link";
 import Register from "./register";
+import { HiFingerPrint , HiAtSymbol} from "react-icons/hi";
+import { useState } from "react";
+import {  signIn, signOut } from "next-auth/react"
+
 
 export default function Signin(){
+    
+    const [show, setShow] = useState(false)
+
+    // Google Handle Fucntion
+
+    async function handleGoogleSignin() {
+        signIn('google',{callbackUrl: "http://localhost:3000/"})
+        
+    }
+
     return(<Layout>
         
         <Head>
@@ -23,23 +37,29 @@ export default function Signin(){
                 placeholder="Email"
                 className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none
                 "/>
+                <span className="icon flex items-center px-4 ">
+                <HiAtSymbol size={25}/>
+                </span>
             </div>
             <div className="flex border rounded-xl relative">
-                <input type="password"
+                <input type={`${show? "text": "password"}`}
                 name="password"
                 placeholder="password"
                 className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none
                 "
                 />
+                 <span className="icon flex items-center px-4" onClick={() => setShow(!show)}>
+                <HiFingerPrint size={25} />
+                </span>
             </div>
-            <div className="w-full bg-gradient-to-r from-blue-500 to-indigo-500  rounded-md py-3 text-gray-50 text-lg hover:bg-red-900">
+            <div className="w-full bg-gradient-to-r from-blue-500 to-indigo-800   rounded-md py-3 text-gray-50 text-lg ">
                 <button  type="submit">Login</button>
             </div>
-            <div className="input-button">
-                <button type="submit">Sign in with Google</button>
+            <div className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200" onClick={handleGoogleSignin}>
+                <button type="button">Sign in with Google</button>
             </div>
-            <div className="input-button">
-                <button type="submit">Sign in with Facebook</button>
+            <div className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
+                <button type="button">Sign in with Github</button>
             </div>
         </form>
         
