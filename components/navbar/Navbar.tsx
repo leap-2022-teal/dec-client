@@ -1,3 +1,4 @@
+import Link from "next/link";
 import NavbarItems from "./NavbarItems";
 
 export default function NavBar() {
@@ -11,8 +12,11 @@ export default function NavBar() {
           <NavbarItems label="About" />
           <NavbarItems label="Help" />
           <NavbarItems label="Sell" />
+          {/* <NavbarItems label={<Link href={"../auth/signin"}>Sign in</Link>} /> */}
         </div>
       </div>
     </div>
   );
 }
+
+
