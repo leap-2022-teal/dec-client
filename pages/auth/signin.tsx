@@ -5,17 +5,29 @@ import Register from "./register";
 import { HiFingerPrint , HiAtSymbol} from "react-icons/hi";
 import { useState } from "react";
 import {  signIn, signOut } from "next-auth/react"
+import { useFormik } from 'formik'
 
-
+interface User {
+    email:String,
+    password: String
+}
 export default function Signin(){
     
     const [show, setShow] = useState(false)
 
-    // Google Handle Fucntion
+    // const form:User = {
+    //     email:
+    //     password:
+    // // }
 
+    // Google Handle Fucntion
     async function handleGoogleSignin() {
-        signIn('google',{callbackUrl: "http://localhost:3000/"})
-        
+        signIn('google',{callbackUrl: "http://localhost:3001/"})        
+    }
+
+    // Github Login
+    async function handleGithubSignin() {
+        signIn('github',{callbackUrl: "http://localhost:3001/"})        
     }
 
     return(<Layout>
@@ -55,11 +67,11 @@ export default function Signin(){
             <div className="w-full bg-gradient-to-r from-blue-500 to-indigo-800   rounded-md py-3 text-gray-50 text-lg ">
                 <button  type="submit">Login</button>
             </div>
-            <div className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200" onClick={handleGoogleSignin}>
-                <button type="button">Sign in with Google</button>
+            <div className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
+                <button onClick={handleGoogleSignin} type="button">Sign in with Google</button>
             </div>
             <div className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200">
-                <button type="button">Sign in with Github</button>
+                <button onClick={handleGithubSignin}type="button">Sign in with Github</button>
             </div>
         </form>
         

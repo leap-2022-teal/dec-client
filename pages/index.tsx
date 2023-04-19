@@ -1,16 +1,20 @@
 import NavBar from "@/components/navbar/Navbar";
 import Link from "next/link";
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession,  signOut, getSession } from "next-auth/react"
 
 export default function Page(){
 
   const {data:session} = useSession()
 
+  function handleSignOut(){
+    signOut()
+  }
+
   return(<div>
     Hello
 
-    {session? User({ session }): Guest()}
+    {session ? User({ session, handleSignOut }): Guest()}
   </div>)
 }
 
@@ -18,7 +22,7 @@ export default function Page(){
 function Guest(){
   return(
     <main className="container mx-auto text-center py-20">
-      <h3 className="text-4xl font-bold">Guest Homopage</h3>
+      <h3 className="text-4xl font-bold">Guest Homepage</h3>
 
       <div className="flex justify-center">
       <Link href={"/auth/signin"} className="mt-5 px-10 py-1 rounded-sm bg-gray-200">Sign in</Link>
@@ -31,7 +35,7 @@ function Guest(){
 
 
 // Authorize User
-function User({ session}:any){
+function User({ session, handleSignOut}:any){
   return(
     <main className="container mx-auto text-center py-20">
       <h3 className="text-4xl font-bold">Нэвтэрсэн хэрэглэгч</h3>
@@ -42,7 +46,7 @@ function User({ session}:any){
       </div>
 
         <div className="flex justify-center">
-          <button className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-50">Sign Out</button>
+          <button className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-50" onClick={handleSignOut}>Sign Out</button>
         </div>
       <div className="flex justify-center">
         <Link href={"/auth"} className="mt-5 px-10 py-1 rounded-sm bg-gray-200"></Link>
@@ -50,4 +54,22 @@ function User({ session}:any){
 
     </main>
   )
+}
+
+export async function getServerSideProps({req}:any){
+  const session = await getSession({req})
+
+  if(!session){
+    return{
+      redirect:{
+        destination: "./auth/signin",
+        permanent:false
+      }
+    }
+  }
+
+  return{
+    props:{session}
+  }
+
 }
