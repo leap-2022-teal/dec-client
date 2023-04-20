@@ -5,7 +5,7 @@ import Register from "./register";
 import { HiFingerPrint , HiAtSymbol} from "react-icons/hi";
 import { useState } from "react";
 import {  signIn, signOut } from "next-auth/react"
-import { useFormik } from 'formik'
+
 
 interface User {
     email:String,
@@ -15,19 +15,15 @@ export default function Signin(){
     
     const [show, setShow] = useState(false)
 
-    // const form:User = {
-    //     email:
-    //     password:
-    // // }
 
     // Google Handle Fucntion
     async function handleGoogleSignin() {
-        signIn('google',{callbackUrl: "http://localhost:3001/"})        
+        signIn('google',{callbackUrl: "http://localhost:3000/"})        
     }
 
     // Github Login
     async function handleGithubSignin() {
-        signIn('github',{callbackUrl: "http://localhost:3001/"})        
+        signIn('github',{callbackUrl: "http://localhost:3000/"})        
     }
 
     return(<Layout>
