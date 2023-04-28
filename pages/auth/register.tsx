@@ -8,6 +8,9 @@ import {
   emailValidator,
   passwordValidator,
 } from "@/components/loginValidators/validators";
+import axios from "axios";
+import { toast, ToastContainer } from 'react-toastify';
+  import "react-toastify/dist/ReactToastify.css";
 
 interface IUser {
   userName: string;
@@ -18,11 +21,31 @@ interface IUser {
 export default function Register() {
   // password haruulah
   const [show, setShow] = useState<any>({ password: false, cpassword: false });
-  const [passErrorMsg, setPassErrorMsg] = useState<string>("")
+  const [passErrorMsg, setPassErrorMsg] = useState<string>("");
 
-
-
-
+  <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
+  
+  const notify = () => toast("Амжилттай бүртгэгдлээ",{
+    position: "top-right",
+  autoClose: 2500,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",});
+  
   // Register
   const [formData, setFormData] = useState<IUser>({
     userName: "",
@@ -31,14 +54,21 @@ export default function Register() {
     cpassword: "",
   });
 
-  function handleSave() {
-    fetch("http://localhost:8000/users", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  function handleSubmit() {
+    axios
+      .post("http://localhost:8000/users", { formData })
+      .then((res) => {
+        console.log(res)
+        const {data, status} = res
+        if(status === 200){   
+          notify()
+        }
+      })
+      .catch((error) => {
+        if(error.message){
+          alert("error")
+        }
+      })
   }
 
   function handleEmail(e: any) {
@@ -50,16 +80,16 @@ export default function Register() {
   function handlePassword(e: any) {
     const password: string = e.target.value;
     if (!password) {
-        setPassErrorMsg("")
+      setPassErrorMsg("");
     } else if (password.length < 8) {
-        setPassErrorMsg("nuuts ug 8 oron oos deesh baih estoi")
-    }else{
-        setPassErrorMsg("")
+      setPassErrorMsg("nuuts ug 8 oron oos deesh baih estoi");
+    } else {
+      setPassErrorMsg("");
     }
     // console.log(passwordValidator({ password }));
     setFormData({ ...formData, password: e.target.value });
-}
-  console.log(passErrorMsg)
+  }
+  console.log(passErrorMsg);
   function handleCpassword(e: any) {
     const cpassword: string = e.target.value;
     const password = formData.password;
@@ -72,7 +102,18 @@ export default function Register() {
       <Head>
         <title>Register</title>
       </Head>
-
+      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div className="title">
           <h1 className="text-gray-800 text-4xl font-bold py-4">Register</h1>
@@ -134,8 +175,7 @@ export default function Register() {
               <HiFingerPrint size={25} />
             </span>
           </div>
-          {passErrorMsg && 
-          <p >{passErrorMsg}</p>}
+          {passErrorMsg && <p className="text-red-600">{passErrorMsg}</p>}
 
           <div className="flex border rounded-xl relative">
             <input
@@ -161,7 +201,7 @@ export default function Register() {
             <button
               className="w-full bg-gradient-to-r from-blue-500 to-indigo-800  rounded-md py-3 text-gray-50 text-lg hover:from-blue-500 hover:first-letter: to-indigo-800 "
               type="button"
-              onClick={handleSave}
+              onClick={handleSubmit}
             >
               Login
             </button>
