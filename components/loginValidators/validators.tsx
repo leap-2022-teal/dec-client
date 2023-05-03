@@ -83,14 +83,14 @@ export function confirmPasswordValidator({ password, cpassword }: any) {
 //     setPasswordError(errMsg)
 //   }
 
-//   if(passwordInputFieldName === "confirmPassword" || (passwordInputFieldName === "password" && passwordInput.confirmPassword.length > 0)){
+// if(passwordInputFieldName === "confirmPassword" || (passwordInputFieldName === "password" && passwordInput.confirmPassword.length > 0)){
 
-//     if(passwordInput.confirmPassword !== passwordInput.password){
-//       setConfirmPasswordError("Confirm password is not matched")
-//     } else {
-//       setConfirmPasswordError("")
-//     }
+//   if(passwordInput.confirmPassword !== passwordInput.password){
+//     setConfirmPasswordError("Confirm password is not matched")
+//   } else {
+//     setConfirmPasswordError("")
 //   }
+// }
 // }
 
 // return(<div className="row">

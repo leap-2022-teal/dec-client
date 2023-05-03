@@ -3,14 +3,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { HiFingerPrint, HiAtSymbol } from "react-icons/hi";
 import { use, useState } from "react";
-import {
-  confirmPasswordValidator,
-  emailValidator,
-  passwordValidator,
-} from "@/components/loginValidators/validators";
+import { confirmPasswordValidator, emailValidator, passwordValidator } from "@/components/loginValidators/validators";
 import axios from "axios";
-import { toast, ToastContainer } from 'react-toastify';
-  import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IUser {
   userName: string;
@@ -23,29 +19,32 @@ export default function Register() {
   const [show, setShow] = useState<any>({ password: false, cpassword: false });
   const [passErrorMsg, setPassErrorMsg] = useState<string>("");
 
-  <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
-  
-  const notify = () => toast("Амжилттай бүртгэгдлээ",{
-    position: "top-right",
-  autoClose: 2500,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",});
-  
+  <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />;
+
+  const notify = () =>
+    toast("Амжилттай бүртгэгдлээ", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const toastError = () =>
+    toast.error("Бүртгэлтэй хаяг байна", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   // Register
   const [formData, setFormData] = useState<IUser>({
     userName: "",
@@ -55,20 +54,21 @@ theme="light"
   });
 
   function handleSubmit() {
-    axios
-      .post("http://localhost:8000/users", { formData })
-      .then((res) => {
-        console.log(res)
-        const {data, status} = res
-        if(status === 200){   
-          notify()
-        }
-      })
-      .catch((error) => {
-        if(error.message){
-          alert("error")
-        }
-      })
+    if (formData) {
+      axios
+        .post("http://localhost:8000/users/register", { formData })
+        .then((res) => {
+          const { data, status } = res;
+          if (status === 200) {
+            notify();
+          }
+        })
+        .catch((error) => {
+          if (error.message) {
+            toastError();
+          }
+        });
+    }
   }
 
   function handleEmail(e: any) {
@@ -79,13 +79,14 @@ theme="light"
 
   function handlePassword(e: any) {
     const password: string = e.target.value;
-    if (!password) {
-      setPassErrorMsg("");
-    } else if (password.length < 8) {
-      setPassErrorMsg("nuuts ug 8 oron oos deesh baih estoi");
-    } else {
-      setPassErrorMsg("");
-    }
+    // let errMsg = "";
+    // if (!password) {
+    //   setPassErrorMsg("");
+    // } else if (password.length < 8) {
+    //   setPassErrorMsg("nuuts ug 8 oron oos deesh baih estoi");
+    // } else {
+    //   setPassErrorMsg("");
+    // }
     // console.log(passwordValidator({ password }));
     setFormData({ ...formData, password: e.target.value });
   }
@@ -102,25 +103,11 @@ theme="light"
       <Head>
         <title>Register</title>
       </Head>
-      <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div className="title">
           <h1 className="text-gray-800 text-4xl font-bold py-4">Register</h1>
-          <p className="w-3/4 mx-auto text-gray-400">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+          <p className="w-3/4 mx-auto text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
 
         <form className="flex flex-col gap-5">
@@ -166,12 +153,7 @@ theme="light"
               onChange={handlePassword}
               value={formData.password}
             />
-            <span
-              className="icon flex items-center px-4"
-              onClick={() =>
-                setShow({ password: !show.password, cpassword: show.cpassword })
-              }
-            >
+            <span className="icon flex items-center px-4" onClick={() => setShow({ password: !show.password, cpassword: show.cpassword })}>
               <HiFingerPrint size={25} />
             </span>
           </div>
@@ -187,12 +169,7 @@ theme="light"
               onChange={handleCpassword}
               value={formData.cpassword}
             />
-            <span
-              className="icon flex items-center px-4"
-              onClick={() =>
-                setShow({ cpassword: !show.cpassword, password: show.password })
-              }
-            >
+            <span className="icon flex items-center px-4" onClick={() => setShow({ cpassword: !show.cpassword, password: show.password })}>
               <HiFingerPrint size={25} />
             </span>
           </div>
