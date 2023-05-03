@@ -34,17 +34,22 @@ export default function NavBar() {
       </div>
 
       <div className="w-full z-40">
-        <div className="px-20 md:px-16 py-2 flex flex-row justify-between items-center  bg-opacity-90">
+        <div className="px-20 md:px-16 py-2 flex justify-between bg-opacity-90">
           
+<<<<<<< HEAD
             <div className="flex-row ml-8 gap-7 hidden lg:flex justify-center w-full">
               <NavbarItems label="Nike"/>
               <NavbarItems label="Adidas" />
               <NavbarItems label="Puma" />
+=======
+            <div className="ml-8 gap-7 hidden lg:flex justify-center w-full">
+              <Categories/>
+>>>>>>> fd90ca9 ( navbar)
             {/* <NavbarItems label={<Link href={"../auth/signin"}>Sign in</Link>} /> */}
             </div>
-            <div className="flex-row ml-8 gap-4 hidden lg:flex">
-              <FavoriteBorderOutlinedIcon/>
-              <ShoppingCartOutlinedIcon/>
+            <div className="m-0 gap-4 flex">
+              <FavoriteBorderOutlinedIcon className="m-0"/>
+              <ShoppingCartOutlinedIcon className="m-0"/>
           </div>
         </div>
       </div>
