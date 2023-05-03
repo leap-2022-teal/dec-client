@@ -9,12 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.2",
+=======
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.17",
+    "@mui/icons-material": "^5.11.16",
+>>>>>>> e7b297b (navbar)
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
