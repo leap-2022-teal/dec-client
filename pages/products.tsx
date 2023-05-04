@@ -6,5 +6,17 @@ export default function AllProducts() {
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=`).then((res) => setProducts(res.data));
   }, []);
-  console.log(products);
+  return (
+    <>
+      <div>
+        {products.map((products: any) => {
+          return (
+            <>
+              <img src={products.image.path} alt="image" />;<span>{products.name}</span>
+            </>
+          );
+        })}
+      </div>
+    </>
+  );
 }
