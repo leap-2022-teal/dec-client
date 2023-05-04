@@ -14,7 +14,7 @@ export default function Categories() {
   useOnHoverOutside(dropdownRef, closeHoverMenu);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/categories`).then((res) => setCategories(res.data));
+    axios.get(`http://localhost:8000/categories?q`).then((res) => setCategories(res.data));
   }, []);
 
   return (

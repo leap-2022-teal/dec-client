@@ -6,7 +6,7 @@ import NavBar from "@/components/navbar/Navbar";
 export default function MainLayout({ children }: any) {
   return (
     <>
-        <NavBar></NavBar>
+      <NavBar></NavBar>
     </>
   );
 }

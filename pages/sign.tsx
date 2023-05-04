@@ -25,10 +25,7 @@ function Guest() {
       <h3 className="text-4xl font-bold">Guest Homepage</h3>
 
       <div className="flex justify-center">
-        <Link
-          href={"/auth/signin"}
-          className="mt-5 px-10 py-1 rounded-sm bg-gray-200"
-        >
+        <Link href={"/auth/signin"} className="mt-5 px-10 py-1 rounded-sm bg-gray-200">
           Sign in
         </Link>
       </div>
@@ -48,16 +45,11 @@ function User({ session, handleSignOut }: any) {
       </div>
 
       <div className="flex justify-center">
-        <button
-          className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-50"
-          onClick={handleSignOut}
-        >
+        <button className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-50" onClick={handleSignOut}>
           Sign Out
         </button>
       </div>
-      <div className="flex justify-center">
-        {/* <Link href={"/auth"} className="mt-5 px-10 py-1 rounded-sm bg-gray-200"></Link> */}
-      </div>
+      <div className="flex justify-center">{/* <Link href={"/auth"} className="mt-5 px-10 py-1 rounded-sm bg-gray-200"></Link> */}</div>
     </main>
   );
 }
