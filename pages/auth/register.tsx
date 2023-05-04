@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface IUser {
-  userName: string;
+  name: string;
   email: string;
   password: string;
   cpassword: string;
@@ -47,7 +47,7 @@ export default function Register() {
 
   // Register
   const [formData, setFormData] = useState<IUser>({
-    userName: "",
+    name: "",
     email: "",
     password: "",
     cpassword: "",
@@ -114,14 +114,14 @@ export default function Register() {
           <div className="flex border rounded-xl relative">
             <input
               type="text"
-              name="Username"
+              name="name"
               placeholder="Username"
               onChange={(e: any) => {
-                setFormData({ ...formData, userName: e.target.value });
+                setFormData({ ...formData, name: e.target.value });
               }}
               className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none
                 "
-              value={formData.userName}
+              value={formData.name}
             />
             <span className="icon flex items-center px-4 ">
               <HiAtSymbol size={25} />
