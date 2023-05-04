@@ -5,10 +5,12 @@ import MainLayout from "@/layout/mainLayout";
 export default function Home() {
   // return
   return (
-    <>
-      <div>wellcome</div>
-      <Banner />
-      <MainLayout>Welcome</MainLayout>
-    </>
+    <MainLayout>
+      <div>
+        <div>wellcome</div>
+        <Banner />
+        Welcome
+      </div>
+    </MainLayout>
   );
 }
