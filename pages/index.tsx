@@ -1,9 +1,16 @@
-import NavBar from "@/components/navbar/Navbar";
-import Link from "next/link";
-import { useState } from "react";
-import { useSession, signOut, getSession } from "next-auth/react";
+import { Banner } from "@/components/Banner";
+
 import MainLayout from "@/layout/mainLayout";
 
 export default function Home() {
-  return <MainLayout>Welcome</MainLayout>;
+  // return
+  return (
+    <MainLayout>
+      <div>
+        <div>wellcome</div>
+        <Banner />
+        Welcome
+      </div>
+    </MainLayout>
+  );
 }
