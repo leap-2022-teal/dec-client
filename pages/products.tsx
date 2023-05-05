@@ -8,11 +8,16 @@ export default function AllProducts() {
   }, []);
   return (
     <>
-      <div>
+      <div className="flex gap-10">
         {products.map((products: any) => {
           return (
             <>
-              <img src={products.image.path} alt="image" />;<span>{products.name}</span>
+              <div className="">
+                <div className="w-[33.33333333333%%]">
+                  <img src={products.image.path} alt="image" />
+                  <div>{products.name}</div>
+                </div>
+              </div>
             </>
           );
         })}
