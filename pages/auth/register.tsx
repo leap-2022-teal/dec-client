@@ -180,7 +180,7 @@ export default function Register() {
               type="button"
               onClick={handleSubmit}
             >
-              Login
+              Register
             </button>
           </div>
         </form>
