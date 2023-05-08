@@ -8,20 +8,27 @@ export default function AllProducts() {
   }, []);
   return (
     <>
-      <div className="flex gap-10">
-        {products.map((products: any) => {
-          return (
-            <>
-              <div className="">
-                <div className="w-[33.33333333333%%]">
-                  <img src={products.image.path} alt="image" />
-                  <div>{products.name}</div>
+      <section className="d-block">
+        <div className="text-left grid grid-cols-2 gap-4 lg:grid-cols-3 ">
+          {products.map((products: any) => {
+            return (
+              <>
+                <div className=" d-inline-block  ">
+                  <div className="products-image">
+                    <div className="aspect-[1/1] relative overflow-hidden">
+                      <img src={products.image[0].path} alt="image" />
+                    </div>
+                    <div>
+                      <h1 className="text-2xl">{products.name} </h1>
+                      <h3>${products.price}</h3>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </>
-          );
-        })}
-      </div>
+              </>
+            );
+          })}
+        </div>
+      </section>
     </>
   );
 }
