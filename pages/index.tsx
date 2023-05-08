@@ -1,16 +1,14 @@
 import { Banner } from "@/components/Banner";
-
-import MainLayout from "@/layout/mainLayout";
-
+import axios from "axios";
+import { useEffect, useState } from "react";
 export default function Home() {
-  // return
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories?q=`).then((res) => setCategories(res.data));
+  }, []);
   return (
-    <MainLayout>
-      <div>
-        <div>wellcome</div>
-        <Banner />
-        Welcome
-      </div>
-    </MainLayout>
+    <div>
+      <Banner />
+    </div>
   );
 }

@@ -18,7 +18,11 @@ export function Banner() {
   }, []);
   return (
     <>
-      <Link href={`${banner[0]?.link}`}>hi</Link>
+      <div className="">
+        <Link href={`${banner[0]?.link}`}>
+          <img src={banner[0]?.image.path} alt="image" className="w-[100%]" />
+        </Link>
+      </div>
     </>
   );
 }
