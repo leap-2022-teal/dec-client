@@ -21,9 +21,6 @@ export default function Signin() {
         .then((res: AxiosResponse) => {
           const { data, status } = res;
           if (status === 200) {
-            // const { token } = data;
-            // localStorage.setItem("loginToken", token);
-            // window.location.reload();
           }
         })
         .catch(({ response, code }) => {
@@ -34,7 +31,7 @@ export default function Signin() {
           }
         });
     } else {
-      console.log("Нууц үг болон нэвтрэх нэрээ оруулна уу!!!");
+      alert("Нууц үг болон нэвтрэх нэрээ оруулна уу!!!");
     }
   }
 
@@ -95,6 +92,18 @@ export default function Signin() {
               <HiFingerPrint size={25} />
             </span>
           </div>
+          <div className="flex justify-between">
+            <div>
+              <label htmlFor="remember-me">Remember me</label>
+              <input type="checkbox" id="remember-me" name="remember" className="ml-2" />
+            </div>
+            <div>
+              <Link href={"./resetpassword"} className={"text-blue-600"}>
+                Reset Password
+              </Link>
+            </div>
+          </div>
+
           <div>
             <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-800   rounded-md py-3 text-gray-50 text-lg " type="button" onClick={handleSubmit}>
               Login
@@ -113,7 +122,7 @@ export default function Signin() {
         </form>
 
         <p className="text-center text-gray-400">
-          dont have account?{" "}
+          Dont have account?{" "}
           <Link className="text-blue-700" href={"./register"}>
             Register here
           </Link>

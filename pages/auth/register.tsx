@@ -176,7 +176,7 @@ export default function Register() {
 
           <div className="">
             <button className="w-full bg-gradient-to-r from-blue-500 rounded-md py-3 text-gray-50 text-lg hover:from-blue-500 hover:first-letter: to-indigo-800 " type="button" onClick={handleSubmit}>
-              Login
+              Register
             </button>
           </div>
         </form>
