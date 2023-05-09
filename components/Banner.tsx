@@ -10,12 +10,17 @@ interface Banner {
     height: number;
   };
   link: string;
+  categoryId: string;
 }
-export function Banner() {
+interface CategoryId {
+  categoryId?: string | null;
+}
+export function Banner(categoryId?: CategoryId) {
   const [banner, setBanner] = useState<Banner[]>([]);
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/banner`).then((res) => setBanner(res.data));
   }, []);
+
   return (
     <>
       <div className="">
