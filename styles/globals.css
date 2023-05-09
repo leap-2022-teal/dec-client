@@ -26,6 +26,23 @@ div{
   height: auto;
   background-color: #f5f5f5;
 }
+.slider-wrapper {
+  overflow-x: scroll;
+}
+
+.slider {
+  display: flex;
+  flex-direction: row;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
 
 
 

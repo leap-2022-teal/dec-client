@@ -11,23 +11,31 @@ interface Banner {
   };
   link: string;
   categoryId: string;
+  position: string;
 }
-interface CategoryId {
-  categoryId?: string | null;
+interface PropType {
+  categoryId?: string | undefined;
+  position: string;
 }
-export function Banner(categoryId?: CategoryId) {
+export function Banner({ categoryId, position }: PropType) {
   const [banner, setBanner] = useState<Banner[]>([]);
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/banner`).then((res) => setBanner(res.data));
   }, []);
-
+  console.log(banner);
   return (
     <>
-      <div className="">
-        <Link href={`${banner[0]?.link}`}>
-          <img src={banner[0]?.image.path} alt="image" className="w-[100%]" />
-        </Link>
-      </div>
+      {banner.map((banner) => (
+        <div>
+          {categoryId === banner.categoryId && position === banner.position ? (
+            <div className="">
+              <Link href={`${banner?.link}`}>
+                <img src={banner?.image.path} alt="image" className="w-[100%]" />
+              </Link>
+            </div>
+          ) : null}
+        </div>
+      ))}
     </>
   );
 }
