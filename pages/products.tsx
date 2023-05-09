@@ -1,4 +1,5 @@
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function AllProducts() {
@@ -13,17 +14,19 @@ export default function AllProducts() {
           {products.map((products: any) => {
             return (
               <>
-                <div className=" d-inline-block  ">
-                  <div className="products-image">
-                    <div className="aspect-[1/1] relative overflow-hidden">
-                      <img src={products.image[0].path} alt="image" />
-                    </div>
-                    <div>
-                      <h1 className="text-2xl">{products.name} </h1>
-                      <h3>${products.price}</h3>
+                <Link href={`/products/${products._id}`}>
+                  <div className=" d-inline-block  ">
+                    <div className="products-image">
+                      <div className="aspect-[1/1] relative overflow-hidden">
+                        <img src={products.image[0].path} alt="image" />
+                      </div>
+                      <div>
+                        <h1 className="text-2xl">{products.name} </h1>
+                        <h3>${products.price}</h3>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </>
             );
           })}
