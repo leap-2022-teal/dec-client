@@ -19,27 +19,28 @@ export default function Menu() {
   }, []);
 
   return (
-    <div className="flex justify-between">
-      <div className=" w-[6%] flex items-center">
-        <img className="w-[100%]" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1200px-Logo_NIKE.svg.png" alt="nike logo" />
-      </div>
-      <div className="w-full flex items-center flex-col " ref={dropdownRef}>
-        <div className="flex-row  gap-7 lg:flex justify-center ">
-          {menu
-            .filter((category: any) => !category.parentId)
-            .map((category: any) => (
-              <Link href={""}>
-                <div className="px-3 text-black border-solid border-black hover:border-b-2 text-base leading-10 h-14 flex items-center" onMouseOver={() => setMenuDropDownOpen(category._id)}>
-                  {category.name}
-                </div>
-              </Link>
-            ))}
+    <div className="z-6 bg-red-400">
+      <div className="flex justify-between static z-5">
+        <div className=" w-[6%] flex items-center">
+          <img className="w-[100%]" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1200px-Logo_NIKE.svg.png" alt="nike logo" />
         </div>
-
-        {isMenuDropDownOpen && <SubMenu isOn={isMenuDropDownOpen} categoryId={isMenuDropDownOpen} categories={menu} />}
+        <div className="w-full flex items-center flex-col " ref={dropdownRef}>
+          <div className="flex-row  gap-7 lg:flex justify-center ">
+            {menu
+              .filter((category: any) => !category.parentId)
+              .map((category: any) => (
+                <Link href={""}>
+                  <div className="px-3 text-black border-solid border-black hover:border-b-2 text-base leading-10 h-14 flex items-center" onMouseOver={() => setMenuDropDownOpen(category._id)}>
+                    {category.name}
+                  </div>
+                </Link>
+              ))}
+          </div>
+        </div>
+        <div>search</div>
+        <div>icons</div>
       </div>
-      <div>search</div>
-      <div>icons</div>
+      <div className="flex justify-center absolute bg-white z-0">{isMenuDropDownOpen && <SubMenu isOn={isMenuDropDownOpen} categoryId={isMenuDropDownOpen} categories={menu} />}</div>
     </div>
   );
 }
