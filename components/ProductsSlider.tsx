@@ -1,3 +1,6 @@
+import { dividerClasses } from "@mui/material";
+import axios from "axios";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export interface Stock {
@@ -21,53 +24,32 @@ export interface Product {
     }
   ];
   _id: string;
+  gender: string;
 }
-
-interface Props {
-  products: Product[];
-}
-
-const NikeSlider = ({ products }: Props) => {
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < products.length - 3) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }
-  };
-
+export function ProductsSlider() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const limit: number = 9;
   useEffect(() => {
-    if (sliderRef.current) {
-      sliderRef.current.style.transform = `translateX(-${currentIndex * 33.33}%)`;
-    }
-  }, [currentIndex]);
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=&limit=${limit}`).then((res) => setProducts(res.data));
+  }, []);
 
   return (
-    <div className="slider-wrapper">
-      <ul className="slider-container">
-        {products.map((product) => (
-          <li className="product" key={product._id}>
-            <img src={product.image[0].path} alt={product.name} />
-            <h3>{product.name}</h3>
-            <p>${product.price.toFixed(2)}</p>
-          </li>
+    <div>
+      <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll my-20 gap-3 ">
+        {products.map((products: Product) => (
+          <div className="snap-start lg:w-[33.33333%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] ">
+            <Link href={`products/${products._id}`} title={products.name}>
+              <figure>
+                <div className="aspect-[1/1] overflow-hidden products-image">
+                  <img src={products.image[0].path} alt="image" />
+                </div>
+                <h4>{products.name}</h4>
+                <h4>${products.price}</h4>
+              </figure>
+            </Link>
+          </div>
         ))}
-      </ul>
-      <button className="prev" onClick={handlePrev} disabled={currentIndex === 0}>
-        Prev
-      </button>
-      <button className="next" onClick={handleNext} disabled={currentIndex === products.length - 3}>
-        Next
-      </button>
+      </div>
     </div>
   );
-};
-
-export default NikeSlider;
+}
