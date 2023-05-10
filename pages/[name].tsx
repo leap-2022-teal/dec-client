@@ -1,4 +1,5 @@
 import { Banner } from "@/components/Banner";
+import { ProductsSlider } from "@/components/ProductsSlider";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -27,7 +28,10 @@ export default function Pages() {
         if (category.name === name) {
           return (
             <div>
+              <h2 className="text-left">{name}</h2>
               <Banner position="start" categoryId={category._id} key={category._id} />
+              <ProductsSlider />
+              <Banner position="center" categoryId={category._id} />
             </div>
           );
         }

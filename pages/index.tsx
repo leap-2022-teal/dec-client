@@ -1,5 +1,5 @@
 import { Banner } from "@/components/Banner";
-import NikeSlider from "@/components/ProductsSlider";
+import { ProductsSlider } from "@/components/ProductsSlider";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div>
       <Banner categoryId="" position="start" />
-      <NikeSlider products={products} />
+      <ProductsSlider />
       <Banner categoryId="" position="center" />
     </div>
   );
