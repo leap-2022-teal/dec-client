@@ -8,12 +8,12 @@ import Menu from "../menu";
 export default function NavBar() {
   return (
     <>
-      <div className="hidden laptop:block w-[100%] bg-neutral-100 h-10 ">
-        <div className="px-20 md:px-16 py-2 flex flex-row justify-between items-center transition duration-50 2xl:mx-auto max-w-[1830px]	 mx-[32px] ">
+      <div className="hidden laptop:block w-[100%] bg-neutral-100 ">
+        <div className=" flex flex-row justify-between items-center transition duration-50 2xl:mx-auto max-w-[1830px]	 mx-[32px] h-10 ">
           <Link href={"/"}>
-            <img className="h-4 lg:h-7" src="https://upload.wikimedia.org/wikipedia/en/3/37/Jumpman_logo.svg" alt="D-E-C" />
+            <img className="h-6 " src="https://upload.wikimedia.org/wikipedia/en/3/37/Jumpman_logo.svg" alt="D-E-C" />
           </Link>
-          <div className="flex-row ml-8 gap-7 hidden laptop:flex lg:flex">
+          <div className="flex-row ml-8 items-center gap-7 hidden laptop:flex lg:flex">
             <NavbarItems label="Browse" />
             <NavbarItems label="Help" />
             <NavbarItems label={<Link href={"../auth/signin"}>Sign in</Link>} />
