@@ -10,7 +10,7 @@ export default function AllProducts() {
   return (
     <>
       <section className="d-block">
-        <div className="text-left grid grid-cols-2 gap-4 lg:grid-cols-3 ">
+        <div className="text-left grid grid-cols-2 gap-4 laptop:grid-cols-3 ">
           {products.map((products: any) => {
             return (
               <>

@@ -6,7 +6,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     <>
       <div>
         <MainLayout>
-          <div className="2xl:mx-auto max-w-[1830px]	 mx-[32px]">
+          <div className="2xl:mx-auto max-w-[1830px] mx-14">
             <Component {...pageProps} />
           </div>
         </MainLayout>
