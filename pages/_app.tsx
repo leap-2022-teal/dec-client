@@ -5,11 +5,11 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   return (
     <>
       <div>
-        <MainLayout>
-          <div className="2xl:mx-auto max-w-[1830px] mx-14">
-            <Component {...pageProps} />
-          </div>
-        </MainLayout>
+        {/* <MainLayout> */}
+        <div className="">
+          <Component {...pageProps} />
+        </div>
+        {/* </MainLayout> */}
       </div>
     </>
   );
