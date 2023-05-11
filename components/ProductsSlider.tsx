@@ -36,7 +36,7 @@ export function ProductsSlider() {
     <div>
       <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll my-20 gap-3 ">
         {products.map((products: Product) => (
-          <div className="snap-center laptop:w-[31%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] ">
+          <div className="snap-center laptop:w-[33.333%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] ">
             <Link href={`products/${products._id}`} title={products.name}>
               <figure>
                 <div className="aspect-[1/1] overflow-hidden products-image">
