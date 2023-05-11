@@ -18,15 +18,19 @@ export default function SideMenu() {
         aria-controls="#sidenav-7"
         aria-haspopup="true"
       >
-        <MenuIcon />
+        <div className="h-10 w-10 flex items-center justify-center">
+          <svg aria-hidden="true" className=" pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+            <path stroke="currentColor" stroke-width="1.5" d="M21 5.25H3M21 12H3m18 6.75H3"></path>
+          </svg>
+        </div>
       </button>
       {isOpen && (
         <nav
           id="sidenav-7"
-          className="fixed right-0 top-0 z-[1035] h-screen w-60 translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:-translate-x-0 dark:bg-zinc-800"
+          className="fixed right-0 top-0 z-[1035] h-screen w-96 translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:-translate-x-0 dark:bg-zinc-800"
           data-te-sidenav-init
           data-te-sidenav-hidden="false"
-          data-te-sidenav-top="true"
+          data-te-sidenav-right="true"
         >
           <ul className="relative m-0 list-none px-[0.2rem]" data-te-sidenav-menu-ref>
             <button onClick={toggleMenu}>exit</button>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchCanvas() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,42 +10,36 @@ export default function SearchCanvas() {
 
   return (
     <>
-      <button
-        className="mr-1.5 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-        type="button"
-        data-te-offcanvas-toggle
-        data-te-target="#offcanvasTop"
-        aria-controls="offcanvasTop"
-        data-te-ripple-init
-        data-te-ripple-color="light"
-      >
-        Toggle top offcanvas
-      </button>
+      <div className="w-10 relative h-10 hover:bg-neutral-200 rounded-full desktop:flex justify-center items-center laptop:flex mobile:flex ">
+        <button className="" onClick={toggleMenu}>
+          <SearchIcon />
+        </button>
+      </div>
       {isOpen && (
-        <div
-          className="invisible fixed bottom-0 left-0 right-0 top-0 z-[1045] flex h-1/3 max-h-full max-w-full -translate-y-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out dark:bg-neutral-800 dark:text-neutral-200 [&[data-te-offcanvas-show]]:transform-none"
-          tabIndex={-1}
-          id="offcanvasTop"
-          aria-labelledby="offcanvasTopLabel"
-          data-te-offcanvas-init
-        >
-          <div className="flex items-center justify-between p-4">
-            <h5 className="mb-0 font-semibold leading-normal" id="offcanvasTopLabel">
-              Offcanvas top
-            </h5>
-            <button
-              type="button"
-              className="box-content rounded-none border-none opacity-50 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-              data-te-offcanvas-dismiss
-            >
-              <span className="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-6 w-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </span>
+        <div className="pt-4 flex justify-around absolute inset-x-0 top-0 w-[100%] h-[300px] bg-white transition-all transition duration-150 eade-linear delay-100">
+          <div className="w-16 object-cover ">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/010/994/232/original/nike-logo-black-clothes-design-icon-abstract-football-illustration-with-white-background-free-vector.jpg"
+              alt=""
+            />
+          </div>
+          <div className="w-[50%] flex">
+            <div className="w-10  h-10 hover:bg-neutral-200 rounded-full ">
+              <SearchIcon />
+            </div>
+            <input
+              // onClick={expandInput}
+              // style={{ width: inputWidth, transition: "width 0.5s" }}
+              type="text"
+              placeholder="search"
+              className=" w-[100%] hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 mobile:hidden laptop:block desktop:block pl-6 bg-neutral-100 rounded-3xl h-10"
+            />
+          </div>
+          <div>
+            <button onClick={toggleMenu} className=" text-black">
+              cancel
             </button>
           </div>
-          <div className="flex-grow overflow-y-auto p-4">...</div>
         </div>
       )}
     </>
