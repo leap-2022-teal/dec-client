@@ -7,7 +7,6 @@ export default function SideMenu() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  console.log(isOpen);
   return (
     <div>
       <button

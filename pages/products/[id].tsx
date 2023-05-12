@@ -35,17 +35,17 @@ const SingleProducts = () => {
           {/* <!-- zuragnuudtai div--> */}
 
           <div className=" w-full sm:w-96 md:w-8/12  lg:w-6/12 flex lg:flex-row flex-col lg:gap-8 sm:gap-6 gap-4 ">
-            <div className=" w-full lg:w-8/12 bg-gray-100 flex justify-center items-center  object-cover ">
+            <div className=" w-full lg:w-8/12  bg-gray-100 flex justify-center items-center  object-cover ">
               <img src={singleProduct.image[0].path} alt="sheos-1" />
             </div>
-            <div className=" w-full lg:w-4/12 grid lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6  object-cover">
-              <div className="scale-100 hover:scale-[2] ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 ">
+            <div className=" w-full lg:w-4/12 grid z-1 hover:z-50 lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6  object-cover">
+              <div className="scale-100 hover:scale-[2] z-1 hover:z-50  ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 ">
                 <img src={singleProduct.image[1].path} alt="Wooden chair - preview 1" />
               </div>
-              <div className="scale-100 hover:scale-[2] ease-in duration-200 bg-gray-100 flex justify-center items-center py-4object-cover">
+              <div className="scale-100 hover:scale-[2] hover:z-50 z-1 ease-in duration-200 bg-gray-100 flex justify-center items-center py-4object-cover">
                 <img src={singleProduct.image[2].path} alt="Wooden chair - preview 2" />
               </div>
-              <div className="scale-100 hover:scale-[2] ease-in duration-200 bg-gray-100 flex justify-center items-center py-4  object-cover">
+              <div className="scale-100 hover:scale-[2] hover:z-50 z-1 ease-in duration-200 bg-gray-100 flex justify-center items-center py-4  object-cover">
                 <img src={singleProduct.image[3].path} alt="Wooden chair- preview 3" />
               </div>
             </div>

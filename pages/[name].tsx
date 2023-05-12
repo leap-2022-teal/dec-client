@@ -30,13 +30,20 @@ export default function Pages() {
         if (category.name === name) {
           return (
             <div>
-              <h2 className="text-left">{name}</h2>
+              <h2 className="text-left text-2xl">{name}</h2>
               <Banner position="start" categoryId={category._id} key={category._id} />
-              <h1 className="text-left text-2xl"> Popular Right Now</h1>
-              <ProductsSlider />
+              <h2 className="text-left text-2xl mt-20">Popular Right Now</h2>
+              <ProductsSlider categoryId={category._id} />
+              <h2 className="text-left text-2xl mt-20">Trending</h2>
               <Feature position="feature" categoryId={category._id} name="The Latest from Nike Basketball" />
-              <Banner position="center" categoryId={category._id} />
-              <h2 className="text-left"> Popular Right Now</h2>
+              {name === "Kids" ? (
+                <div className="mt-20">
+                  <h2 className="text-2xl text-left ">Best of Air Max</h2>
+                  <Banner position="center" categoryId={category._id} />
+                </div>
+              ) : null}
+
+              <h2 className="text-left text-2xl mt-28">Icons for Any Season</h2>
               <BannerSlider categoryId="" position="end" />
             </div>
           );
