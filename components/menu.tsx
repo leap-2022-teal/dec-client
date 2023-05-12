@@ -46,16 +46,18 @@ export default function Menu() {
   return (
     <div className="w-[100%]">
       <div className={isSearchActive ? outDivActive : outDivInActive}>
-        <div className={isSearchActive ? imageActive : imageInActive}>
-          <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-16" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </div>
+        <Link href={"/"}>
+          <div className={isSearchActive ? imageActive : imageInActive}>
+            <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-16" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+              <path
+                fill="currentColor"
+                fill-rule="evenodd"
+                d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+        </Link>
         <div className={isSearchActive ? searchActive : searchInactive} ref={dropdownRef}>
           <div className="flex-row gap-7 flex justify-center ">
             {menu
@@ -133,11 +135,15 @@ export function SubMenu({ categories, categoryId, isOn }: any) {
   return (
     <>
       <div className="">
-        {subMenu.map((category: any) => (
-          <Link href={""}>
-            <div className="  text-neutral-600 hover:text-black">{category.name}</div>
-          </Link>
-        ))}
+        <Link href={"/products"}>All sheos</Link>
+        {subMenu.map((category: any) => {
+          console.log(subMenu);
+          return (
+            <Link href={`/category/${category._id}`}>
+              <div className="  text-neutral-600 hover:text-black">{category.name}</div>
+            </Link>
+          );
+        })}
       </div>
     </>
   );
