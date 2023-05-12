@@ -41,4 +41,9 @@ div {
 
 .slider::-webkit-scrollbar {
   display: none;
+  
+}
+
+.multi-color {
+  background-color:radial-gradient(#ffffff 20%,transparent 20%), radial-gradient(#ffffff 20%,transparent 20%), #000
 }
