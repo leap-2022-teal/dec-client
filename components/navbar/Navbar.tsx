@@ -8,7 +8,7 @@ import Menu from "../menu";
 export default function NavBar() {
   return (
     <>
-      <div className="hidden laptop:block w-[100%] bg-neutral-100 ">
+      <div className="hidden static laptop:block w-[100%] bg-neutral-100 ">
         <div className=" flex flex-row justify-between items-center transition duration-50 desktop:mx-auto max-w-[1830px] mx-6 h-10 ">
           <Link href={"/"}>
             <img className="h-6 " src="https://upload.wikimedia.org/wikipedia/en/3/37/Jumpman_logo.svg" alt="D-E-C" />

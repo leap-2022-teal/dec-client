@@ -20,13 +20,13 @@ export default function AllProducts() {
             return (
               <>
                 <Link href={`/products/${products._id}`}>
-                  <div className=" d-inline-block mb-14">
+                  <div className=" d-inline-block  ">
                     <div className="products-image">
                       <div className="aspect-[1/1] relative overflow-hidden">
                         <img src={products.image[0].path} alt="image" />
                       </div>
-                      <div className="mt-3">
-                        <h1 className="text-base">{products.name}</h1>
+                      <div>
+                        <h1 className="text-2xl">{products.name} </h1>
                         <h3>${products.price}</h3>
                       </div>
                     </div>

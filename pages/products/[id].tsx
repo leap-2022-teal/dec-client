@@ -39,10 +39,10 @@ const SingleProducts = () => {
               <img src={singleProduct.image[0].path} alt="sheos-1" />
             </div>
             <div className=" w-full lg:w-4/12 grid z-1 hover:z-50 lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6  object-cover">
-              <div className="scale-100 hover:scale-[2] z-1 hover:z-50  ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 ">
+              <div className="scale-100 hover:scale-[2] z-1 hover:z-50  ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 object-cover">
                 <img src={singleProduct.image[1].path} alt="Wooden chair - preview 1" />
               </div>
-              <div className="scale-100 hover:scale-[2] hover:z-50 z-1 ease-in duration-200 bg-gray-100 flex justify-center items-center py-4object-cover">
+              <div className="scale-100 hover:scale-[2] ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 object-cover">
                 <img src={singleProduct.image[2].path} alt="Wooden chair - preview 2" />
               </div>
               <div className="scale-100 hover:scale-[2] hover:z-50 z-1 ease-in duration-200 bg-gray-100 flex justify-center items-center py-4  object-cover">
