@@ -34,7 +34,7 @@ export default function Menu() {
   const imageInActive = "w-16";
   const imageActive = "w-16 laptop:block mobile:hidden desktop:block tablet:hidden";
   const inputActive =
-    " h-10 mt-4 pl-14 w-[500px] ease-in transition delay-300 duration-300 hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 pl-6 bg-neutral-100 rounded-3xl";
+    " h-10 mt-4 pl-12 w-[500px] ease-in transition delay-300 duration-300 hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 bg-neutral-100 rounded-3xl";
   const menuIconInActive = " mobile:flex items-center desktop:hidden laptop:hidden ";
   const menuIconActive = "mobile:hidden tablet:hidden";
 
