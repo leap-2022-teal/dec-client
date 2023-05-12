@@ -34,7 +34,7 @@ export function Feature({ categoryId, position, name }: PropType) {
   console.log(banner[0]?.name, name);
   return (
     <>
-      <div className="grid laptop:grid-cols-2 gap-5 my-14">
+      <div className="grid laptop:grid-cols-2 gap-5 my-4">
         {banner.map((banner) => (
           <>
             {categoryId === banner.categoryId && position === banner.position ? (

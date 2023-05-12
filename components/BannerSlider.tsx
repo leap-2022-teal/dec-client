@@ -33,7 +33,7 @@ export function BannerSlider({ categoryId, position }: PropType) {
   console.log(banner[0]?.name, name);
   return (
     <>
-      <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll mt-8 gap-3">
+      <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll mt-4 gap-3">
         {banner.map((banner) => (
           <>
             {categoryId === banner.categoryId && position === banner.position ? (
@@ -43,7 +43,7 @@ export function BannerSlider({ categoryId, position }: PropType) {
                     <div className=" overflow-hidden products-image">
                       <img src={banner.image.path} alt="image" />
                     </div>
-                    <h4 className="text-black text-xl mt-8">{banner.name}</h4>
+                    <h4 className="text-black text-xl mt-4">{banner.name}</h4>
                   </figure>
                 </Link>
               </div>
