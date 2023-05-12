@@ -8,6 +8,21 @@ export function SideBar({ name }: any) {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories?q=$parentId=${name}`).then((res) => setList(res.data));
   }, [name]);
 
+  const colors = [
+    { colorClass: "bg-purple-500", colorName: "Purple" },
+    { colorClass: "bg-slate-950 ", colorName: "Black" },
+    { colorClass: " bg-red-500 ", colorName: "Red" },
+    { colorClass: " bg-orange-500", colorName: "Orange" },
+    { colorClass: " bg-blue-500 ", colorName: "Blue" },
+    { colorClass: " bg-yellow-800", colorName: "Brown" },
+    { colorClass: "bg-yellow-300 ", colorName: "Yellow" },
+    { colorClass: "bg-gradient-to-r from-indigo-500 from-30% via-sky-500 via-40% to-emerald-500 to-30%   ", colorName: "Multi-Color" },
+    { colorClass: "border-solid border border-grey h-7 bg-white-500  ", colorName: "White" },
+    { colorClass: " bg-gray-500 ", colorName: "Grey" },
+    { colorClass: " bg-pink-500  ", colorName: "Pink" },
+    { colorClass: " bg-green-600  ", colorName: "Green" },
+  ];
+
   function productWomen() {}
   console.log(list);
   return (
@@ -73,63 +88,13 @@ export function SideBar({ name }: any) {
         <div>
           <h2 className="mt-6 text-xl">Color</h2>
         </div>
-        <div className="mt-4">
-          <div className="flex gap-3">
-            <div>
-              <div className="w-7 h-7 bg-purple-500 rounded-full"></div>
-              <a href="">Purple</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-slate-950 rounded-full "></div>
-              <a href="">Black</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-red-500 rounded-full"></div>
-              <a href="">Red</a>
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <div>
-              <div className="w-7 h-7 bg-orange-500 rounded-full"></div>
-              <a href="">Orange</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-blue-500 rounded-full"></div>
-              <a href="">Blue</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-white-500 rounded-full box-border"></div>
-              <a href="">White</a>
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <div>
-              <div className="w-7 h-7 bg-yellow-950 rounded-full"></div>
-              <a href="">Brown</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-green-500 rounded-full"></div>
-              <a href="">Green</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-yellow-500 rounded-full"></div>
-              <a href="">Yellow</a>
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <div>
-              <div className="w-7 h-7 bg-red-500 rounded-full"></div>
-              <a href="">Multi-color</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-gray-500 rounded-full"></div>
-              <a href="">Grey</a>
-            </div>
-            <div>
-              <div className="w-7 h-7 bg-pink-500 rounded-full"></div>
-              <a href="">Pink</a>
-            </div>
-          </div>
+        <div className="mt-4 grid-cols-3 grid gap-3 p-2 text-xs">
+          {colors.map((color: any) => (
+            <Link href="">
+              <div className={`w-7 h-7 ${color.colorClass} rounded-full`}></div>
+              <a href="">{color.colorName}</a>
+            </Link>
+          ))}
         </div>
       </div>
 
@@ -137,42 +102,42 @@ export function SideBar({ name }: any) {
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
-        <div className="mt-4">
-          <div className="flex gap-3">
-            <div>6</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
+        <div className="mt-4 grid-cols-1 grid gap-2 p-2 h-9 ">
+          <div className="">
+            <button className="border-2 rounded-md w-10">6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
           </div>
-          <div className="flex gap-3">
-            <div>10</div>
-            <div>29</div>
-            <div>30</div>
-            <div>31</div>
+          <div className="">
+            <button>10</button>
+            <button>29</button>
+            <button>30</button>
+            <button>31</button>
           </div>
-          <div className="flex gap-3">
-            <div>32</div>
-            <div>33</div>
-            <div>34</div>
-            <div>35</div>
+          <div className="">
+            <button>32</button>
+            <button>33</button>
+            <button>34</button>
+            <button>35</button>
           </div>
-          <div className="flex gap-3">
-            <div>36</div>
-            <div>37</div>
-            <div>38</div>
-            <div>39</div>
+          <div className="">
+            <button>36</button>
+            <button>37</button>
+            <button>38</button>
+            <button>39</button>
           </div>
-          <div className="flex gap-3">
-            <div>40</div>
-            <div>41</div>
-            <div>42</div>
-            <div>43</div>
+          <div className="">
+            <button>40</button>
+            <button>41</button>
+            <button>42</button>
+            <button>43</button>
           </div>
-          <div className="flex gap-3">
-            <div>44</div>
-            <div>45</div>
-            <div>46</div>
-            <div>47</div>
+          <div className="">
+            <button>44</button>
+            <button>45</button>
+            <button>46</button>
+            <button>47</button>
           </div>
         </div>
       </div>
