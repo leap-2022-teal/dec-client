@@ -9,43 +9,68 @@ export default function Menu() {
   const dropdownRef = useRef(null);
   const [isMenuDropDownOpen, setMenuDropDownOpen] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
+  // const [isCategoryActive, setIsCategoryActive] = useState(false);
+  const [inputText, setInputText] = useState("");
+  console.log(inputText);
+  // input clear button darahad text ustgaj baigaa function
+  function handleInputTextDelete() {
+    setInputText("");
+  }
 
+  // input deer darahad input oorchlogdoj baigaa function
+  function handleInputOnChange(event: any) {
+    setInputText(event.target.value);
+    setIsSearchActive(true);
+  }
+
+  // input cancel button darahad davhar input deerhi text ustgaj baigaa function
+  function handleInputDeleteCancel() {
+    setIsSearchActive(false);
+    setInputText("");
+  }
+
+  //
   const closeHoverMenu = () => {
     setMenuDropDownOpen("");
   };
 
-  // search icon darah uyd oorchlogdoj bgaa style
-
+  // search icon darah uyd oorchlogdoj bgaa styles
   const searchInactive = " flex items-center flex-col ";
   const searchActive = "hidden ";
-  const outDivInActive = " flex justify-between items-center desktop:mx-auto max-w-[1830px] mx-6 ";
-  const outDivActive =
-    " ease-linear duration-500 delay-100 duration-100 laptop:h-[300px] desktop:h-[300px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6";
+  const outDivInActive = "h-14 pt-4 flex justify-between  desktop:mx-auto max-w-[1830px] mx-6 ";
+  const outDivActive = ` ease-linear duration-500 delay-100 duration-100 laptop:h-[300px] desktop:h-[300px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6`;
   const heartIconInActive = "desktop:flex laptop:flex mobile:hidden w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
   const heartIconActive = "hidden";
   const bagIconInActive = "w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
   const bagIconActive = "hidden";
-  const searchIconInActive =
-    "desktop:absolute laptop:absolute tablet:block mobile:block w-10  h-10 hover:bg-neutral-200 rounded-full desktop:flex desktop:items-center desktop:justify-center laptop:flex laptop:items-center laptop:justify-center";
-  const searchIconActive = "laptop:absolute w-10 mt-4  h-10 hover:bg-neutral-200 rounded-full laptop:flex laptop:items-center laptop:justify-center";
+  const searchIconInActive = `desktop:absolute laptop:absolute tablet:block mobile:block w-10  h-10 hover:bg-neutral-200 rounded-full desktop:flex desktop:items-center desktop:justify-center laptop:flex laptop:items-center laptop:justify-center`;
+  const searchIconActive = "absolute w-10 mt-4  h-10 hover:bg-neutral-200 rounded-full flex items-center justify-center";
   const cancelInActive = "hidden";
   const cancelActive = "flex hover:text-neutral-500 h-16";
-  const inputInActive = " hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 mobile:hidden laptop:block desktop:block pl-12 w-28  bg-neutral-100 rounded-3xl h-10";
   const imageInActive = "w-16";
   const imageActive = "w-16 laptop:block mobile:hidden desktop:block tablet:hidden";
-  const inputActive =
-    " h-10 mt-4 pl-12 w-[500px] ease-in transition delay-300 duration-300 hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 bg-neutral-100 rounded-3xl";
+  const inputInActive = " hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 mobile:hidden laptop:block desktop:block pl-12 w-28  bg-neutral-100 rounded-3xl h-10";
+  const inputActive = ` h-10 mt-4 pl-12 laptop:w-[650px] tablet:w-[450px] between:w-[300px] ease-in transition delay-300 duration-300 hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 bg-neutral-100 rounded-3xl`;
   const menuIconInActive = " mobile:flex items-center desktop:hidden laptop:hidden ";
   const menuIconActive = "mobile:hidden tablet:hidden";
+  const inputClearIconInActive = `${inputText ? `right-0 w-10  h-10 hover:bg-neutral-200 rounded-full flex items-center justify-center absolute` : `hidden`}`;
+  const inputClearIconActive = `${!inputText ? `hidden` : `mt-4 right-0 w-10  h-10 hover:bg-neutral-200 rounded-full flex items-center justify-center absolute`}`;
 
+  const categoryInActive = " mobile:hidden tablet:hidden laptop:flex desktop:flex px-3 text-black text-base leading-10 h-14 items-center";
+  const categoryActive = "relative px-3 text-black border-solid border-black border-b-2 text-base leading-10 h-14 items-center flex";
+
+  const subCategoryInActive = "";
+  const subCategoryActive = " fixed w-full h-[330px] bg-white ease-linear transform transition delay-100 duration-400";
   useOnHoverOutside(dropdownRef, closeHoverMenu);
   useEffect(() => {
     axios.get(`http://localhost:8000/categories?q`).then((res) => setMenu(res.data));
   }, []);
 
   return (
-    <div className="w-[100%]">
+    // buh menu navbaraa orooson div
+    <div className={isMenuDropDownOpen ? subCategoryActive : subCategoryInActive}>
       <div className={isSearchActive ? outDivActive : outDivInActive}>
+        {/* nike logo image */}
         <Link href={"/"}>
           <div className={isSearchActive ? imageActive : imageInActive}>
             <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-16" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
@@ -58,35 +83,51 @@ export default function Menu() {
             </svg>
           </div>
         </Link>
-        <div className={isSearchActive ? searchActive : searchInactive} ref={dropdownRef}>
-          <div className="flex-row gap-7 flex justify-center ">
+        {/*  */}
+        {/* buh angilalaa orooson div */}
+        <div className={`${isSearchActive ? searchActive : searchInactive}`} ref={dropdownRef}>
+          <div className=" flex-row gap-7 flex justify-center">
             {menu
               .filter((category: any) => !category.parentId)
               .map((category: any) => (
                 <Link href={""}>
-                  <div
-                    className=" mobile:hidden tablet:hidden laptop:flex desktop:flex px-3 text-black border-solid border-black hover:border-b-2 text-base leading-10 h-14 items-center"
-                    onMouseOver={() => setMenuDropDownOpen(category._id)}
-                  >
+                  {/* nemu deerhi angilaluud */}
+                  <div className={category._id === isMenuDropDownOpen ? categoryActive : categoryInActive} onMouseOver={() => setMenuDropDownOpen(category._id)}>
                     {category.name}
                   </div>
                 </Link>
               ))}
           </div>
-          <div className="flex justify-center bg-white w-[100%]">{isMenuDropDownOpen && <SubMenu isOn={isMenuDropDownOpen} categoryId={isMenuDropDownOpen} categories={menu} />}</div>
+          {/* subcategories  */}
+          <div>{<SubMenu isOn={isMenuDropDownOpen} categoryId={isMenuDropDownOpen} categories={menu} />}</div>
         </div>
 
-        <div className="mobile:flex mobile:gap-4">
-          <button className={isSearchActive ? searchIconActive : searchIconInActive} onClick={() => setIsSearchActive(true)}>
-            <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
-              <path
-                stroke="currentColor"
-                stroke-width="1.5"
-                d="M13.962 16.296a6.716 6.716 0 01-3.462.954 6.728 6.728 0 01-4.773-1.977A6.728 6.728 0 013.75 10.5c0-1.864.755-3.551 1.977-4.773A6.728 6.728 0 0110.5 3.75c1.864 0 3.551.755 4.773 1.977A6.728 6.728 0 0117.25 10.5a6.726 6.726 0 01-.921 3.407c-.517.882-.434 1.988.289 2.711l3.853 3.853"
-              ></path>
-            </svg>
-          </button>
-          <input type="text" placeholder="search" className={isSearchActive ? inputActive : inputInActive} />
+        <div className="mobile:flex mobile:gap-4 ">
+          <div className="flex relative">
+            {/* search icon */}
+            <button className={`outline-none ${isSearchActive ? searchIconActive : searchIconInActive}`} onClick={() => setIsSearchActive(true || inputText)}>
+              <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  d="M13.962 16.296a6.716 6.716 0 01-3.462.954 6.728 6.728 0 01-4.773-1.977A6.728 6.728 0 013.75 10.5c0-1.864.755-3.551 1.977-4.773A6.728 6.728 0 0110.5 3.75c1.864 0 3.551.755 4.773 1.977A6.728 6.728 0 0117.25 10.5a6.726 6.726 0 01-.921 3.407c-.517.882-.434 1.988.289 2.711l3.853 3.853"
+                ></path>
+              </svg>
+            </button>
+            {/* search input */}
+            <input value={inputText} onChange={handleInputOnChange} type="text" placeholder="Search" className={`outline-none ${isSearchActive ? inputActive : inputInActive}`} />
+
+            {/* input text clear button */}
+
+            <button onClick={handleInputTextDelete} className={`outline-none ${isSearchActive ? inputClearIconActive : inputClearIconInActive}`}>
+              <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+                <path stroke="currentColor" stroke-width="1.5" d="M18.973 5.027L5.028 18.972M5.027 5.027l13.945 13.945"></path>
+              </svg>
+            </button>
+          </div>
+
+          {/* heart icon */}
+
           <div className={isSearchActive ? heartIconActive : heartIconInActive}>
             <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
               <path
@@ -96,7 +137,7 @@ export default function Menu() {
               ></path>
             </svg>
           </div>
-
+          {/* bag icon */}
           <div className={isSearchActive ? bagIconActive : bagIconInActive}>
             <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
               <path
@@ -106,12 +147,14 @@ export default function Menu() {
               ></path>
             </svg>
           </div>
+          {/* submenu icon */}
           <div className={isSearchActive ? menuIconActive : menuIconInActive}>
             <SideMenu />
           </div>
         </div>
+        {/* input cancel button */}
         <div className={isSearchActive ? cancelActive : cancelInActive}>
-          <button onClick={() => setIsSearchActive(false)}>cancel</button>
+          <button onClick={handleInputDeleteCancel}>Cancel</button>
         </div>
       </div>
     </div>
@@ -135,12 +178,11 @@ export function SubMenu({ categories, categoryId, isOn }: any) {
   return (
     <>
       <div className="">
-        <Link href={"/products"}>All sheos</Link>
+        {/* <Link href={"/products"}>All sheos</Link> */}
         {subMenu.map((category: any) => {
-          console.log(subMenu);
           return (
             <Link href={`/category/${category._id}`}>
-              <div className="  text-neutral-600 hover:text-black">{category.name}</div>
+              <div className="mt-2 w-[300px] flex justify-center   text-neutral-600 hover:text-black">{category.name}</div>
             </Link>
           );
         })}
