@@ -53,7 +53,7 @@ const SingleProducts = () => {
           {/* <!-- tailbar div --> */}
 
           <div className="  w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
-            <h2 className="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 mt-4">{singleProduct.name}</h2>
+            <h2 className="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-black mt-4">{singleProduct.name}</h2>
 
             <div className=" flex flex-row justify-between  mt-5">
               <div className=" flex flex-row space-x-3">
@@ -93,12 +93,12 @@ const SingleProducts = () => {
               </p>
             </div>
 
-            <p className=" font-normal text-base leading-6 text-gray-600 mt-7">{singleProduct.details}</p>
+            <p className=" font-normal text-base leading-6 text-neutral-700 mt-7">{singleProduct.details}</p>
             <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">${singleProduct.price}</p>
 
             <div className="lg:mt-11 mt-10">
               <div className="flex flex-row justify-between">
-                <p className=" font-medium text-base leading-4 text-gray-600">Тоо ширхэг</p>
+                <p className=" font-medium text-base leading-4 text-black">Тоо ширхэг</p>
                 <div className="flex">
                   <span
                     onClick={minusCount}
@@ -117,7 +117,7 @@ const SingleProducts = () => {
               </div>
               <hr className=" bg-gray-200 w-full my-2" />
               <div className=" flex flex-col  justify-between items-center mt-4">
-                <p className="font-medium text-base leading-4 text-gray-600 mb-4">Гутлын размер</p>
+                <p className="font-medium text-base leading-4 text-black mb-4">Гутлын размер</p>
                 <div className="flex gap-2">
                   {singleProduct.sizes.map((size: any) => (
                     <div className=" flex items-center justify-center hover:bg-black hover:text-white  border-[1px] border-solid border-black w-8 h-8">{size.size}</div>
@@ -127,18 +127,18 @@ const SingleProducts = () => {
               <hr className=" bg-gray-200 w-full mt-4" />
             </div>
             <div className=" flex justify-center gap-4">
-              <button className=" focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6">
+              <button className="border-2 rounded-full border-solid hover:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
                 Сагсанд нэмэх
                 <EastIcon className="ml-8" />
               </button>
               <div
-                className=" hover:bg-black hover:text-white flex items-center justify-center mt-6 border-solid border-gray-800 border-2 py-5 lg:mt-12 w-20 focus:outline-none focus:ring-2 focus:ring-offset-2 font-medium text-base leading-4 text-gray-800"
+                className=" hover:border-black flex items-center justify-center mt-6 border-solid border-neutral-400 border-2 rounded-full py-5 lg:mt-12 w-20  font-medium text-base leading-4 text-black"
                 itemType="button"
               >
                 <FavoriteBorderIcon className=" text-[30px]" />
               </div>
             </div>
-            <button className="focus:outline-none focus:ring-2  hover:text-white hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-gray-800 border-solid border-gray-800 border-2 w-full py-5 lg:mt-12 mt-6">
+            <button className=" hover:border-black focus:ring-offset-2  font-medium text-base leading-4 text-black border-solid border-neutral-400 rounded-full border-2 w-full py-5 lg:mt-12 mt-6">
               Худалдаж авах
               <EastIcon className="mx-10" />
             </button>
