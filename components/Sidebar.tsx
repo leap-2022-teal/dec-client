@@ -23,6 +23,8 @@ export function SideBar({ name }: any) {
     { colorClass: " bg-green-600  ", colorName: "Green" },
   ];
 
+  const sizes = [6, 7, 8, 9, 10, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
+
   function productWomen() {}
   console.log(list);
   return (
@@ -102,44 +104,12 @@ export function SideBar({ name }: any) {
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
-        <div className="mt-4 grid-cols-1 grid gap-2 p-2 h-9 ">
-          <div className="">
-            <button className="border-2 rounded-md w-10">6</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-          </div>
-          <div className="">
-            <button>10</button>
-            <button>29</button>
-            <button>30</button>
-            <button>31</button>
-          </div>
-          <div className="">
-            <button>32</button>
-            <button>33</button>
-            <button>34</button>
-            <button>35</button>
-          </div>
-          <div className="">
-            <button>36</button>
-            <button>37</button>
-            <button>38</button>
-            <button>39</button>
-          </div>
-          <div className="">
-            <button>40</button>
-            <button>41</button>
-            <button>42</button>
-            <button>43</button>
-          </div>
-          <div className="">
-            <button>44</button>
-            <button>45</button>
-            <button>46</button>
-            <button>47</button>
-          </div>
-        </div>
+        <div className="mt-4 grid-cols-1 grid gap-2 p-2 h-9 "></div>
+        {sizes.map((sizes: any) => (
+          <Link href="">
+            <button>{sizes}</button>
+          </Link>
+        ))}
       </div>
     </div>
   );
