@@ -40,12 +40,12 @@ export function Feature({ categoryId, position, name }: PropType) {
             {categoryId === banner.categoryId && position === banner.position ? (
               <div className="grid-cols-2">
                 <Link href={`${banner?.link}`}>
-                  <figure className="relative">
+                  <figure className="">
                     <div>
                       <img src={banner?.image.path} alt="image" className="w-[100%]" />
                     </div>
                     {banner.name === name ? (
-                      <figcaption className=" mt-6 text-left  absolute laptop:bottom-14 laptop:left-14 bottom-8 left-4 ">
+                      <figcaption className=" mt-6 text-left   ">
                         <div>
                           <p>{banner.name}</p>
                           <h3 className="font-black my-3 text-2xl">{banner.details}</h3>
@@ -55,7 +55,7 @@ export function Feature({ categoryId, position, name }: PropType) {
                         </div>
                       </figcaption>
                     ) : (
-                      <figcaption className=" mt-6 text-left absolute laptop:bottom-14 laptop:left-14  bottom-8 left-4">
+                      <figcaption className=" mt-6 text-left ">
                         <div>
                           <p className="text-white">{banner.details}</p>
                           <h3 className=" text-white my-3 text-2xl">{banner.name}</h3>

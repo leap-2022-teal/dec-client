@@ -4,6 +4,9 @@ import { useOnHoverOutside } from "./hook";
 import Link from "next/link";
 import SideMenu from "./sideMenu";
 import NavBar from "./navbar/Navbar";
+import { useDebounce } from "use-debounce";
+import { useProducts } from "./useProducts";
+import Highlighter from "react-highlight-words";
 
 export default function Menu() {
   const [menu, setMenu] = useState([]);
@@ -12,6 +15,10 @@ export default function Menu() {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isSideMenuActive, setIsSideMenuActive] = useState(false);
   const [isSubMenuIsSubCategory, setIsSubMenuIsSugCategory] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searchedQuery] = useDebounce(query, 300);
+  const limit = 5;
+  const products: any = useProducts({ searchedQuery, limit });
   // const [isCategoryActive, setIsCategoryActive] = useState(false);
   const [inputText, setInputText] = useState("");
 
@@ -39,6 +46,7 @@ export default function Menu() {
   function handleInputDeleteCancel() {
     setIsSearchActive(false);
     setInputText("");
+    setQuery("");
   }
 
   //
@@ -51,7 +59,7 @@ export default function Menu() {
   const searchInactive = " flex items-center flex-col ";
   const searchActive = "hidden ";
   const outDivInActive = "flex justify-between tablet:mx-6 laptop:mx-6 mobile:mx-6 between:mx-6  desktop:mx-auto max-w-[1830px] mx-6";
-  const outDivActive = ` ease-linear duration-500 delay-100 duration-100 laptop:h-[300px] desktop:h-[300px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6`;
+  const outDivActive = ` ease-linear duration-500 delay-100 duration-100 laptop:h-[500px] desktop:h-[500px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6`;
   const heartIconInActive = "desktop:flex laptop:flex mobile:hidden w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
   const heartIconActive = "hidden";
   const bagIconInActive = "w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
@@ -160,7 +168,17 @@ export default function Menu() {
                 </svg>
               </button>
               {/* search input */}
-              <input value={inputText} onChange={handleInputOnChange} type="text" placeholder="Search" className={`outline-none ${isSearchActive ? inputActive : inputInActive}`} />
+              <input
+                value={query}
+                onChange={(e: any) => {
+                  setQuery(e.target.value);
+                  handleInputOnChange(e);
+                }}
+                // onChange={handleInputOnChange}
+                type="text"
+                placeholder="Search"
+                className={`outline-none ${isSearchActive ? inputActive : inputInActive}`}
+              />
 
               {/* input text clear button */}
 
@@ -208,6 +226,35 @@ export default function Menu() {
             <button onClick={handleInputDeleteCancel}>Cancel</button>
           </div>
         </div>
+      </div>
+      <div className="absolute">
+        {query ? (
+          <div className="flex  ">
+            <div className="w-[900px] mt-28">hi</div>
+            <div className={"grid grid-cols-2 gap-5  laptop:grid-cols-5 mt-28 "}>
+              {products.map((products: any) => (
+                <>
+                  <Link href={`/products/${products._id}`}>
+                    <div className="  ">
+                      <div className="products-image">
+                        <div className="aspect-[1/1]  overflow-hidden">
+                          <img src={products.image[0].path} alt="image" />
+                        </div>
+                        <div>
+                          <h1 className="text-xl">
+                            {/* <Highlighter searchWords={[searchedQuery]} autoEscape={true} textToHighlight={products.name} />{" "} */}
+                            {products.name}
+                          </h1>
+                          <h3>${products.price}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
