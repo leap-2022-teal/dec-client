@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDebounce } from "use-debounce";
 import { useProducts } from "./useProducts";
+import Link from "next/link";
+import Highlighter from "react-highlight-words";
 
 export default function SearchCanvas() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [searchedQuery] = useDebounce(query, 300);
-  const [categoryId, setCategoryId] = useState("");
-  const products = useProducts({ searchedQuery, categoryId });
+  const limit = 5;
+  const products = useProducts({ searchedQuery, limit });
+  console.log(products, "hi");
+  console.log(query);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -41,6 +45,27 @@ export default function SearchCanvas() {
               placeholder="search"
               className=" w-[100%] hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 mobile:hidden laptop:block desktop:block pl-6 bg-neutral-100 rounded-3xl h-10"
             />
+          </div>
+          <div className="grid grid-cols-5">
+            {products.map((products: any) => (
+              <>
+                <Link href={`/products/${products._id}`}>
+                  <div className=" d-inline-block  ">
+                    <div className="products-image">
+                      <div className="aspect-[1/1] relative overflow-hidden">
+                        <img src={products.image[0].path} alt="image" />
+                      </div>
+                      <div>
+                        <h1 className="text-xl">
+                          <Highlighter highlightClassName="p-0 bg-red" searchWords={[searchedQuery]} autoEscape={true} textToHighlight={products.name} />{" "}
+                        </h1>
+                        <h3>${products.price}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </>
+            ))}
           </div>
           <div>
             <button onClick={toggleMenu} className=" text-black">
