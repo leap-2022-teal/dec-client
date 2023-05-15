@@ -59,7 +59,7 @@ export default function Menu() {
   const searchInactive = " flex items-center flex-col ";
   const searchActive = "hidden ";
   const outDivInActive = "flex justify-between tablet:mx-6 laptop:mx-6 mobile:mx-6 between:mx-6  desktop:mx-auto max-w-[1830px] mx-6";
-  const outDivActive = ` ease-linear duration-500 delay-100 duration-100 laptop:h-[500px] desktop:h-[500px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6`;
+  const outDivActive = `laptop:h-[500px] desktop:h-[500px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6`;
   const heartIconInActive = "desktop:flex laptop:flex mobile:hidden w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
   const heartIconActive = "hidden";
   const bagIconInActive = "w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
@@ -71,7 +71,7 @@ export default function Menu() {
   const imageInActive = "w-16";
   const imageActive = "w-16 laptop:block mobile:hidden desktop:block tablet:hidden";
   const inputInActive = " hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 mobile:hidden laptop:block desktop:block pl-12 w-28  bg-neutral-100 rounded-3xl h-10";
-  const inputActive = ` h-10 mt-4 pl-12 laptop:w-[650px] tablet:w-[450px] between:w-[300px] ease-in transition delay-300 duration-300 hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 bg-neutral-100 rounded-3xl`;
+  const inputActive = ` h-10 mt-4 pl-12 laptop:w-[650px] tablet:w-[450px] between:w-[300px]  hover:placeholder:text-neutral-500 placeholder:text-neutral-300 hover:bg-neutral-200 bg-neutral-100 rounded-3xl`;
   const menuIconInActive = " mobile:flex items-center desktop:hidden laptop:hidden ";
   const menuIconActive = "mobile:hidden tablet:hidden";
   const inputClearIconInActive = `${inputText ? `right-0 w-10  h-10 hover:bg-neutral-200 rounded-full flex items-center justify-center absolute` : `hidden`}`;
@@ -82,10 +82,10 @@ export default function Menu() {
   const categoryActive = "relative px-3 text-black border-solid border-black border-b-2 text-base leading-10 h-14 items-center flex";
 
   const subCategoryInActive = "";
-  const subCategoryActive = " fixed w-full h-[350px] bg-white ease-linear transform transition delay-100 duration-400";
+  const subCategoryActive = " fixed w-full h-[350px] bg-white ";
 
-  const sideMenuOutDivInActive = "";
-  const sideMenuOutDivActive = "transition duration-200 ease-in-linear delay-200 h-full w-[300px] bg-white fixed right-0 top-0";
+  const sideMenuOutDivInActive = "translate-x-[w-300px] w-[0px]";
+  const sideMenuOutDivActive = " h-full w-[300px] bg-white fixed right-0 top-0  duration-500   -translate-x-0";
 
   const sideMenuCategoryActive = " mobile:flex tablet:flex px-3 text-black text-2xl leading-10 ";
   return (
@@ -105,9 +105,9 @@ export default function Menu() {
             </svg>
           </div>
         </Link>
-        {/*  */}
+        {/* && isSearchActive ? outDivActive : ` flex justify-between w-[90%]` */}
         {/* buh angilalaa orooson div */}
-        <div className={`${isSideMenuActive ? sideMenuOutDivActive : `` && isSearchActive ? outDivActive : ` flex justify-between w-[90%]`}`}>
+        <div className={`${isSideMenuActive ? sideMenuOutDivActive : sideMenuOutDivInActive && isSearchActive ? outDivActive : ` flex justify-between w-[90%]`}`}>
           <div className="flex justify-between p-3">
             <div onClick={() => setIsSubMenuIsSugCategory(false)} className={isSubMenuIsSubCategory ? `flex` : `hidden`}>
               <svg aria-hidden="true" className="pre-chevron pre-chevron-back d-sm-b mr-3" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
