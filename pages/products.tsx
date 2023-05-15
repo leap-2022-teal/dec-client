@@ -6,13 +6,17 @@ import { useEffect, useState } from "react";
 
 export default function AllProducts() {
   const [products, setProducts] = useState<any>([]);
+  function filterProduct(e: any) {
+    console.log(e, "parent");
+    setProducts(e);
+  }
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=`).then((res) => setProducts(res.data));
   }, []);
   return (
     <div className="flex ">
       <div className="ml-15 w-80">
-        <SideBar />
+        <SideBar getProduct={filterProduct} />
       </div>
       <section className="d-block mt-10 ml-20">
         <div className="text-left grid grid-cols-2 gap-4 laptop:grid-cols-3 ">

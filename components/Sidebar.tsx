@@ -2,12 +2,17 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export function SideBar({ name }: any) {
-  const [list, setList] = useState([]);
-  useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories?q=$parentId=${name}`).then((res) => setList(res.data));
-  }, [name]);
+interface PropType {
+  getProduct: (e: any) => void;
+}
 
+export function SideBar({ getProduct }: PropType) {
+  const [list, setList] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState();
+  const [gender, setGender] = useState<any[]>([]);
+
+  const genderOptions = ["Men", "Women"];
+  console.log(gender);
   const colors = [
     { colorClass: "bg-purple-500", colorName: "Purple" },
     { colorClass: "bg-slate-950 ", colorName: "Black" },
@@ -25,35 +30,62 @@ export function SideBar({ name }: any) {
 
   const sizes = [6, 7, 8, 9, 10, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 
-  function productWomen() {}
-  console.log(list);
+  const prices = ["$0-$25", "$25-$50", "$50-$100", "Over $150"];
+  useEffect(() => {
+    if (filteredProducts && typeof getProduct === "function") {
+      getProduct(filteredProducts);
+    }
+  }, [filteredProducts]);
+
+  useEffect(() => {
+    if (gender.length === 1) {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/filter?gender=${gender[0]}&color=`).then((res) => {
+        const { data, status } = res;
+        if (status === 200) {
+          setFilteredProducts(data);
+          // setProducts(data);
+        } else {
+          alert(`Aldaa garlaa: ${status}`);
+        }
+      });
+    } else {
+      console.log("ok");
+    }
+  }, [gender]);
+  console.log(filteredProducts);
+
+  function handleGender(event: any) {
+    if (event.target.checked) {
+      setGender([...gender, event.target.name]);
+    } else {
+      const selectedGender = gender.filter((e: any) => e !== event.target.name);
+      setGender(selectedGender);
+    }
+  }
+
   return (
-    <div className="h-[200px] top-[200px] left-2 fixed">
-      {/* hello, {name} */}
-      {list.map((item: any): any => (
-        <Link href={item.name} className="flex flex-col">
-          {item.name}
-        </Link>
-      ))}
+    <div className="sidebar h-96 overflow-y-auto fixed">
+      <div>
+        {list.map((item: any): any => (
+          <Link href={item.name} className="flex flex-col">
+            {item.name}
+          </Link>
+        ))}
+      </div>
+
       <div className="">
         <div>
           <h2 className="mt-6 text-xl">Gender</h2>
         </div>
         <div className="mt-4">
-          <div>
-            <input type="checkbox" id="Men" name="Men" checked />
-            <label htmlFor="Men">Men</label>
-          </div>
-          <div>
-            <input type="checkbox" id="Women" name="Women" />
-            <label htmlFor="Women" onClick={productWomen}>
-              Women
-            </label>
-          </div>
-          <div>
-            <input type="checkbox" id="Unisex" name="Unisex" />
-            <label htmlFor="Unisex">Unisex</label>
-          </div>
+          {genderOptions
+            // .filter((category: any) => !category.parentId)
+            .map((gender: string) => (
+              <div onClick={handleGender}>
+                <input type="checkbox" id={gender} name={gender} />
+                <label htmlFor={gender}>{gender}</label>
+              </div>
+            ))}
         </div>
         <span></span>
       </div>
@@ -62,27 +94,13 @@ export function SideBar({ name }: any) {
         <div>
           <h2 className="mt-6 text-xl">Shop By Price</h2>
         </div>
-        <div className="mt-4">
-          <div>
-            <input type="checkbox" id="0-$25" name="0-$25" />
-            <label htmlFor="0-$25">$0-$25</label>
-          </div>
-          <div>
-            <input type="checkbox" id="25-$50" name="25-$50" />
-            <label htmlFor="25-$50">$25-$50</label>
-          </div>
-          <div>
-            <input type="checkbox" id="50-$100" name="50-$100" />
-            <label htmlFor="50-$100">$50-$100</label>
-          </div>
-          <div>
-            <input type="checkbox" id="100-$150" name="100-$150" />
-            <label htmlFor="100-$150">$100-$150</label>
-          </div>
-          <div>
-            <input type="checkbox" id="Over $150" name="Over $150" />
-            <label htmlFor="Over $150">Over $150</label>
-          </div>
+        <div className="mt-4 grid-cols-1 grid gap-y-1">
+          {prices.map((prices: any) => (
+            <Link href={""}>
+              <input type="checkbox" />
+              <label htmlFor="">{prices}</label>
+            </Link>
+          ))}
         </div>
       </div>
 
@@ -94,7 +112,7 @@ export function SideBar({ name }: any) {
           {colors.map((color: any) => (
             <Link href="">
               <div className={`w-7 h-7 ${color.colorClass} rounded-full`}></div>
-              <a href="">{color.colorName}</a>
+              <div>{color.colorName}</div>
             </Link>
           ))}
         </div>
@@ -104,12 +122,13 @@ export function SideBar({ name }: any) {
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
-        <div className="mt-4 grid-cols-1 grid gap-2 p-2 h-9 "></div>
-        {sizes.map((sizes: any) => (
-          <Link href="">
-            <button>{sizes}</button>
-          </Link>
-        ))}
+        <div className="mt-4 grid-cols-3 grid gap-2 p-2  gap-y-2">
+          {sizes.map((sizes: any) => (
+            <Link href="">
+              <button className=" border border-solid border-black rounded-md h-5 p-3 w-[40px] ">{sizes}</button>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
