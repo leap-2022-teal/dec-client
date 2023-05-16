@@ -1,7 +1,7 @@
 import React from "react";
 
 import NavBar from "@/components/navbar/Navbar";
-import Menu, { SubMenu } from "@/components/menu";
+import Menu from "@/components/menuDesktop";
 import SubBanner from "@/components/subBanner";
 
 export default function MainLayout({ children }: any) {
