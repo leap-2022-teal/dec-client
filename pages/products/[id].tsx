@@ -4,24 +4,39 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { env } from "process";
-import { useCreateOrderProduct } from "@/components/useOrders";
+import { useLocalStorage } from "@/components/LocalStorageProducts";
+import { useOrders } from "@/components/useOrders";
 
 const SingleProducts = () => {
   const [count, setCount] = useState(0);
   const router = useRouter();
   const { id } = router.query;
   const [singleProduct, setSingleProduct] = useState<any>();
-  const createOrderProducts = useCreateOrderProduct();
+  const [sizes, setSizes] = useState<number>();
   // const [sizes, setSizes] = useState([]);
-  console.log(singleProduct);
+  const [error, setError] = useState(false);
+  const { bag, createNewProduct } = useOrders();
+  const [select, setSelect] = useState(false);
+  function handleAddProduct() {
+    if (sizes) {
+      const products = [
+        {
+          quantity: count,
+          productId: singleProduct._id,
+          size: sizes,
+        },
+      ];
+      createNewProduct(products);
+    } else {
+      setError(true);
+    }
+  }
   useEffect(() => {
     if (id) {
       axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`).then((res) => setSingleProduct(res.data));
     }
   }, [id]);
-  function handleSubmit() {
-    createOrderProducts({});
-  }
+
   const addCount = () => {
     setCount((prev) => prev + 1);
   };
@@ -31,6 +46,11 @@ const SingleProducts = () => {
       setCount((prev) => prev - 1);
     }
   };
+  function selectSize(size: number) {
+    setSizes(size);
+    setError(false);
+  }
+
   if (!singleProduct) return null;
   return (
     <div>
@@ -122,17 +142,24 @@ const SingleProducts = () => {
               </div>
               <hr className=" bg-gray-200 w-full my-2" />
               <div className=" flex flex-col  justify-between items-center mt-4">
-                <p className="font-medium text-base leading-4 text-black mb-4">Гутлын размер</p>
+                <p className={`font-medium text-base leading-4 text-black mb-4 ${error ? "text-red-600" : ""}`}> {!error ? "Гутлын размер" : "select size"} </p>
+                {/* {!error ? "" : <p className="text-red-600">select size please</p>} */}
                 <div className="flex gap-2">
-                  {singleProduct.sizes.map((size: any) => (
-                    <div className=" flex items-center justify-center hover:bg-black hover:text-white  border-[1px] border-solid border-black w-8 h-8">{size.size}</div>
+                  {singleProduct.sizes.map((size: any, index: any) => (
+                    <div
+                      key={index}
+                      onClick={() => selectSize(size.size)}
+                      className={`select-size flex items-center justify-center border-[1px] border-solid border-black w-8 h-8 ${size.size === sizes ? "bg-black text-white" : ""}`}
+                    >
+                      {size.size}
+                    </div>
                   ))}
                 </div>
               </div>
               <hr className=" bg-gray-200 w-full mt-4" />
             </div>
             <div className=" flex justify-center gap-4">
-              <button onClick={handleSubmit} className="border-2 rounded-full border-solid hover:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
+              <button onClick={handleAddProduct} className="border-2 rounded-full border-solid hover:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
                 Сагсанд нэмэх
                 <EastIcon className="ml-8" />
               </button>
