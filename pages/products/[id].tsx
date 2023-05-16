@@ -3,13 +3,15 @@ import EastIcon from "@mui/icons-material/East";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Order from "../order";
+import { env } from "process";
+import { useCreateOrderProduct } from "@/components/useOrders";
 
 const SingleProducts = () => {
   const [count, setCount] = useState(0);
   const router = useRouter();
   const { id } = router.query;
   const [singleProduct, setSingleProduct] = useState<any>();
+  const createOrderProducts = useCreateOrderProduct();
   // const [sizes, setSizes] = useState([]);
   console.log(singleProduct);
   useEffect(() => {
@@ -17,7 +19,9 @@ const SingleProducts = () => {
       axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`).then((res) => setSingleProduct(res.data));
     }
   }, [id]);
-
+  function handleSubmit() {
+    createOrderProducts({});
+  }
   const addCount = () => {
     setCount((prev) => prev + 1);
   };
@@ -128,9 +132,8 @@ const SingleProducts = () => {
               <hr className=" bg-gray-200 w-full mt-4" />
             </div>
             <div className=" flex justify-center gap-4">
-              <button className="border-2 rounded-full border-solid hover:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
+              <button onClick={handleSubmit} className="border-2 rounded-full border-solid hover:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
                 Сагсанд нэмэх
-                <Order productId={singleProduct._id} />
                 <EastIcon className="ml-8" />
               </button>
               <div
