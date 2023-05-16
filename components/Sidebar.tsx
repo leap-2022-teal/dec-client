@@ -1,6 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 interface PropType {
   getProduct: (e: any) => void;
@@ -10,9 +10,12 @@ export function SideBar({ getProduct }: PropType) {
   const [list, setList] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState();
   const [gender, setGender] = useState<any[]>([]);
+  const [color, setColor] = useState<any[]>([]);
+  const [size, setSizes] = useState<any[]>([]);
+
+  console.log(size, "size");
 
   const genderOptions = ["Men", "Women"];
-  console.log(gender);
   const colors = [
     { colorClass: "bg-purple-500", colorName: "Purple" },
     { colorClass: "bg-slate-950 ", colorName: "Black" },
@@ -36,23 +39,17 @@ export function SideBar({ getProduct }: PropType) {
       getProduct(filteredProducts);
     }
   }, [filteredProducts]);
-
   useEffect(() => {
-    if (gender.length === 1) {
-      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/filter?gender=${gender[0]}&color=`).then((res) => {
-        const { data, status } = res;
-        if (status === 200) {
-          setFilteredProducts(data);
-          // setProducts(data);
-        } else {
-          alert(`Aldaa garlaa: ${status}`);
-        }
-      });
-    } else {
-      console.log("ok");
-    }
-  }, [gender]);
-  console.log(filteredProducts);
+    console.log(color, "useEff");
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products/filter`, { color, gender }).then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        setFilteredProducts(data);
+      } else {
+        alert(`Aldaa garlaa: ${status}`);
+      }
+    });
+  }, [gender, color]);
 
   function handleGender(event: any) {
     if (event.target.checked) {
@@ -63,8 +60,27 @@ export function SideBar({ getProduct }: PropType) {
     }
   }
 
+  function handleColor(event: any) {
+    console.log(event);
+    if (!color.includes(event.colorName.toLowerCase())) {
+      setColor([...color, event.colorName.toLowerCase()]);
+    } else {
+      const selectedColor = color.filter((e: any) => e !== event.colorName.toLowerCase());
+      setColor(selectedColor);
+    }
+  }
+
+  function handleSize(event: any) {
+    if (event) {
+      setSizes([...size, event]);
+    } else {
+      const selectedSize = size.filter((e: any) => e !== event);
+      setSizes(selectedSize);
+    }
+  }
+
   return (
-    <div className="sidebar h-96 overflow-y-auto fixed">
+    <div className="">
       <div>
         {list.map((item: any): any => (
           <Link href={item.name} className="flex flex-col">
@@ -110,10 +126,10 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4 grid-cols-3 grid gap-3 p-2 text-xs">
           {colors.map((color: any) => (
-            <Link href="">
+            <div onClick={() => handleColor(color)}>
               <div className={`w-7 h-7 ${color.colorClass} rounded-full`}></div>
               <div>{color.colorName}</div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
@@ -123,10 +139,12 @@ export function SideBar({ getProduct }: PropType) {
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
         <div className="mt-4 grid-cols-3 grid gap-2 p-2  gap-y-2">
-          {sizes.map((sizes: any) => (
-            <Link href="">
-              <button className=" border border-solid border-black rounded-md h-5 p-3 w-[40px] ">{sizes}</button>
-            </Link>
+          {sizes.map((size: number) => (
+            <div>
+              <button onClick={() => handleSize(size)} className=" border border-solid border-black rounded-md h-5 p-3 w-[40px] ">
+                {size}
+              </button>
+            </div>
           ))}
         </div>
       </div>

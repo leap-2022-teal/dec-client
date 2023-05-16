@@ -14,11 +14,11 @@ export default function AllProducts() {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=`).then((res) => setProducts(res.data));
   }, []);
   return (
-    <div className="flex ">
-      <div className="ml-15 w-80">
+    <div className=" ">
+      <div className="sidebar h-full overflow-y-auto w-[280px] absolute ">
         <SideBar getProduct={filterProduct} />
       </div>
-      <section className="d-block mt-10 ml-20">
+      <section className="ml-[300px] mt-10 ">
         <div className="text-left grid grid-cols-2 gap-4 laptop:grid-cols-3 ">
           {products.map((products: any) => {
             return (
