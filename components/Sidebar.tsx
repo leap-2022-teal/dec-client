@@ -40,16 +40,16 @@ export function SideBar({ getProduct }: PropType) {
     }
   }, [filteredProducts]);
   useEffect(() => {
-    console.log(color, "useEff");
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products/filter`, { color, gender }).then((res) => {
-      const { data, status } = res;
-      if (status === 200) {
-        setFilteredProducts(data);
-      } else {
-        alert(`Aldaa garlaa: ${status}`);
-      }
-    });
-  }, [gender, color]);
+    // console.log(color, "useEff");
+    // axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products/filter`, { color, gender, size }).then((res) => {
+    //   const { data, status } = res;
+    //   if (status === 200) {
+    //     setFilteredProducts(data);
+    //   } else {
+    //     alert(`Aldaa garlaa: ${status}`);
+    //   }
+    // });
+  }, [gender, color, size]);
 
   function handleGender(event: any) {
     if (event.target.checked) {
@@ -61,7 +61,6 @@ export function SideBar({ getProduct }: PropType) {
   }
 
   function handleColor(event: any) {
-    console.log(event);
     if (!color.includes(event.colorName.toLowerCase())) {
       setColor([...color, event.colorName.toLowerCase()]);
     } else {
@@ -71,7 +70,7 @@ export function SideBar({ getProduct }: PropType) {
   }
 
   function handleSize(event: any) {
-    if (event) {
+    if (!size.includes(event)) {
       setSizes([...size, event]);
     } else {
       const selectedSize = size.filter((e: any) => e !== event);
@@ -94,14 +93,12 @@ export function SideBar({ getProduct }: PropType) {
           <h2 className="mt-6 text-xl">Gender</h2>
         </div>
         <div className="mt-4">
-          {genderOptions
-            // .filter((category: any) => !category.parentId)
-            .map((gender: string) => (
-              <div onClick={handleGender}>
-                <input type="checkbox" id={gender} name={gender} />
-                <label htmlFor={gender}>{gender}</label>
-              </div>
-            ))}
+          {genderOptions.map((gender: string) => (
+            <div onClick={handleGender}>
+              <input type="checkbox" id={gender} name={gender} />
+              <label htmlFor={gender}>{gender}</label>
+            </div>
+          ))}
         </div>
         <span></span>
       </div>
@@ -140,7 +137,7 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4 grid-cols-3 grid gap-2 p-2  gap-y-2">
           {sizes.map((size: number) => (
-            <div>
+            <div key={size}>
               <button onClick={() => handleSize(size)} className=" border border-solid border-black rounded-md h-5 p-3 w-[40px] ">
                 {size}
               </button>
