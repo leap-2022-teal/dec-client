@@ -1,7 +1,11 @@
+import { ExampleContext } from "@/layout/mainLayout";
 import Link from "next/link";
 import MenuSearch from "./menuSearch";
+import { useContext } from "react";
 
 export default function MenuMobile() {
+  const basket = useContext(ExampleContext);
+  console.log("this is basket", basket);
   return (
     <div className="flex justify-between desktop:hidden laptop:hidden max-w-[1200px] mx-6">
       <Link href={"/"}>
@@ -28,6 +32,7 @@ export default function MenuMobile() {
                 d="M8.25 8.25V6a2.25 2.25 0 012.25-2.25h3a2.25 2.25 0 110 4.5H3.75v8.25a3.75 3.75 0 003.75 3.75h9a3.75 3.75 0 003.75-3.75V8.25H17.5"
               ></path>
             </svg>
+            <p>{basket.length}</p>
           </Link>
         </div>
         <div className="h-10 w-10 flex items-center justify-center hover:bg-neutral-200 rounded-full">
