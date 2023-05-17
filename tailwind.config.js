@@ -13,13 +13,13 @@ module.exports = {
     extend: {},
     screens: {
       mobile: "200px",
-      between: "500px",
-      tablet: "640px",
+      between: "580px",
+      tablet: "7200px",
       sm: "640px",
       // => @media (min-width: 640px) { ... }
       md: "768px",
       lg: "1024px",
-      laptop: "900px",
+      laptop: "960px",
       // => @media (min-width: 1024px) { ... }
 
       desktop: "1900px",
