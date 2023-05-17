@@ -2,11 +2,7 @@ import axios from "axios";
 import { useState, useEffect, useRef, MutableRefObject } from "react";
 import { useOnHoverOutside } from "./hook";
 import Link from "next/link";
-import SideMenu from "./sideMenu";
-import NavBar from "./navbar/Navbar";
-import { useDebounce } from "use-debounce";
-import { useProducts } from "./useProducts";
-import Highlighter from "react-highlight-words";
+
 import MenuMobile from "./menuMobile";
 import MenuSearch from "./menuSearch";
 
@@ -14,19 +10,14 @@ export default function Menu() {
   const [menu, setMenu] = useState([]);
   const dropdownRef = useRef(null);
   const [isMenuDropDownOpen, setMenuDropDownOpen] = useState("");
-  const [isSearchActive, setIsSearchActive] = useState(false);
-  const [isSideMenuActive, setIsSideMenuActive] = useState(false);
-  const [isSubMenuIsSubCategory, setIsSubMenuIsSugCategory] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:8000/categories?q`).then((res) => setMenu(res.data));
   }, []);
 
-  // sideMenu cancel button function
-
-  const handleCancelSideMenu = () => {
-    setIsSideMenuActive(false);
-  };
+  // const handleCancelSideMenu = () => {
+  //   setIsSideMenuActive(false);
+  // };
 
   const closeHoverMenu = () => {
     setMenuDropDownOpen("");
@@ -35,32 +26,8 @@ export default function Menu() {
   useOnHoverOutside(dropdownRef, closeHoverMenu);
   // search icon darah uyd oorchlogdoj bgaa styles
 
-  const outDivInActive = " flex justify-between items-center tablet:mx-6 laptop:mx-6 mobile:mx-6 between:mx-6  desktop:mx-auto  mx-6";
-  const outDivActive = `  laptop:h-[500px] desktop:h-[500px] tablet:h-full mobile:h-full bg-white fixed top-0 inset-x-0 flex laptop:justify-around desktop:justify-around tablet:justify-between mobile:justify-between mobile:px-6 tablet:px-6`;
-  const heartIconInActive = "desktop:flex laptop:flex mobile:hidden w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
-  const heartIconActive = "hidden";
-  const bagIconInActive = "w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center ";
-  const bagIconActive = "hidden";
-
-  const imageInActive = "w-16";
-  const imageActive = "w-16 laptop:block mobile:hidden desktop:block tablet:hidden";
-
-  const menuIconInActive = " mobile:flex items-center desktop:hidden laptop:hidden ";
-  const menuIconActive = "mobile:hidden tablet:hidden";
-
-  const inputOutDivInActive = "mobile:flex mobile:gap-4 flex items-center";
-  const inputOutDivActive = "transition duration-700 ease-in-out -translate-y-0 h-[500px] fixed  top-0 mobile:flex mobile:gap-4";
   const categoryInActive = "h-14 mobile:hidden tablet:hidden laptop:flex desktop:flex px-3 text-black text-base leading-10  items-center";
   const categoryActive = "h-14 relative px-3 text-black border-solid border-black border-b-2 text-base leading-10  items-center flex";
-  const searchInactive = " flex items-center flex-col ";
-  const searchActive = "hidden ";
-  const subCategoryInActive = "flex justify-between tablet:mx-6 laptop:mx-6 mobile:mx-6 between:mx-6  desktop:mx-auto max-w-[1830px] mx-6";
-  const subCategoryActive = " fixed w-full h-[350px] bg-white transition-all duration  ";
-
-  const sideMenuOutDivInActive = "";
-  const sideMenuOutDivActive = " h-full w-[300px] bg-white fixed right-0 top-0  duration-500   -translate-x-0";
-
-  const sideMenuCategoryActive = " mobile:flex tablet:flex px-3 text-black text-2xl leading-10 ";
 
   return (
     <>
@@ -88,11 +55,7 @@ export default function Menu() {
                 <Link href={""}>
                   {/* nemu deerhi angilaluud */}
                   <div className="flex items-center justify-between">
-                    <div
-                      className={`${category._id === isMenuDropDownOpen ? categoryActive : categoryInActive}`}
-                      onMouseOver={() => setMenuDropDownOpen(category._id)}
-                      onClick={() => setIsSubMenuIsSugCategory(true)}
-                    >
+                    <div className={`${category._id === isMenuDropDownOpen ? categoryActive : categoryInActive}`} onMouseOver={() => setMenuDropDownOpen(category._id)}>
                       {category.name}
                     </div>
                   </div>
