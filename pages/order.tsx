@@ -12,12 +12,6 @@ export default function Order() {
   const [count, setCount] = useState(1);
 
   useEffect(() => {
-    // basket.forEach((product: any) => {
-    //   axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => {
-    //     setItems((prevData): any => [...prevData, res.data]);
-    //   });
-    // });
-
     const fetchProductDetails = async () => {
       const itemDetails = await Promise.all(basket.map((product: any) => axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => res.data)));
       setItems(itemDetails);
