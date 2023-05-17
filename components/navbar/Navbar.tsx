@@ -1,6 +1,4 @@
-import { ExampleContext } from "@/layout/mainLayout";
 import Link from "next/link";
-import { useContext } from "react";
 
 export default function NavBar({ isSideMenuActive, isSearchActive }: any) {
   return (

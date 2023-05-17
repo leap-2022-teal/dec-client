@@ -6,54 +6,27 @@ import axios from "axios";
 import { env } from "process";
 import { useLocalStorage } from "@/components/LocalStorageProducts";
 import { useOrders } from "@/components/useOrders";
-import { ToastContainer, toast } from "react-toastify";
 
 const SingleProducts = () => {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const router = useRouter();
   const { id } = router.query;
   const [singleProduct, setSingleProduct] = useState<any>();
   const [sizes, setSizes] = useState<number>();
+  // const [sizes, setSizes] = useState([]);
   const [error, setError] = useState(false);
   const { bag, createNewProduct } = useOrders();
-
-  useEffect(() => {
-    const basket = localStorage.getItem("basket");
-    if (basket) {
-      console.log(basket);
-    }
-  }, []);
-
-  const notify = () =>
-    toast("Амжилттай бүртгэгдлээ", {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+  const [select, setSelect] = useState(false);
   function handleAddProduct() {
     if (sizes) {
-      const products = {
-        quantity: count,
-        productId: singleProduct._id,
-        size: sizes,
-      };
-
-      // createNewProduct(products);
-      const basket = localStorage.getItem("basket");
-      if (basket) {
-        const basketItems = JSON.parse(basket);
-        console.log(basketItems);
-        basketItems.push(products);
-        localStorage.setItem("basket", JSON.stringify(basketItems));
-      } else {
-        localStorage.setItem("basket", JSON.stringify([products]));
-      }
-      notify();
+      const products = [
+        {
+          quantity: count,
+          productId: singleProduct._id,
+          size: sizes,
+        },
+      ];
+      createNewProduct(products);
     } else {
       setError(true);
     }
@@ -69,7 +42,7 @@ const SingleProducts = () => {
   };
 
   const minusCount = () => {
-    if (count > 1) {
+    if (count > 0) {
       setCount((prev) => prev - 1);
     }
   };
@@ -81,7 +54,6 @@ const SingleProducts = () => {
   if (!singleProduct) return null;
   return (
     <div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />;
       <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
         <p className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">Home / Furniture / Wooden Stool</p>
         <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
@@ -187,7 +159,7 @@ const SingleProducts = () => {
               <hr className=" bg-gray-200 w-full mt-4" />
             </div>
             <div className=" flex justify-center gap-4">
-              <button onClick={handleAddProduct} className="border-2 rounded-full border-solid active:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
+              <button onClick={handleAddProduct} className="border-2 rounded-full border-solid hover:bg-neutral-600 font-medium text-base leading-4 text-white bg-black w-full py-5 lg:mt-12 mt-6">
                 Сагсанд нэмэх
                 <EastIcon className="ml-8" />
               </button>
