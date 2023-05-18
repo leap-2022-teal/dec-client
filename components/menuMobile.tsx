@@ -3,11 +3,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import MenuSearch from "./menuSearch";
 import { useContext } from "react";
+import NavBar from "./navbar/Navbar";
 
 export default function MenuMobile({ categories }: any) {
   const [isSideMenuActive, setIsSideMenuActive] = useState(false);
   const [isSubCategoryActive, setSubCategoryActive] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState("");
+  const [isOnCategoryName, setIsOnCategoryName] = useState("");
+
+  console.log(isOnCategoryName);
 
   return (
     <>
@@ -44,15 +48,10 @@ export default function MenuMobile({ categories }: any) {
               <path stroke="currentColor" stroke-width="1.5" d="M21 5.25H3M21 12H3m18 6.75H3"></path>
             </svg>
           </button>
-
-          {/* <div className={isSideMenuActive ? `flex` : `hidden`}>
-              <NavBar isSideMenuActive={isSideMenuActive} isSearchActive={isSearchActive} />
-            </div> */}
         </div>
       </div>
-      {/* <div className={!isSubCategoryActive ? "hidden" : ""}> */}
       <div className={isSubCategoryActive ? "hidden" : ""}>
-        <div className={isSideMenuActive ? `transition-all fixed duration-300 h-full w-[300px] ease-in-out bg-white top-0 right-0 p-4` : `w-0  `}>
+        <div className={isSideMenuActive ? `transition-all fixed duration-300 h-full w-[300px] ease-in-out bg-white top-0 right-0 p-8` : `w-0  `}>
           <div className="flex justify-between">
             <div></div>
             <button
@@ -64,33 +63,43 @@ export default function MenuMobile({ categories }: any) {
               </svg>
             </button>
           </div>
-          <div className={isSideMenuActive ? "flex-col flex" : "hidden"}>
+          <div className={isSideMenuActive ? "flex-col flex text-2xl w-full" : "hidden"}>
             {categories
               .filter((categroy: any) => !categroy.parentId)
               .map((category: any) => (
-                <div
-                  onClick={() => {
-                    setIsSubMenuOpen(category._id), setSubCategoryActive(true);
-                  }}
-                >
-                  {category.name}
+                <div className="flex justify-between items-center w-full py-4">
+                  <button
+                    onClick={() => {
+                      setIsSubMenuOpen(category._id), setSubCategoryActive(true), setIsOnCategoryName(category.name);
+                    }}
+                  >
+                    {category.name}
+                  </button>
+                  <div className="h-10 w-10 flex justify-center items-center">
+                    <svg aria-hidden="true" className="pre-chevron chev-root pre-chevron-next d-sm-b d-lg-h" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+                      <path stroke="currentColor" stroke-width="1.5" d="M8.474 18.966L15.44 12 8.474 5.033"></path>
+                    </svg>
+                  </div>
                 </div>
               ))}
           </div>
+          <div className={isSideMenuActive ? `flex` : `hidden`}>
+            <NavBar isSideMenuActive={isSideMenuActive} />
+          </div>
         </div>
       </div>
-      {/* </div> */}
       <div className={!isSubCategoryActive ? `transition-all fixed duration-300 h-full w-[0px] top-0 ease-in-out bg-white right-0 ` : ` w-[300px]  `}>
-        <div className={isSubCategoryActive ? `transition-all fixed  h-full w-[300px] duration-300 ease-in-out top-0  bg-white right-0 p-4` : ` w-0  `}>
-          <div className={isSubCategoryActive ? "flex" : "hidden"}>
-            <div onClick={() => setSubCategoryActive(false)}>
+        <div className={isSubCategoryActive ? `transition-all fixed  h-full w-[300px] duration-300 ease-in-out top-0 p-8  bg-white right-0` : ` w-0  `}>
+          <button onClick={() => setSubCategoryActive(false)} className={isSubCategoryActive ? "flex my-8 " : "hidden"}>
+            <div className="mr-4">
               <svg aria-hidden="true" className="pre-chevron pre-chevron-back d-sm-b" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
                 <path stroke="currentColor" stroke-width="1.5" d="M15.525 18.966L8.558 12l6.967-6.967"></path>
               </svg>
             </div>
             <p>All</p>
-          </div>
-          <div>
+          </button>
+          <div className=" text-2xl mb-8">{isOnCategoryName}</div>
+          <div className="">
             <SubCategoriesMenu categories={categories} isOn={isSubMenuOpen} categoryId={isSubMenuOpen} />
           </div>
         </div>
@@ -120,7 +129,7 @@ export function SubCategoriesMenu({ categories, isOn, categoryId }: any) {
         {subMenu.map((category: any) => {
           return (
             <Link href={`/category/${category._id}`}>
-              <div className="">{category.name}</div>
+              <div className=" text-neutral-500 hover:text-black py-1">{category.name}</div>
             </Link>
           );
         })}

@@ -2,19 +2,11 @@ import { ExampleContext } from "@/layout/mainLayout";
 import Link from "next/link";
 import { useContext } from "react";
 
-export default function NavBar({ isSideMenuActive, isSearchActive }: any) {
+export default function NavBar({ isSideMenuActive, SubCategoryActive }: any) {
   return (
     <>
-      <div
-        className={`${
-          isSideMenuActive
-            ? `tablet:flex mobile:flex between:flex desktop:hidden laptop:hidden w-full `
-            : ` ` && isSearchActive
-            ? `hidden laptop:block desktop:block`
-            : `tablet:hidden mobile:hidden between:hidden desktop:block laptop:block bg-neutral-100`
-        }`}
-      >
-        <div className={`${isSideMenuActive ? `flex-col w-[300px]  mt-6 p-3 ` : `flex flex-row justify-between items-center transition duration-50 desktop:mx-auto max-w-[1830px] mx-6 h-10 `}`}>
+      <div className={isSideMenuActive ? `bg-none` : "max-w-[1830px] bg-neutral-100 w-full"}>
+        <div className={`${isSideMenuActive ? `flex-col w-full  mt-6 ` : `flex-row justify-between items-center desktop:mx-auto  laptop:mx-6 h-10 mobile:hidden desktop:flex laptop:flex `}`}>
           <Link href={"/"}>
             <img className={`${isSideMenuActive ? `w-12 ` : `w-6`}`} src="https://upload.wikimedia.org/wikipedia/en/3/37/Jumpman_logo.svg" alt="D-E-C" />
           </Link>
