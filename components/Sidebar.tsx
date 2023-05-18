@@ -12,8 +12,10 @@ export function SideBar({ getProduct }: PropType) {
   const [gender, setGender] = useState<any[]>([]);
   const [color, setColor] = useState<any[]>([]);
   const [size, setSizes] = useState<any[]>([]);
-
-  console.log(size, "size");
+  const [price, setPrices] = useState<any[]>([]);
+  const [price1, setPrice1] = useState<number>();
+  const [minPrice, setMinPrice] = useState<number>(1);
+  const [maxPrice, setMaxPrice] = useState<number>(10);
 
   const genderOptions = ["Men", "Women"];
   const colors = [
@@ -33,23 +35,27 @@ export function SideBar({ getProduct }: PropType) {
 
   const sizes = [6, 7, 8, 9, 10, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 
-  const prices = ["$0-$25", "$25-$50", "$50-$100", "Over $150"];
+  const prices = ["$0 - $25", "$25 - $50", "$50 - $100", "Over $150"];
+  // const prices = [{ minPrice: 0, maxPrice: 25 }, { minPrice: 25, maxPrice: 50 }, { minPrice: 50, maxPrice: 100 }, { minPrice: 100 }];
+  console.log(price);
   useEffect(() => {
     if (filteredProducts && typeof getProduct === "function") {
       getProduct(filteredProducts);
     }
   }, [filteredProducts]);
+  console.log(price);
   useEffect(() => {
-    // console.log(color, "useEff");
-    // axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products/filter`, { color, gender, size }).then((res) => {
-    //   const { data, status } = res;
-    //   if (status === 200) {
-    //     setFilteredProducts(data);
-    //   } else {
-    //     alert(`Aldaa garlaa: ${status}`);
-    //   }
-    // });
-  }, [gender, color, size]);
+    const queryString = "color=" + color.join("&color=") + "&size=" + size.join("&size=") + "&price=" + price.join("&price=");
+    console.log(queryString);
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?${queryString}`).then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        setFilteredProducts(data);
+      } else {
+        alert(`Aldaa garlaa: ${status}`);
+      }
+    });
+  }, [gender, color, size, price]);
 
   function handleGender(event: any) {
     if (event.target.checked) {
@@ -57,6 +63,15 @@ export function SideBar({ getProduct }: PropType) {
     } else {
       const selectedGender = gender.filter((e: any) => e !== event.target.name);
       setGender(selectedGender);
+    }
+  }
+
+  function handlePrice(event: any) {
+    if (event.target.checked) {
+      setPrices([...price, event.target.name]);
+    } else {
+      const selectedPrice = price.filter((e: any) => e !== event.target.name);
+      setPrices(selectedPrice);
     }
   }
 
@@ -87,7 +102,6 @@ export function SideBar({ getProduct }: PropType) {
           </Link>
         ))}
       </div>
-
       <div className="">
         <div>
           <h2 className="mt-6 text-xl">Gender</h2>
@@ -96,7 +110,9 @@ export function SideBar({ getProduct }: PropType) {
           {genderOptions.map((gender: string) => (
             <div onClick={handleGender}>
               <input type="checkbox" id={gender} name={gender} />
-              <label htmlFor={gender}>{gender}</label>
+              <label className="ml-2" htmlFor={gender}>
+                {gender}
+              </label>
             </div>
           ))}
         </div>
@@ -107,12 +123,14 @@ export function SideBar({ getProduct }: PropType) {
         <div>
           <h2 className="mt-6 text-xl">Shop By Price</h2>
         </div>
-        <div className="mt-4 grid-cols-1 grid gap-y-1">
-          {prices.map((prices: any) => (
-            <Link href={""}>
-              <input type="checkbox" />
-              <label htmlFor="">{prices}</label>
-            </Link>
+        <div className="mt-4 grid-cols-1 grid gap-y-1 ">
+          {prices.map((price: any) => (
+            <div onClick={handlePrice}>
+              <input type="checkbox" id={price} name={price} />
+              <label className="ml-2 " htmlFor={price}>
+                {price}
+              </label>
+            </div>
           ))}
         </div>
       </div>
@@ -131,6 +149,10 @@ export function SideBar({ getProduct }: PropType) {
         </div>
       </div>
 
+      <div>
+        <input type="range" min="0" max="1000" className="thumb thumb--zindex-3" />
+        <input type="range" min="0" max="1000" className="thumb thumb--zindex-4" />
+      </div>
       <div>
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
