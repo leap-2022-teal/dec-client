@@ -21,7 +21,7 @@ export default function MainLayout({ children }: any) {
         <NavBar></NavBar>
         <Menu />
         <SubBanner />
-        {children}
+        <div className="">{children}</div>
       </ExampleContext.Provider>
     </>
   );
