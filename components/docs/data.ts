@@ -1,12 +1,8 @@
 export interface ColourOption {
   readonly value: number;
   readonly label: number;
-  readonly color?: string;
-  readonly isFixed?: boolean;
-  readonly isDisabled?: boolean;
 }
-
-export const colourOptions: readonly ColourOption[] = [
+export const colourOptions: ColourOption[] = [
   { value: 1, label: 1 },
   { value: 2, label: 2 },
   { value: 3, label: 3 },
