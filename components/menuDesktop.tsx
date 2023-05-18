@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useRef, MutableRefObject } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useOnHoverOutside } from "./hook";
 import Link from "next/link";
 

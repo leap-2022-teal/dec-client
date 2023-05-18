@@ -81,9 +81,9 @@ const SingleProducts = () => {
   if (!singleProduct) return null;
   return (
     <div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />;
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
       <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
-        <p className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">Home / Furniture / Wooden Stool</p>
+        {/* <p className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">Home / Furniture / Wooden Stool</p> */}
         <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
           {/* <!-- zuragnuudtai div--> */}
 
@@ -91,8 +91,8 @@ const SingleProducts = () => {
             <div className=" w-full lg:w-8/12  bg-gray-100 flex justify-center items-center  object-cover ">
               <img src={singleProduct.image[0].path} alt="sheos-1" />
             </div>
-            <div className=" w-full lg:w-4/12 grid z-1 hover:z-50 lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6  object-cover">
-              <div className="scale-100 hover:scale-[2] z-1 hover:z-50  ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 object-cover">
+            <div className=" w-full lg:w-4/12 grid  hover:z-50 lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6  object-cover">
+              <div className="scale-100 hover:scale-[2]  ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 object-cover">
                 <img src={singleProduct.image[1].path} alt="Wooden chair - preview 1" />
               </div>
               <div className="scale-100 hover:scale-[2] ease-in duration-200 bg-gray-100 flex justify-center items-center py-4 object-cover">
@@ -170,7 +170,7 @@ const SingleProducts = () => {
               </div>
               <hr className=" bg-gray-200 w-full my-2" />
               <div className=" flex flex-col  justify-between items-center mt-4">
-                <p className={`font-medium text-base leading-4 text-black mb-4 ${error ? "text-red-600" : ""}`}> {!error ? "Гутлын размер" : "select size"} </p>
+                <p className={`font-medium text-base leading-4 text-black mb-4 ${error ? "text-red-600" : ""}`}> {!error ? "Гутлын размер" : "Размэр сонгоно уу?"} </p>
                 {/* {!error ? "" : <p className="text-red-600">select size please</p>} */}
                 <div className="flex gap-2">
                   {singleProduct.sizes.map((size: any, index: any) => (

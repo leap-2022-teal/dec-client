@@ -31,7 +31,6 @@ export function Feature({ categoryId, position, name }: PropType) {
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/banner`).then((res) => setBanner(res.data));
   }, []);
-  console.log(banner[0]?.name, name);
   return (
     <>
       <div className="grid laptop:grid-cols-2 gap-5 my-4">
