@@ -32,7 +32,7 @@ export default function Menu() {
   return (
     <>
       {/* desktop menu  */}
-      <div className={`h-16 justify-between items-center max-w-[1830px] desktop:mx-auto laptop:mx-6 mobile:hidden between:hidden tablet:hidden laptop:flex desltop:flex`}>
+      <div className={` h-16 justify-between items-center max-w-[1830px] desktop:mx-auto laptop:mx-6 mobile:hidden between:hidden tablet:hidden laptop:flex desltop:flex`}>
         {/* nike logo image */}
         <div className="w-24 h-16">
           <Link href={"/"}>

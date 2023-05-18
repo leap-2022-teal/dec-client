@@ -41,11 +41,11 @@ export default function MenuSearch() {
       <div
         className={
           isSearchActive
-            ? `overflow-visible flex-col fixed w-full  transition-all duration-500 ease-in-out bg-white right-0 mobile:h-full tablet:h-full d top-0 laptop:h-[500px] desktop:h-[500px] pb-12`
+            ? ` overflow-visible flex-col fixed w-full  transition-all duration-500 ease-in-out bg-white right-0 mobile:h-full tablet:h-full d top-0 laptop:h-[500px] desktop:h-[500px] pb-12`
             : ` h-10 mobile:w-10 desktop:w-auto laptop:w-auto`
         }
       >
-        <div className={isSearchActive ? "flex justify-between max-w-[1830px] desktop:mx-auto mx-6" : ""}>
+        <div className={isSearchActive ? "flex justify-between max-w-[1830px] desktop:mx-auto mx-6 " : ""}>
           {/* nike logo image */}
           <div className={isSearchActive ? `laptop:w-24 laptop:h-16 mobile:hidden laptop:block` : `hidden`}>
             <Link href={"/"}>

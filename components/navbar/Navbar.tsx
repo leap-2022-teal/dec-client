@@ -5,8 +5,12 @@ import { useContext } from "react";
 export default function NavBar({ isSideMenuActive, SubCategoryActive }: any) {
   return (
     <>
-      <div className={isSideMenuActive ? `bg-none` : "max-w-[1830px] bg-neutral-100 w-full"}>
-        <div className={`${isSideMenuActive ? `flex-col w-full  mt-6 ` : `flex-row justify-between items-center desktop:mx-auto  laptop:mx-6 h-10 mobile:hidden desktop:flex laptop:flex `}`}>
+      <div className={isSideMenuActive ? `bg-none` : " bg-neutral-100 w-full"}>
+        <div
+          className={`${
+            isSideMenuActive ? `flex-col w-full  mt-6 ` : `max-w-[1830px] flex-row justify-between items-center desktop:mx-auto  laptop:mx-6 h-10 mobile:hidden desktop:flex laptop:flex `
+          }`}
+        >
           <Link href={"/"}>
             <img className={`${isSideMenuActive ? `w-12 ` : `w-6`}`} src="https://upload.wikimedia.org/wikipedia/en/3/37/Jumpman_logo.svg" alt="D-E-C" />
           </Link>
