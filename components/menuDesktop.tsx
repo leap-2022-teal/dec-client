@@ -12,7 +12,7 @@ export default function Menu() {
   const [isMenuDropDownOpen, setMenuDropDownOpen] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/categories?q`).then((res) => setMenu(res.data));
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories?q`).then((res) => setMenu(res.data));
   }, []);
 
   // const handleCancelSideMenu = () => {

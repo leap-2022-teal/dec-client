@@ -56,7 +56,7 @@ export default function Register() {
   function handleSubmit() {
     if (formData) {
       axios
-        .post("http://localhost:8000/users/register", { formData })
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, { formData })
         .then((res) => {
           const { data, status } = res;
           if (status === 200) {

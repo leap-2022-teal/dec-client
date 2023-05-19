@@ -23,7 +23,9 @@ export default function ProductPage() {
   return (
     <div className="flex ">
       <div className="ml-15 w-80">
-        <SideBar getProduct={filterProduct} />
+        <SideBar getProduct={function (e: any): void {
+          throw new Error("Function not implemented.");
+        } } />
       </div>
       <section className="d-block mt-10 ml-20">
         <div className="text-left grid grid-cols-2 gap-4 laptop:grid-cols-3 ">

@@ -4,6 +4,7 @@ import NavBar from "@/components/navbar/Navbar";
 import Menu from "@/components/menuDesktop";
 import SubBanner from "@/components/subBanner";
 import { createContext } from "react";
+import { useRouter } from "next/router";
 
 export const ExampleContext = createContext([]);
 export default function MainLayout({ children }: any) {
@@ -15,12 +16,23 @@ export default function MainLayout({ children }: any) {
     }
   }, []);
   // const name = "bat";
+  const router = useRouter()
+  const {pathname} = router
+  console.log(pathname)
+  // if(query === "/login"){
+
+  // }
   return (
     <>
       <ExampleContext.Provider value={basket}>
+        {pathname!=="/auth/signin"?
+        <>
         <NavBar></NavBar>
         <Menu />
         <SubBanner />
+        </>
+        :null
+        }
         <div className="">{children}</div>
       </ExampleContext.Provider>
     </>

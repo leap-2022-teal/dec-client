@@ -17,7 +17,7 @@ export default function Signin() {
     event.preventDefault();
     if (email && password) {
       axios
-        .post("http://localhost:8000/user/login", { email, password })
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, { email, password })
         .then((res: AxiosResponse) => {
           const { data, status } = res;
           if (status === 200) {
@@ -47,36 +47,42 @@ export default function Signin() {
 
   return (
     <Layout>
-      <Head>
-        <title>Login</title>
-      </Head>
 
-      <section className="w-3/4 mx-auto flex flex-col gap-10">
+      <section className="w-full mx-auto flex flex-col gap-10">
+
+        <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-16" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+              <path
+                fill="currentColor"
+
+                d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
+
+              ></path>
+        </svg>
+
         <div className="title">
-          <h1 className="text-gray-800 text-4xl font-bold py-4">Explore</h1>
-          <p className="w-3/4 mx-auto text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h1 className="text-gray-800 font-thin text-3xl py-4">Enter your email to join us or sign in.</h1>
         </div>
 
         <form className="flex flex-col gap-5">
           <div className="flex border rounded-xl relative">
-            <label htmlFor="email" className="">
+            {/* <label htmlFor="email" className="">
               Email
-            </label>
+            </label> */}
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none
+              className="w-full py-4 px-6 border border-black-800 rounded-xl focus:outline-none 
                 "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email"
             />
-            <span className="icon flex items-center px-4 ">
+            {/* <span className="icon flex items-center px-4 ">
               <HiAtSymbol size={25} />
-            </span>
+            </span> */}
           </div>
-          <div className="flex border rounded-xl relative">
+          {/* <div className="flex border rounded-xl relative">
             <label htmlFor="password">Password</label>
             <input
               type={`${show ? "text" : "password"}`}
@@ -118,12 +124,12 @@ export default function Signin() {
             <button className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200" onClick={handleGithubSignin} type="button">
               Sign in with Github
             </button>
-          </div>
+          </div> */}
         </form>
 
-        <p className="text-center text-gray-400">
+        <p className="text-gray-400">
           Dont have account?{" "}
-          <Link className="text-blue-700" href={"./register"}>
+          <Link className="text-slate-700 " href={"./register"}>
             Register here
           </Link>
         </p>
