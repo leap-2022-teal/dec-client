@@ -10,6 +10,7 @@ export const title = Archivo_Black({
 });
 
 interface Banner {
+  _id: string;
   name: string;
   details: string;
   image: {
@@ -34,7 +35,7 @@ export function Banner({ categoryId, position }: PropType) {
   return (
     <>
       {banner.map((banner) => (
-        <div className="mt-5">
+        <div className="mt-5" key={banner._id}>
           {categoryId === banner.categoryId && position === banner.position ? (
             <div className="">
               <Link href={`${banner?.link}`}>

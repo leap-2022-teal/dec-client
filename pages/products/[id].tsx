@@ -3,9 +3,6 @@ import EastIcon from "@mui/icons-material/East";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { env } from "process";
-import { useLocalStorage } from "@/components/LocalStorageProducts";
-import { useOrders } from "@/components/useOrders";
 import { ToastContainer, toast } from "react-toastify";
 
 const SingleProducts = () => {
@@ -15,7 +12,6 @@ const SingleProducts = () => {
   const [singleProduct, setSingleProduct] = useState<any>();
   const [sizes, setSizes] = useState<number>();
   const [error, setError] = useState(false);
-  const { bag, createNewProduct } = useOrders();
 
   useEffect(() => {
     const basket = localStorage.getItem("basket");
@@ -43,12 +39,17 @@ const SingleProducts = () => {
         size: sizes,
       };
 
-      // createNewProduct(products);
       const basket = localStorage.getItem("basket");
       if (basket) {
         const basketItems = JSON.parse(basket);
-        console.log(basketItems);
-        basketItems.push(products);
+        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.productId);
+
+        if (existingItemIndex !== -1) {
+          basketItems[existingItemIndex].quantity += products.quantity;
+        } else {
+          basketItems.push(products);
+        }
+
         localStorage.setItem("basket", JSON.stringify(basketItems));
       } else {
         localStorage.setItem("basket", JSON.stringify([products]));
@@ -58,6 +59,7 @@ const SingleProducts = () => {
       setError(true);
     }
   }
+
   useEffect(() => {
     if (id) {
       axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`).then((res) => setSingleProduct(res.data));

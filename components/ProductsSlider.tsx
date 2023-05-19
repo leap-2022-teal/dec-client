@@ -40,7 +40,7 @@ export function ProductsSlider({ categoryId }: PropType) {
     <div>
       <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll my-5 gap-3 ">
         {products.map((products: Product) => (
-          <div className="snap-start laptop:w-[32.9%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] ">
+          <div className="snap-start laptop:w-[32.9%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] " key={products._id}>
             <Link href={`products/${products._id}`} title={products.name}>
               <figure>
                 <div className="aspect-[1/1] overflow-hidden products-image">
