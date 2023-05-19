@@ -16,11 +16,14 @@ export default function ProductPage() {
     }
   }, [categoryId]);
   console.log(products);
-
+  function filterProduct(e: any) {
+    console.log(e, "parent");
+    setProducts(e);
+  }
   return (
     <div className="flex ">
       <div className="ml-15 w-80">
-        <SideBar />
+        <SideBar getProduct={filterProduct} />
       </div>
       <section className="d-block mt-10 ml-20">
         <div className="text-left grid grid-cols-2 gap-4 laptop:grid-cols-3 ">

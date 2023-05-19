@@ -97,7 +97,7 @@ export function SideBar({ getProduct }: PropType) {
     <div className="">
       <div>
         {list.map((item: any): any => (
-          <Link href={item.name} className="flex flex-col">
+          <Link href={item.name} key={item.name} className="flex flex-col">
             {item.name}
           </Link>
         ))}
@@ -108,7 +108,7 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4">
           {genderOptions.map((gender: string) => (
-            <div onClick={handleGender}>
+            <div onClick={handleGender} key={gender}>
               <input type="checkbox" id={gender} name={gender} />
               <label className="ml-2" htmlFor={gender}>
                 {gender}
@@ -125,7 +125,7 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4 grid-cols-1 grid gap-y-1 ">
           {prices.map((price: any) => (
-            <div onClick={handlePrice}>
+            <div onClick={handlePrice} key={price}>
               <input type="checkbox" id={price} name={price} />
               <label className="ml-2 " htmlFor={price}>
                 {price}
@@ -141,7 +141,7 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4 grid-cols-3 grid gap-3 p-2 text-xs">
           {colors.map((color: any) => (
-            <div onClick={() => handleColor(color)}>
+            <div onClick={() => handleColor(color)} key={color}>
               <div className={`w-7 h-7 ${color.colorClass} rounded-full`}></div>
               <div>{color.colorName}</div>
             </div>

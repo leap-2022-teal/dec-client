@@ -67,7 +67,7 @@ export default function MenuMobile({ categories }: any) {
             {categories
               .filter((categroy: any) => !categroy.parentId)
               .map((category: any) => (
-                <div className="flex justify-between items-center w-full py-4">
+                <div className="flex justify-between items-center w-full py-4" key={category._id}>
                   <button
                     onClick={() => {
                       setIsSubMenuOpen(category._id), setSubCategoryActive(true), setIsOnCategoryName(category.name);
@@ -128,7 +128,7 @@ export function SubCategoriesMenu({ categories, isOn, categoryId }: any) {
         {/* <Link href={"/products"}>All sheos</Link> */}
         {subMenu.map((category: any) => {
           return (
-            <Link href={`/category/${category._id}`}>
+            <Link href={`/category/${category._id}`} key={category._id}>
               <div className=" text-neutral-500 hover:text-black py-1">{category.name}</div>
             </Link>
           );
