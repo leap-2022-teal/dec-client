@@ -15,7 +15,7 @@ export default function AllProducts() {
   }, []);
   return (
     <div className=" ">
-      <div className="sidebar h-full overflow-y-auto w-[280px] absolute ">
+      <div className="sidebar h-full overflow-y-auto w-[260px] absolute ">
         <SideBar getProduct={filterProduct} />
       </div>
       <section className="ml-[300px] mt-10 ">

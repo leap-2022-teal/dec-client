@@ -1,6 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 interface PropType {
   getProduct: (e: any) => void;
@@ -17,6 +18,14 @@ export function SideBar({ getProduct }: PropType) {
   const [minPrice, setMinPrice] = useState<number>(1);
   const [maxPrice, setMaxPrice] = useState<number>(10);
 
+  const handleMinChange = (event: any) => {
+    setMinPrice(parseInt(event.target.value));
+  };
+
+  const handleMaxChange = (event: any) => {
+    setMaxPrice(parseInt(event.target.value));
+  };
+
   const genderOptions = ["Men", "Women"];
   const colors = [
     { colorClass: "bg-purple-500", colorName: "Purple" },
@@ -27,7 +36,7 @@ export function SideBar({ getProduct }: PropType) {
     { colorClass: " bg-yellow-800", colorName: "Brown" },
     { colorClass: "bg-yellow-300 ", colorName: "Yellow" },
     { colorClass: "bg-gradient-to-r from-indigo-500 from-30% via-sky-500 via-40% to-emerald-500 to-30%   ", colorName: "Multi-Color" },
-    { colorClass: "border-solid border border-grey h-7 bg-white-500  ", colorName: "White" },
+    { colorClass: " border-solid border  border-gray-200 bg-white-500  ", colorName: "White" },
     { colorClass: " bg-gray-500 ", colorName: "Grey" },
     { colorClass: " bg-pink-500  ", colorName: "Pink" },
     { colorClass: " bg-green-600  ", colorName: "Green" },
@@ -37,7 +46,7 @@ export function SideBar({ getProduct }: PropType) {
 
   const prices = ["$0 - $25", "$25 - $50", "$50 - $100", "Over $150"];
   // const prices = [{ minPrice: 0, maxPrice: 25 }, { minPrice: 25, maxPrice: 50 }, { minPrice: 50, maxPrice: 100 }, { minPrice: 100 }];
-  console.log(price);
+
   useEffect(() => {
     if (filteredProducts && typeof getProduct === "function") {
       getProduct(filteredProducts);
@@ -83,7 +92,7 @@ export function SideBar({ getProduct }: PropType) {
       setColor(selectedColor);
     }
   }
-
+  console.log(size);
   function handleSize(event: any) {
     if (!size.includes(event)) {
       setSizes([...size, event]);
@@ -94,7 +103,7 @@ export function SideBar({ getProduct }: PropType) {
   }
 
   return (
-    <div className="">
+    <div className="w-[230px] mx-[20px]">
       <div>
         {list.map((item: any): any => (
           <Link href={item.name} key={item.name} className="flex flex-col">
@@ -104,30 +113,29 @@ export function SideBar({ getProduct }: PropType) {
       </div>
       <div className="">
         <div>
-          <h2 className="mt-6 text-xl">Gender</h2>
+          <h2 className="mt-6 text-xl text-[16px] ">Gender</h2>
         </div>
         <div className="mt-4">
           {genderOptions.map((gender: string) => (
-            <div onClick={handleGender} key={gender}>
-              <input type="checkbox" id={gender} name={gender} />
-              <label className="ml-2" htmlFor={gender}>
+            <div onClick={handleGender} className="flex cursor-pointer" key={gender}>
+              <input type="checkbox" className="cursor-pointer accent-black h-5 w-5 " id={gender} name={gender} />
+              <label className="ml-2 cursor-pointer text-[16px] hover:" htmlFor={gender}>
                 {gender}
               </label>
             </div>
           ))}
         </div>
-        <span></span>
       </div>
 
       <div>
         <div>
-          <h2 className="mt-6 text-xl">Shop By Price</h2>
+          <h2 className="mt-6 text-xl text-[16px] bold">Shop By Price</h2>
         </div>
         <div className="mt-4 grid-cols-1 grid gap-y-1 ">
           {prices.map((price: any) => (
-            <div onClick={handlePrice} key={price}>
-              <input type="checkbox" id={price} name={price} />
-              <label className="ml-2 " htmlFor={price}>
+            <div onClick={handlePrice} className="flex" key={price}>
+              <input type="checkbox" className="h-5 w-5 border border-solid border-red-900" id={price} name={price} />
+              <label className="ml-2" htmlFor={price}>
                 {price}
               </label>
             </div>
@@ -137,31 +145,43 @@ export function SideBar({ getProduct }: PropType) {
 
       <div>
         <div>
-          <h2 className="mt-6 text-xl">Color</h2>
+          <h2 className="mt-6 text-xl text-[16px]">Color</h2>
         </div>
-        <div className="mt-4 grid-cols-3 grid gap-3 p-2 text-xs">
+        <div className="mt-4 w-[200px] grid-cols-3 grid gap-0 p-2 text-xs pl-0">
           {colors.map((color: any) => (
-            <div onClick={() => handleColor(color)} key={color}>
-              <div className={`w-7 h-7 ${color.colorClass} rounded-full`}></div>
-              <div>{color.colorName}</div>
+            <div className="justify-around mb-6   " onClick={() => handleColor(color)} key={color}>
+              <div className={`w-7 h-7 mx-auto ${color.colorClass} rounded-full`}></div>
+              <div className="text-center text-[12px]">{color.colorName}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <div>
-        <input type="range" min="0" max="1000" className="thumb thumb--zindex-3" />
-        <input type="range" min="0" max="1000" className="thumb thumb--zindex-4" />
+      <div className="flex items-center">
+        <div className="range-input relative  ">
+          <input type="range" min={0} max={100} value={minPrice} onChange={handleMinChange} className=" range-min absolute w-full  -top-1  h-1   bg-transparent  appearance-none pointer-events-none" />
+          <span className="mx-4">Min Price: {minPrice}</span>
+          <input type="range" min={0} max={100} value={maxPrice} onChange={handleMaxChange} className="w-1/2" />
+          <span>Max Price: {maxPrice}</span>
+        </div>
       </div>
+
       <div>
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
         <div className="mt-4 grid-cols-3 grid gap-2 p-2  gap-y-2">
-          {sizes.map((size: number) => (
-            <div key={size}>
-              <button onClick={() => handleSize(size)} className=" border border-solid border-black rounded-md h-5 p-3 w-[40px] ">
-                {size}
+          {sizes.map((e: number) => (
+            <div key={e}>
+              <button
+                onClick={() => handleSize(e)}
+                className={
+                  size.includes(e)
+                    ? ` border border-solid    border-black  active:border-black  rounded-md h-5 p-3 w-[40px] `
+                    : ` border border-solid  border-#e5e5e5  hover:border-black active:border-black rounded-md h-5 p-3 w-[40px] `
+                }
+              >
+                {e}
               </button>
             </div>
           ))}
