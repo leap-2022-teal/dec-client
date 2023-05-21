@@ -37,7 +37,7 @@ export function BannerSlider({ categoryId, position }: PropType) {
         {banner.map((banner) => (
           <>
             {categoryId === banner.categoryId && position === banner.position ? (
-              <div className="snap-start laptop:w-[32.333%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] ">
+              <div key={banner.name} className="snap-start laptop:w-[32.333%] flex-shrink-0 h-[auto] items-center pb-10  justify-center w-[75%] ">
                 <Link href={`products/`} title={banner.name}>
                   <figure>
                     <div className=" overflow-hidden products-image">

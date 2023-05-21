@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { NumberSelector } from "@/components/ReactSelect";
 import { SizeSelector } from "@/components/SizeSelector";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+// import { createContext } from "vm";
 export interface Stock {
   size: number;
   stock: number;
@@ -28,7 +28,6 @@ export interface Product {
   quantity: number;
 }
 export default function Order() {
-  // const reload = useRouter();
   const [basket, setBasket] = useState([]);
   useEffect(() => {
     const basketItems = localStorage.getItem("basket");
@@ -38,16 +37,7 @@ export default function Order() {
   }, []);
   const [items, setItems] = useState<Product[]>([]);
 
-  // const [count, setCount] = useState(1);
   useEffect(() => {
-    // basket.forEach((product: any) => {
-    //   axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => {
-    //     setItems((prevData): any => [...prevData, res.data]);
-    //   });
-    // });
-
-    const basketItem = localStorage.getItem("basket");
-
     const fetchProductDetails = async () => {
       const itemDetails = await Promise.all(
         basket.map((product: any) =>
@@ -202,7 +192,6 @@ export default function Order() {
         ) : (
           <div className="laptop:w-[300px]">
             <div className="text-xl">Summary</div>
-
             <div className="flex justify-between mt-4">
               <div>Total Shoes:</div>
               <div> {totalQuantity()}</div>
@@ -211,9 +200,9 @@ export default function Order() {
               <div>Total Amount:</div>
               <div> ${totalAmount()}</div>
             </div>
-            <button className="bg-black text-white rounded-full p-4 w-full mt-8">
-              <Link href={"/checkout"}>Checkout</Link>{" "}
-            </button>
+            <Link href={"/checkout"}>
+              <button className="bg-black text-white rounded-full p-4 w-full mt-8">Checkout</button>
+            </Link>{" "}
           </div>
         )}
       </main>
