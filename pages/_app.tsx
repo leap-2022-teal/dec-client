@@ -1,6 +1,6 @@
 import MainLayout from "@/layout/mainLayout";
 import "@/styles/globals.css";
-import Signin from "./auth/signin";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
@@ -16,4 +16,3 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     </>
   );
 }
-2;

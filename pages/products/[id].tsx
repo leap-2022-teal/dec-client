@@ -23,7 +23,7 @@ const SingleProducts = () => {
   const notify = () =>
     toast("Амжилттай бүртгэгдлээ", {
       position: "top-right",
-      autoClose: 2500,
+      autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -42,7 +42,7 @@ const SingleProducts = () => {
       const basket = localStorage.getItem("basket");
       if (basket) {
         const basketItems = JSON.parse(basket);
-        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.productId);
+        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.productId && item.size !== products.size);
 
         if (existingItemIndex !== -1) {
           basketItems[existingItemIndex].quantity += products.quantity;
@@ -54,10 +54,10 @@ const SingleProducts = () => {
       } else {
         localStorage.setItem("basket", JSON.stringify([products]));
       }
-      notify();
     } else {
       setError(true);
     }
+    notify();
   }
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const SingleProducts = () => {
   if (!singleProduct) return null;
   return (
     <div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />{" "}
       <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
         {/* <p className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">Home / Furniture / Wooden Stool</p> */}
         <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
