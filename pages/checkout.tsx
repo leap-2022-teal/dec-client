@@ -157,7 +157,9 @@ export default function Checkout() {
                       <h2 className="text-lg">{product.name}</h2>
                     </div>
                     <div>
-                      <div>{basket.map((basketItems: any) => (product._id === basketItems.productId ? <div>size : {basketItems.size}</div> : <div>size : empty</div>))}</div>
+                      <div>
+                        {basket.map((basketItems: any) => (product._id === basketItems.productId ? <div key={product._id}>size : {basketItems.size}</div> : <div key={product._id}>size : empty</div>))}
+                      </div>
                       <div>
                         quantity : {product.quantity} @ ${product.price}
                       </div>
