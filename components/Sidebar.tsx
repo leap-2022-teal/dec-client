@@ -1,7 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import { useEffect, useState } from "react";
 
 interface PropType {
   getProduct: (e: any) => void;
@@ -9,22 +8,11 @@ interface PropType {
 
 export function SideBar({ getProduct }: PropType) {
   const [list, setList] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState();
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [gender, setGender] = useState<any[]>([]);
   const [color, setColor] = useState<any[]>([]);
   const [size, setSizes] = useState<any[]>([]);
   const [price, setPrices] = useState<any[]>([]);
-  const [price1, setPrice1] = useState<number>();
-  const [minPrice, setMinPrice] = useState<number>(1);
-  const [maxPrice, setMaxPrice] = useState<number>(10);
-
-  const handleMinChange = (event: any) => {
-    setMinPrice(parseInt(event.target.value));
-  };
-
-  const handleMaxChange = (event: any) => {
-    setMaxPrice(parseInt(event.target.value));
-  };
 
   const genderOptions = ["Men", "Women"];
   const colors = [
@@ -45,16 +33,16 @@ export function SideBar({ getProduct }: PropType) {
   const sizes = [6, 7, 8, 9, 10, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 
   const prices = ["$0 - $25", "$25 - $50", "$50 - $100", "Over $150"];
-  // const prices = [{ minPrice: 0, maxPrice: 25 }, { minPrice: 25, maxPrice: 50 }, { minPrice: 50, maxPrice: 100 }, { minPrice: 100 }];
 
   useEffect(() => {
     if (filteredProducts && typeof getProduct === "function") {
       getProduct(filteredProducts);
     }
   }, [filteredProducts]);
-  console.log(price);
+
   useEffect(() => {
-    const queryString = "color=" + color.join("&color=") + "&size=" + size.join("&size=") + "&price=" + price.join("&price=");
+    // const queryString = "color=" + color.join("&color=") + "&size=" + size.join("&size=") + "&price=" + price.join("&price=");
+    const queryString = `color=${color.join("&color=")}&size=${size.join("&size=")}&price=${price.join("&price=")}`;
     console.log(queryString);
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?${queryString}`).then((res) => {
       const { data, status } = res;
@@ -67,20 +55,22 @@ export function SideBar({ getProduct }: PropType) {
   }, [gender, color, size, price]);
 
   function handleGender(event: any) {
+    const selectedGender = event.target.name;
     if (event.target.checked) {
-      setGender([...gender, event.target.name]);
+      setGender([...gender, selectedGender]);
     } else {
-      const selectedGender = gender.filter((e: any) => e !== event.target.name);
-      setGender(selectedGender);
+      const updatedGender = gender.filter((e) => e !== selectedGender);
+      setGender(updatedGender);
     }
   }
 
   function handlePrice(event: any) {
+    const selectedPrice = event.target.name;
     if (event.target.checked) {
-      setPrices([...price, event.target.name]);
+      setPrices([...price, selectedPrice]);
     } else {
-      const selectedPrice = price.filter((e: any) => e !== event.target.name);
-      setPrices(selectedPrice);
+      const updatedPrice = price.filter((e: any) => e !== selectedPrice);
+      setPrices(updatedPrice);
     }
   }
 
@@ -92,7 +82,7 @@ export function SideBar({ getProduct }: PropType) {
       setColor(selectedColor);
     }
   }
-  console.log(size);
+
   function handleSize(event: any) {
     if (!size.includes(event)) {
       setSizes([...size, event]);
@@ -115,12 +105,13 @@ export function SideBar({ getProduct }: PropType) {
         <div>
           <h2 className="mt-6 text-xl text-[16px] ">Gender</h2>
         </div>
+
         <div className="mt-4">
-          {genderOptions.map((gender: string) => (
-            <div onClick={handleGender} className="flex cursor-pointer" key={gender}>
-              <input type="checkbox" className="cursor-pointer accent-black h-5 w-5 " id={gender} name={gender} />
-              <label className="ml-2 cursor-pointer text-[16px] hover:" htmlFor={gender}>
-                {gender}
+          {genderOptions.map((selectedGender) => (
+            <div onClick={handleGender} className="flex cursor-pointer" key={selectedGender}>
+              <input type="checkbox" className="cursor-pointer accent-black h-5 w-5" id={selectedGender} name={selectedGender} checked={gender.includes(selectedGender)} />
+              <label className={gender.includes(selectedGender) ? "ml-2 cursor-pointer text-[16px]" : "ml-2 cursor-pointer text-[16px] hover:opacity-50"} htmlFor={selectedGender}>
+                {selectedGender}
               </label>
             </div>
           ))}
@@ -132,11 +123,11 @@ export function SideBar({ getProduct }: PropType) {
           <h2 className="mt-6 text-xl text-[16px] bold">Shop By Price</h2>
         </div>
         <div className="mt-4 grid-cols-1 grid gap-y-1 ">
-          {prices.map((price: any) => (
-            <div onClick={handlePrice} className="flex" key={price}>
-              <input type="checkbox" className="h-5 w-5 border border-solid border-red-900" id={price} name={price} />
-              <label className="ml-2" htmlFor={price}>
-                {price}
+          {prices.map((selectedPrice: any) => (
+            <div onClick={handlePrice} className="flex cursor-pointer" key={selectedPrice}>
+              <input type="checkbox" className="h-5 w-5 accent-black cursor-pointer" id={selectedPrice} name={selectedPrice} checked={price.includes(selectedPrice)} />
+              <label className={price.includes(selectedPrice) ? `ml-2 cursor-pointer` : `ml-2 cursor-pointer hover:opacity-50`} htmlFor={selectedPrice}>
+                {selectedPrice}
               </label>
             </div>
           ))}
@@ -149,20 +140,11 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4 w-[200px] grid-cols-3 grid gap-0 p-2 text-xs pl-0">
           {colors.map((color: any) => (
-            <div className="justify-around mb-6   " onClick={() => handleColor(color)} key={color}>
-              <div className={`w-7 h-7 mx-auto ${color.colorClass} rounded-full`}></div>
-              <div className="text-center text-[12px]">{color.colorName}</div>
+            <div className="justify-around mb-6 cursor-pointer " onClick={() => handleColor(color)} key={color}>
+              <div className={`w-7 h-7 mx-auto hover:opacity-100 ${color.colorClass} rounded-full`}></div>
+              <div className="text-center text-[12px] hover:opacity-50   ">{color.colorName}</div>
             </div>
           ))}
-        </div>
-      </div>
-
-      <div className="flex items-center">
-        <div className="range-input relative  ">
-          <input type="range" min={0} max={100} value={minPrice} onChange={handleMinChange} className=" range-min absolute w-full  -top-1  h-1   bg-transparent  appearance-none pointer-events-none" />
-          <span className="mx-4">Min Price: {minPrice}</span>
-          <input type="range" min={0} max={100} value={maxPrice} onChange={handleMaxChange} className="w-1/2" />
-          <span>Max Price: {maxPrice}</span>
         </div>
       </div>
 

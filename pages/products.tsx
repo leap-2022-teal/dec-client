@@ -30,8 +30,8 @@ export default function AllProducts() {
                         <img src={products.image[0].path} alt="image" />
                       </div>
                       <div>
-                        <h1 className="text-2xl">{products.name} </h1>
-                        <h3>${products.price}</h3>
+                        <h1 className="text-2xl mt-2">{products.name} </h1>
+                        <h3 className="mt-1">${products.price}</h3>
                       </div>
                     </div>
                   </div>
