@@ -5,17 +5,38 @@ import MenuSearch from "./menuSearch";
 import { useContext } from "react";
 import NavBar from "./navbar/Navbar";
 
-export default function MenuMobile({ categories }: any) {
+export default function MenuMobile({ categories, toggleSearch, handleSideMenuOpen }: any) {
   const [isSideMenuActive, setIsSideMenuActive] = useState(false);
   const [isSubCategoryActive, setSubCategoryActive] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState("");
   const [isOnCategoryName, setIsOnCategoryName] = useState("");
 
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+
+    if (currentScrollPos > prevScrollPos) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+
+    setPrevScrollPos(currentScrollPos);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   console.log(isOnCategoryName);
 
   return (
     <>
-      <div className="flex justify-between desktop:hidden laptop:hidden max-w-[1200px] mx-6">
+      <div className={` flex justify-between desktop:hidden laptop:hidden mx-6  ${visible ? `sticky top-0 bg-white ` : ``}`}>
         <Link href={"/"}>
           <div className="w-16">
             <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-16" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
@@ -29,7 +50,7 @@ export default function MenuMobile({ categories }: any) {
           </div>
         </Link>
         <div className={isSideMenuActive ? "hidden" : "flex gap-4 items-center "}>
-          <MenuSearch />
+          <MenuSearch toggleSearch={toggleSearch} />
 
           <div className="h-10 w-10 flex justify-center items-center hover:bg-neutral-200 rounded-full ">
             <Link href={"/order"}>
@@ -42,8 +63,14 @@ export default function MenuMobile({ categories }: any) {
               </svg>
             </Link>
           </div>
-
-          <button onClick={() => setIsSideMenuActive(true)} className="h-10 w-10 flex items-center justify-center hover:bg-neutral-200 rounded-full">
+          {/* btn click  */}
+          <button
+            onClick={() => {
+              setIsSideMenuActive(true);
+              handleSideMenuOpen(true);
+            }}
+            className="h-10 w-10 flex items-center justify-center hover:bg-neutral-200 rounded-full"
+          >
             <svg aria-hidden="true" className=" pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
               <path stroke="currentColor" stroke-width="1.5" d="M21 5.25H3M21 12H3m18 6.75H3"></path>
             </svg>
@@ -55,7 +82,10 @@ export default function MenuMobile({ categories }: any) {
           <div className="flex justify-between">
             <div></div>
             <button
-              onClick={() => setIsSideMenuActive(false)}
+              onClick={() => {
+                setIsSideMenuActive(false);
+                handleSideMenuOpen(false);
+              }}
               className={`outline-none ${isSideMenuActive ? "w-10  h-10 hover:bg-neutral-200 rounded-full flex items-center justify-center " : "hidden"}`}
             >
               <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">

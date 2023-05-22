@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useProducts } from "./useProducts";
 
-export default function MenuSearch() {
+export default function MenuSearch({ toggleSearch }: any) {
   const [inputText, setInputText] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
 
@@ -25,6 +25,7 @@ export default function MenuSearch() {
   function handleInputDeleteCancel() {
     setIsSearchActive(false);
     setQuery("");
+    toggleSearch(false);
   }
 
   const searchIconInActive = `desktop:absolute laptop:absolute mobile:absolute  w-10  h-10 hover:bg-neutral-200 rounded-full flex items-center justify-center`;
@@ -36,15 +37,10 @@ export default function MenuSearch() {
   const cancelInActive = "hidden";
   const cancelActive = "flex hover:text-neutral-500 h-16";
 
+  const canvas = "overflow-visible flex-col fixed w-full  transition-all duration-500 ease-in-out bg-white right-0 mobile:h-full tablet:h-full d top-0 laptop:h-[300px] desktop:h-[500px] pb-12";
   return (
     <>
-      <div
-        className={
-          isSearchActive
-            ? ` overflow-visible flex-col fixed w-full  transition-all duration-500 ease-in-out bg-white right-0 mobile:h-full tablet:h-full d top-0 laptop:h-[500px] desktop:h-[500px] pb-12`
-            : ` h-10 mobile:w-10 desktop:w-auto laptop:w-auto`
-        }
-      >
+      <div className={isSearchActive ? `${canvas} ` : ` h-10 mobile:w-10 desktop:w-auto laptop:w-auto`}>
         <div className={isSearchActive ? "flex justify-between max-w-[1830px] desktop:mx-auto mx-6 " : ""}>
           {/* nike logo image */}
           <div className={isSearchActive ? `laptop:w-24 laptop:h-16 mobile:hidden laptop:block` : `hidden`}>
@@ -61,7 +57,13 @@ export default function MenuSearch() {
           </div>
           <div className={isSearchActive ? "relative desktop:w-[40%] laptop:w-[45%] tablet:w-[80%] between:w-[70%] mobile:w-[65%] pr-12" : "w-28"}>
             {/* search icon */}
-            <button className={`outline-none ${isSearchActive ? searchIconActive : searchIconInActive}`} onClick={() => setIsSearchActive(true || inputText)}>
+            <button
+              className={`outline-none ${isSearchActive ? searchIconActive : searchIconInActive}`}
+              onClick={() => {
+                setIsSearchActive(true || inputText);
+                toggleSearch(true);
+              }}
+            >
               <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
                 <path
                   stroke="currentColor"
@@ -77,8 +79,8 @@ export default function MenuSearch() {
               onChange={(e: any) => {
                 setQuery(e.target.value);
                 handleInputOnChange(e);
+                toggleSearch(true);
               }}
-              // onChange={handleInputOnChange}
               type="text"
               placeholder="Search"
               className={`outline-none ${isSearchActive ? inputActive : inputInActive}`}
