@@ -52,7 +52,7 @@ export default function Menu() {
             {menu
               .filter((category: any) => !category.parentId)
               .map((category: any) => (
-                <Link href={""}>
+                <Link href={""} key={category}>
                   {/* nemu deerhi angilaluud */}
                   <div className="flex items-center justify-between">
                     <div className={`${category._id === isMenuDropDownOpen ? categoryActive : categoryInActive}`} onMouseOver={() => setMenuDropDownOpen(category._id)}>
@@ -119,7 +119,7 @@ export function SubMenu({ categories, categoryId, isOn }: any) {
         {/* <Link href={"/products"}>All sheos</Link> */}
         {subMenu.map((category: any) => {
           return (
-            <Link href={`/category/${category._id}`}>
+            <Link href={`/category/${category._id}`} key={category._id}>
               <div className=" pt-4 w-[300px] flex justify-start  text-neutral-600 hover:text-black">{category.name}</div>
             </Link>
           );
