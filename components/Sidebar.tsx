@@ -1,18 +1,21 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AiOutlineCheck } from "react-icons/ai";
 
 interface PropType {
   getProduct: (e: any) => void;
+  categoryId: undefined | string | string[];
 }
 
-export function SideBar({ getProduct }: PropType) {
+export function SideBar({ getProduct, categoryId }: PropType) {
   const [list, setList] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [gender, setGender] = useState<any[]>([]);
   const [color, setColor] = useState<any[]>([]);
   const [size, setSizes] = useState<any[]>([]);
   const [price, setPrices] = useState<any[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const genderOptions = ["Men", "Women"];
   const colors = [
@@ -29,20 +32,19 @@ export function SideBar({ getProduct }: PropType) {
     { colorClass: " bg-pink-500  ", colorName: "Pink" },
     { colorClass: " bg-green-600  ", colorName: "Green" },
   ];
-
+  console.log(categoryId, "cate");
   const sizes = [6, 7, 8, 9, 10, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 
   const prices = ["$0 - $25", "$25 - $50", "$50 - $100", "Over $150"];
 
   useEffect(() => {
-    if (filteredProducts && typeof getProduct === "function") {
+    if (filteredProducts) {
       getProduct(filteredProducts);
     }
   }, [filteredProducts]);
 
   useEffect(() => {
-    // const queryString = "color=" + color.join("&color=") + "&size=" + size.join("&size=") + "&price=" + price.join("&price=");
-    const queryString = `color=${color.join("&color=")}&size=${size.join("&size=")}&price=${price.join("&price=")}`;
+    const queryString = `categoryId=${categoryId}&color=${color.join("&color=")}&size=${size.join("&size=")}&price=${price.join("&price=")}`;
     console.log(queryString);
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?${queryString}`).then((res) => {
       const { data, status } = res;
@@ -64,13 +66,15 @@ export function SideBar({ getProduct }: PropType) {
     }
   }
 
+  console.log({ price });
+
   function handlePrice(event: any) {
     const selectedPrice = event.target.name;
     if (event.target.checked) {
       setPrices([...price, selectedPrice]);
     } else {
       const updatedPrice = price.filter((e: any) => e !== selectedPrice);
-      setPrices(updatedPrice);
+      setPrices([...updatedPrice]);
     }
   }
 
@@ -93,7 +97,7 @@ export function SideBar({ getProduct }: PropType) {
   }
 
   return (
-    <div className="w-[230px] mx-[20px]">
+    <div>
       <div>
         {list.map((item: any): any => (
           <Link href={item.name} key={item.name} className="flex flex-col">
@@ -124,8 +128,17 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4 grid-cols-1 grid gap-y-1 ">
           {prices.map((selectedPrice: any) => (
-            <div onClick={handlePrice} className="flex cursor-pointer" key={selectedPrice}>
-              <input type="checkbox" className="h-5 w-5 accent-black cursor-pointer" id={selectedPrice} name={selectedPrice} checked={price.includes(selectedPrice)} />
+            <div className="flex cursor-pointer" key={selectedPrice}>
+              <input
+                type="checkbox"
+                className="h-5 w-5 accent-black cursor-pointer"
+                id={selectedPrice}
+                name={selectedPrice}
+                checked={price.includes(selectedPrice)}
+                onChange={(e) => {
+                  handlePrice(e);
+                }}
+              />
               <label className={price.includes(selectedPrice) ? `ml-2 cursor-pointer` : `ml-2 cursor-pointer hover:opacity-50`} htmlFor={selectedPrice}>
                 {selectedPrice}
               </label>
@@ -138,11 +151,11 @@ export function SideBar({ getProduct }: PropType) {
         <div>
           <h2 className="mt-6 text-xl text-[16px]">Color</h2>
         </div>
-        <div className="mt-4 w-[200px] grid-cols-3 grid gap-0 p-2 text-xs pl-0">
-          {colors.map((color: any) => (
-            <div className="justify-around mb-6 cursor-pointer " onClick={() => handleColor(color)} key={color}>
-              <div className={`w-7 h-7 mx-auto hover:opacity-100 ${color.colorClass} rounded-full`}></div>
-              <div className="text-center text-[12px] hover:opacity-50   ">{color.colorName}</div>
+        <div className="mt-4 w-[200px] grid-cols-3 grid gap-0 p-2 text-xs pl-0   ">
+          {colors.map((color: any, index: number) => (
+            <div className="justify-around mb-6 cursor-pointer group " onClick={() => handleColor(color)} key={index}>
+              <div className={`w-7 h-7 mx-auto  ${color.colorClass} rounded-full`}></div>
+              <div className="text-center text-[12px] group-hover:opacity-50   ">{color.colorName}</div>
             </div>
           ))}
         </div>
