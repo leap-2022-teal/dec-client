@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 }
 a {
   color: inherit;
@@ -42,10 +42,8 @@ div {
 
 .slider::-webkit-scrollbar {
   display: none;
-  
 }
 
 .multi-color {
-  background-color:radial-gradient(#ffffff 20%,transparent 20%), radial-gradient(#ffffff 20%,transparent 20%), #000
+  background-color: radial-gradient(#ffffff 20%, transparent 20%), radial-gradient(#ffffff 20%, transparent 20%), #000;
 }
-
