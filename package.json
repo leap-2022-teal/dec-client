@@ -39,7 +39,8 @@
     "sass": "^1.61.0",
     "slick-carousel": "^1.8.1",
     "typescript": "5.0.3",
-    "use-debounce": "^9.0.4"
+    "use-debounce": "^9.0.4",
+    "vercel": "^29.3.6"
   },
   "devDependencies": {
     "@types/react-highlight-words": "^0.16.4",

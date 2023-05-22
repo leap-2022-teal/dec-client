@@ -46,7 +46,7 @@ export default function AllProducts() {
                 <Link href={`/products/${products._id}`} key={products}>
                   <div className=" d-inline-block  ">
                     <div className="products-image">
-                      <div className="aspect-[1/1] relative overflow-hidden">
+                      <div className="aspect-[1/1] overflow-hidden">
                         <img src={products.image[0].path} alt="image" />
                       </div>
                       <div>

@@ -116,8 +116,8 @@ export default function Order() {
 
   return (
     <div className="">
-      <main className=" laptop:flex gap-10 max-w-[1300px] mx-auto mt-8">
-        <div className="laptop:w-[600px]">
+      <main className=" laptop:flex gap-10 max-w-[1000px] mx-auto mt-8">
+        <div className="laptop:w-[600px] mt-4">
           <div className="laptop:text-left text-center text-xl ">Bag</div>
           <div>
             {items.length == 0 ? (
@@ -176,7 +176,7 @@ export default function Order() {
           </div>
         </div>
         {items.length == 0 ? (
-          <div className="laptop:w-[300px]">
+          <div className="laptop:w-[300px] mt-">
             <div className="text-xl">Summary</div>
 
             <div className="flex justify-between mt-4">
@@ -190,7 +190,7 @@ export default function Order() {
             <button className="bg-zinc-100 text-zinc-300 rounded-full p-4 w-full mt-8"> Checkout</button>
           </div>
         ) : (
-          <div className="laptop:w-[300px]">
+          <div className="laptop:w-[300px] mt-4">
             <div className="text-xl">Summary</div>
             <div className="flex justify-between mt-4">
               <div>Total Shoes:</div>
@@ -201,7 +201,7 @@ export default function Order() {
               <div> ${totalAmount()}</div>
             </div>
             <Link href={"/checkout"}>
-              <button className="bg-black text-white rounded-full p-4 w-full mt-8">Checkout</button>
+              <button className="bg-black text-white rounded-full py-4 w-full mt-8">Checkout</button>
             </Link>{" "}
           </div>
         )}
