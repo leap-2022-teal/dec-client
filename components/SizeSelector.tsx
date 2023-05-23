@@ -14,7 +14,7 @@ interface Stock {
 export function SizeSelector({ sizes, defaultValue, onChange, id, quantity }: PropType) {
   return (
     <>
-      <select name="Size" id="size" defaultValue={defaultValue} onChange={(e) => onChange({ size: Number(e.target.value), productId: id, quantity: quantity })}>
+      <select name="Size" id="size" defaultValue={defaultValue} onChange={(e) => onChange({ size: Number(e.target.value), id: id, quantity: quantity })}>
         {sizes.map((size) => (
           <option key={size.size} value={size.size}>
             {size.size}

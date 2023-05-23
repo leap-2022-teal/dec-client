@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NumberSelector } from "@/components/ReactSelect";
 import { SizeSelector } from "@/components/SizeSelector";
 import Link from "next/link";
@@ -9,6 +9,7 @@ export interface Stock {
   stock: number;
 }
 export interface Product {
+  id: string;
   name: string;
   details: string;
   price: number;
@@ -29,13 +30,14 @@ export interface Product {
 }
 export default function Order() {
   const [basket, setBasket] = useState([]);
+  const [items, setItems] = useState<Product[]>([]);
+
   useEffect(() => {
     const basketItems = localStorage.getItem("basket");
     if (basketItems) {
       setBasket(JSON.parse(basketItems));
     }
   }, []);
-  const [items, setItems] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -44,6 +46,7 @@ export default function Order() {
           axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => {
             const singleItem = res.data;
             singleItem.quantity = product.quantity;
+            singleItem.id = product.id;
             return singleItem;
           })
         )
@@ -58,7 +61,7 @@ export default function Order() {
   function deleteItem(productId: any) {
     // Remove item from local storage
     // localStorage.removeItem(productId)
-    const updateBasket = basket.filter((product: any) => product.productId !== productId);
+    const updateBasket = basket.filter((product: any) => product.id !== productId);
     setBasket(updateBasket);
     localStorage.setItem("basket", JSON.stringify(updateBasket));
 
@@ -67,14 +70,13 @@ export default function Order() {
   }
   function changeSize(e: any) {
     const updatedBasket = basket.map((bag: any) => {
-      if (bag.productId === e.productId) {
+      if (bag.id === e.id) {
         bag.size = e.size;
       }
       return bag;
     });
     localStorage.setItem("basket", JSON.stringify(updatedBasket));
   }
-  console.log(items, "hi");
   function changeQuantity(e: any) {
     const updatedBasket: any = basket.map((bag: any) => {
       if (bag.productId === e.productId) {
@@ -114,8 +116,12 @@ export default function Order() {
     return totalQuantity;
   }
 
+  function deleteI() {
+    localStorage.removeItem("orders");
+  }
   return (
     <div className="">
+      <OrdersReview />
       <main className=" laptop:flex gap-10 max-w-[1000px] mx-auto mt-8">
         <div className="laptop:w-[600px] mt-4">
           <div className="laptop:text-left text-center text-xl ">Bag</div>
@@ -147,8 +153,10 @@ export default function Order() {
                           <div className="flex sm:mt-4 mt-2">
                             <label htmlFor="Size">Size</label>
                             {basket.map((item: any) =>
-                              product._id === item.productId ? (
-                                <SizeSelector key={item.productId} onChange={changeSize} id={item.productId} quantity={item.quantity} defaultValue={item.size} sizes={product.sizes} />
+                              product.id === item.id ? (
+                                <div key={item.id}>
+                                  <SizeSelector key={item.productId} onChange={changeSize} id={item.id} quantity={item.quantity} defaultValue={item.size} sizes={product.sizes} />
+                                </div>
                               ) : (
                                 ""
                               )
@@ -156,7 +164,7 @@ export default function Order() {
                           </div>
                         </div>
 
-                        <button onClick={() => deleteItem(product._id)} className="mt-2">
+                        <button onClick={() => deleteItem(product.id)} className="mt-2">
                           {/* <DeleteIcon className="mt-2" /> */}
                           <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
                             <path
@@ -206,6 +214,22 @@ export default function Order() {
           </div>
         )}
       </main>
+    </div>
+  );
+}
+
+function OrdersReview() {
+  const [order, setOrder] = useState([]);
+  useEffect(() => {
+    const ordersItems = localStorage.getItem("orders");
+    if (ordersItems) {
+      setOrder(JSON.parse(ordersItems));
+    }
+  }, []);
+  return (
+    <div>
+      <div>Order Review</div>
+      {order ? <div>hi</div> : <div>sorry you dont purchase</div>}
     </div>
   );
 }

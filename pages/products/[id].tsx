@@ -4,7 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-
+import { v4 as uuidv4 } from "uuid";
 const SingleProducts = () => {
   const [count, setCount] = useState(1);
   const router = useRouter();
@@ -34,6 +34,7 @@ const SingleProducts = () => {
   function handleAddProduct() {
     if (sizes) {
       const products = {
+        id: uuidv4(),
         quantity: count,
         productId: singleProduct._id,
         size: sizes,
@@ -42,7 +43,7 @@ const SingleProducts = () => {
       const basket = localStorage.getItem("basket");
       if (basket) {
         const basketItems = JSON.parse(basket);
-        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.productId && item.size !== products.size);
+        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.productId && item.size === products.size);
 
         if (existingItemIndex !== -1) {
           basketItems[existingItemIndex].quantity += products.quantity;
