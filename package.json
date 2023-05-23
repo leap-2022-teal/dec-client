@@ -40,8 +40,7 @@
     "slick-carousel": "^1.8.1",
     "typescript": "5.0.3",
     "use-debounce": "^9.0.4",
-    "uuid": "^9.0.0",
-    "vercel": "^29.3.6"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react-highlight-words": "^0.16.4",
@@ -50,6 +49,6 @@
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
-    "vercel": "^29.3.6"
+    "vercel": "^29.4.0"
   }
 }
