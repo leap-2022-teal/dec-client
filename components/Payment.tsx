@@ -1,6 +1,24 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
-export function Payment() {
+export function Payment({ createNewUsers, customer, products, totalPrice }: any) {
+  console.log(products, "this order products");
+
+  console.log(customer, "this is customer");
+  console.log(totalPrice, "pricwe");
+  function handlePayment() {
+    createNewUsers();
+    useEffect(() => {
+      if (customer) {
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, { customer, products, totalPrice }).then((res) => {
+          const { status } = res;
+          if (status === 200) {
+          }
+        });
+      }
+    }, [customer]);
+  }
+  console.log(customer);
   const [payment, setPayment] = useState("");
   console.log(payment, "payment");
   // useEffect(() => {
@@ -99,7 +117,9 @@ export function Payment() {
       <div className="flex justify-between">
         <div></div>
         <div>
-          <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4">Continue To order reviev</button>
+          <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4" onClick={handlePayment}>
+            Continue To order reviev
+          </button>
         </div>
       </div>
     </div>
