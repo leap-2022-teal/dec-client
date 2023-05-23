@@ -1,6 +1,5 @@
 import { AddressSelector } from "@/components/AddressSelector";
 import { Payment } from "@/components/Payment";
-import { dividerClasses } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -10,6 +9,7 @@ export interface Stock {
   stock: number;
 }
 export interface Product {
+  id: string;
   name: string;
   details: string;
   price: number;
@@ -39,7 +39,8 @@ export default function Checkout() {
   const [show, setShow] = useState(false);
   const [save, setSave] = useState(false);
   const [customer, setCustomer] = useState("");
-  console.log(show, "show");
+  const [totalPrice, setTotalPrice] = useState<number>();
+  console.log(totalPrice, "total");
   useEffect(() => {
     const basketItems = localStorage.getItem("basket");
     if (basketItems) {
@@ -54,6 +55,7 @@ export default function Checkout() {
           axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => {
             const singleItem = res.data;
             singleItem.quantity = product.quantity;
+            singleItem.id = product.id;
             return singleItem;
           })
         )
@@ -66,7 +68,6 @@ export default function Checkout() {
     }
   }, [basket]);
 
-  // function createUsers() {
   useEffect(() => {
     if (firstName && lastName && email && phoneNumber && state && location) {
       setShow(true);
@@ -87,7 +88,7 @@ export default function Checkout() {
   function handleSave() {
     setSave(true);
   }
-  console.log(state);
+
   function edit() {
     setSave(false);
   }
@@ -99,7 +100,7 @@ export default function Checkout() {
       const productAmount = product.price * product.quantity;
       totalAmount += productAmount;
     });
-
+    // setTotalPrice(totalAmount);
     return totalAmount;
   }
   function totalQuantity() {
@@ -123,7 +124,6 @@ export default function Checkout() {
               <Link href={"/order"}>Edit</Link>
             </div>
           </div>
-
           {items ? (
             items.map((product) => (
               <div className=" laptop:w-[300px] mt-4" key={product._id}>
@@ -137,9 +137,7 @@ export default function Checkout() {
                       <h2 className="text-lg">{product.name}</h2>
                     </div>
                     <div>
-                      <div>
-                        {basket.map((basketItems: any) => (product._id === basketItems.productId ? <div key={product._id}>size : {basketItems.size}</div> : <div key={product._id}>size : empty</div>))}
-                      </div>
+                      <div>{basket.map((basketItems: any) => (product.id === basketItems.id ? <div key={product._id}>size : {basketItems.size}</div> : ""))}</div>
                       <div>
                         quantity : {product.quantity} @ ${product.price}
                       </div>
@@ -240,6 +238,13 @@ export default function Checkout() {
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       pattern="[0-9]{8}"
                       required
+                      onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                        const input = e.currentTarget;
+                        input.value = input.value.replace(/\D/g, "");
+                        if (input.value.length > 8) {
+                          input.value = input.value.slice(0, 8);
+                        }
+                      }}
                       value={phoneNumber}
                       className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none "
                     />
@@ -261,17 +266,16 @@ export default function Checkout() {
                       Save & Continue
                     </button>
                   ) : (
-                    <button className="bg-gray-200 px-4 py-2 rounded-full  text-center mt-4">Save & Continue</button>
+                    <button className="bg-gray-200 px-4 py-2 rounded-full  text-center mt-4"> Continue</button>
                   )}
                 </div>
               </div>
             </div>
           )}
-
           <div className="mt-2">
             <div className="text-3xl ">Payment</div>
           </div>
-          {save ? <Payment createNewUsers={createNewUsers} customer={customer} products={basket} totalPrice={totalAmount} /> : <div></div>}
+          {save ? <Payment createNewUsers={createNewUsers} customer={customer} products={basket} totalPrice={totalPrice} /> : <div></div>}
         </div>
       </main>
     </div>
