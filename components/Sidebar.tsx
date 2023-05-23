@@ -164,7 +164,7 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
-        <div className="mt-4 desktop:grid-cols-3 grid gap-2 p-2  gap-y-2 mobile:grid-cols-7">
+        <div className="mt-4  grid gap-2 p-2  gap-y-2 md:grid-cols-3 sm:grid-cols-7">
           {sizes.map((e: number) => (
             <div key={e}>
               <button
@@ -172,13 +172,25 @@ export function SideBar({ getProduct, categoryId }: PropType) {
                 className={
                   size.includes(e)
                     ? ` border border-solid    border-black  active:border-black  rounded-md h-5 p-3 w-[40px] `
-                    : ` border border-solid  border-#e5e5e5  hover:border-black active:border-black rounded-md h-5 p-3 w-[40px] `
+                    : ` border border-solid  border-gray-300  hover:border-black active:border-black rounded-md h-5 p-3 w-[40px] `
                 }
               >
                 {e}
               </button>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="desktop:hidden laptop:hidden mobile:block ">
+        <div className="flex justify-between w-[800px] h-[50px] mt-10">
+          <div>
+            <button>Clear</button>
+          </div>
+
+          <div>
+            <button>Apply</button>
+          </div>
         </div>
       </div>
     </div>
