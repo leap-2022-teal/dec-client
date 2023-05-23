@@ -38,6 +38,7 @@ export default function Checkout() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [show, setShow] = useState(false);
   const [save, setSave] = useState(false);
+  const [customer, setCustomer] = useState("");
   console.log(show, "show");
   useEffect(() => {
     const basketItems = localStorage.getItem("basket");
@@ -73,13 +74,18 @@ export default function Checkout() {
       setShow(false);
     }
   }, [firstName, lastName, email, phoneNumber, state, location]);
-  function createUsers() {
+
+  function createNewUsers() {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, { firstName, lastName, email, phoneNumber, state, location }).then((res) => {
+      const { status } = res;
+      if (status === 200) {
+        setCustomer(res.data);
+      }
+    });
+  }
+
+  function handleSave() {
     setSave(true);
-    // axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, { firstName, lastName, email, phoneNumber, state, location }).then((res) => {
-    //   const { status } = res;
-    //   if (status === 200) {
-    //   }
-    // });
   }
   console.log(state);
   function edit() {
@@ -173,7 +179,7 @@ export default function Checkout() {
         <div className="laptop:w-[700px] mt-8 laptop:mt-0">
           <div className="text-left text-3xl">Shipping</div>
           {save ? (
-            <div className="flex justify-between border border-solid border-2  border-black mt-4 rounded-xl p-2">
+            <div className="flex justify-between border-solid border-2  border-black mt-4 rounded-xl p-2">
               <div>
                 <div>
                   name : {firstName} {lastName}
@@ -251,7 +257,7 @@ export default function Checkout() {
                 <div></div>
                 <div>
                   {show ? (
-                    <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4" onClick={createUsers}>
+                    <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4" onClick={handleSave}>
                       Save & Continue
                     </button>
                   ) : (
@@ -265,7 +271,7 @@ export default function Checkout() {
           <div className="mt-2">
             <div className="text-3xl ">Payment</div>
           </div>
-          {save ? <Payment /> : <div></div>}
+          {save ? <Payment createNewUsers={createNewUsers} customer={customer} products={basket} totalPrice={totalAmount} /> : <div></div>}
         </div>
       </main>
     </div>
