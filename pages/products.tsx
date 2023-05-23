@@ -4,7 +4,11 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function AllProducts() {
+interface PropType {
+  categoryId?: string | undefined;
+}
+
+export default function AllProducts({ categoryId }: PropType) {
   const [products, setProducts] = useState<any>([]);
   const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
@@ -17,11 +21,12 @@ export default function AllProducts() {
     console.log(e, "parent");
     setProducts(e);
   }
+
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=`).then((res) => setProducts(res.data));
   }, []);
   return (
-    <div className="relative">
+    <div className="">
       <div
         className="text-end"
         onClick={() => {

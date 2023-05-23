@@ -24,9 +24,9 @@ export default function NavBar({ isSideMenuActive }: any) {
             {/* <span className={isSideMenuActive ? `hidden` : `block`}>|</span> */}
             <div className={`${isSideMenuActive ? ` flex mt-8` : ` flex `}`}>
               <button className={isSideMenuActive ? `mr-2 text-sm bg-black text-white hover:bg-neutral-700 border-2 rounded-full p-2 border-black hover:border-neutral-700 w-20` : `hidden`}>
-                Join Us
+                Sign Up
               </button>
-              <p className={`${isSideMenuActive ? `hidden` : `cursor-pointer hover:text-neutral-500`}`}>Join Us</p>
+              <p className={`${isSideMenuActive ? `hidden` : `cursor-pointer hover:text-neutral-500`}`}>Sign Up</p>
               <span className={isSideMenuActive ? `hidden` : `block mx-6 `}>|</span>
               <div>
                 <Link href={"../auth/signin"}>
