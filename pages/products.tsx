@@ -30,14 +30,16 @@ export default function AllProducts({ categoryId }: PropType) {
   console.log(bottomSideBar, showSidebar);
   return (
     <div className="">
-      <div
-        className="text-end"
-        onClick={() => {
-          setShowSidebar(!showSidebar);
-          localStorage.setItem("sidebarFilter", (!showSidebar).toString());
-        }}
-      >
-        Filter
+      <div className="flex justify-end mt-5">
+        <button
+          onClick={() => {
+            setShowSidebar(!showSidebar);
+            localStorage.setItem("sidebarFilter", (!showSidebar).toString());
+          }}
+          className="absolute hidden desktop:block laptop:block"
+        >
+          {showSidebar ? "Hide filter" : "Show filter"}
+        </button>
       </div>
 
       <div className="flex justify-end">
@@ -53,27 +55,20 @@ export default function AllProducts({ categoryId }: PropType) {
 
       <div>
         <div
-          className={`hidden md:block ${
-            bottomSideBar
-              ? ` tablet:block between:block mobile:block transition-all duration-700 ease-in-out sidebar overflow-y-auto absolute  bg-white  top-0 w-full h-full `
-              : " transition-all duration-700 ease-in-out absolute invisible mt-[1000px]"
+          className={`mobile:hidden desktop:block laptop:block ${
+            showSidebar ? `transition-all duration-500 ease-in-out sidebar h-[1000px] overflow-y-auto w-[260px]  absolute` : `transition-all duration-700 ease-in-out ml-[-500px] absolute invisible`
           }`}
         >
-          {bottomSideBar ? (
-            <div className="mt-10 mr-10">
-              <SideBar getProduct={filterProduct} categoryId={""} />
-            </div>
-          ) : (
-            <div
-              className={
-                showSidebar
-                  ? `transition-all duration-500 ease-in-out sidebar h-[1000px] overflow-y-auto w-[260px]  absolute `
-                  : ` transition-all duration-700 ease-in-out ml-[-500px] absolute invisible `
-              }
-            >
-              <SideBar getProduct={filterProduct} categoryId={""} />
-            </div>
-          )}
+          <SideBar getProduct={filterProduct} categoryId={""} />
+        </div>
+        <div
+          className={`desktop:hidden laptop:hidden ${
+            bottomSideBar
+              ? `tablet:block between:block mobile:block transition-all duration-00 ease-in-out sidebar overflow-y-auto absolute bg-white top-0 w-full h-full`
+              : "transition-all duration-700 ease-in-out absolute invisible mt-[1000px]"
+          }`}
+        >
+          <SideBar getProduct={filterProduct} categoryId={""} />
         </div>
       </div>
 
