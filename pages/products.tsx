@@ -30,7 +30,6 @@ export default function AllProducts({ categoryId }: PropType) {
   console.log(bottomSideBar, showSidebar);
   return (
     <div className="">
-<<<<<<< Updated upstream
       <div
         className="text-end"
         onClick={() => {
@@ -39,18 +38,6 @@ export default function AllProducts({ categoryId }: PropType) {
         }}
       >
         Filter
-=======
-      <div className="flex justify-end mt-6">
-        <button
-          className="tablet:hidden desktop:block laptop:block between:hidden"
-          onClick={() => {
-            setShowSidebar(!showSidebar);
-            localStorage.setItem("sidebarFilter", (!showSidebar).toString());
-          }}
-        >
-          {showSidebar ? "Hide filter" : "Show Filter"}
-        </button>
->>>>>>> Stashed changes
       </div>
 
       <div className="flex justify-end">
