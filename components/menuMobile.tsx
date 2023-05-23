@@ -128,7 +128,9 @@ export default function MenuMobile({ categories, toggleSearch, handleSideMenuOpe
             </div>
             <p>All</p>
           </button>
-          <div className=" text-2xl mb-8">{isOnCategoryName}</div>
+          <div className=" text-2xl mb-8">
+            <Link href={`/${isOnCategoryName}`}>{isOnCategoryName}</Link>
+          </div>
           <div className="">
             <SubCategoriesMenu categories={categories} isOn={isSubMenuOpen} categoryId={isSubMenuOpen} />
           </div>

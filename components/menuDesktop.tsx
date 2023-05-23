@@ -44,7 +44,7 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
 
   const categoryInActive = "h-14 mobile:hidden tablet:hidden laptop:flex desktop:flex px-3 text-black text-base leading-10  items-center";
   const categoryActive = "h-14 relative px-3 text-black border-solid border-black border-b-2 text-base leading-10  items-center flex";
-
+  console.log(menu);
   return (
     <>
       {/* desktop menu  */}
@@ -66,14 +66,20 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
 
           <div className={`w-full`} ref={dropdownRef}>
             <div className={`${`flex-row gap-7 flex justify-center items-center h-16`}`}>
+              <Link href={`/products`}>
+                {/* menu  deerhi angilaluud */}
+                <div className="flex items-center justify-between">
+                  <div className={`hover:border-solid border-black border-b-2 h-14 px-3 text-black items-center flex`}>All Shoes</div>
+                </div>
+              </Link>
               {menu
                 .filter((category: any) => !category.parentId)
                 .map((category: any) => (
-                  <Link href={""} key={category._id}>
-                    {/* nemu deerhi angilaluud */}
+                  <Link href={`/${category.name}`} key={category._id}>
+                    {/* menu  deerhi angilaluud */}
                     <div className="flex items-center justify-between">
                       <div
-                        className={`${category._id === isMenuDropDownOpen ? categoryActive : categoryInActive}`}
+                        className={`${category._id === isMenuDropDownOpen ? categoryActive : categoryInActive || !category._id ? categoryInActive : ``}`}
                         onMouseOver={() => {
                           setMenuDropDownOpen(category._id);
                           handleMenuDropDown(true);

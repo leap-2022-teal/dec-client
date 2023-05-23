@@ -5,6 +5,7 @@ import { ProductsSlider } from "@/components/ProductsSlider";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import AllProducts from "./products";
 
 export interface Categories {
   name: string;
@@ -31,6 +32,7 @@ export default function Pages() {
           return (
             <div key={category._id}>
               <h2 className="text-left text-2xl">{name}</h2>
+
               <Banner position="start" categoryId={category._id} key={category._id} />
               <h2 className="text-left text-2xl mt-20">Popular Right Now</h2>
               <ProductsSlider categoryId={category._id} />
