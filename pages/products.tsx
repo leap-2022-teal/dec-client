@@ -30,16 +30,6 @@ export default function AllProducts({ categoryId }: PropType) {
   console.log(bottomSideBar, showSidebar);
   return (
     <div className="">
-<<<<<<< Updated upstream
-      <div
-        className="text-end"
-        onClick={() => {
-          setShowSidebar(!showSidebar);
-          localStorage.setItem("sidebarFilter", (!showSidebar).toString());
-        }}
-      >
-        Filter
-=======
       <div className="flex justify-end mt-6">
         <button
           className="tablet:hidden desktop:block laptop:block between:hidden"
@@ -50,7 +40,6 @@ export default function AllProducts({ categoryId }: PropType) {
         >
           {showSidebar ? "Hide filter" : "Show Filter"}
         </button>
->>>>>>> Stashed changes
       </div>
 
       <div className="flex justify-end">
@@ -66,27 +55,15 @@ export default function AllProducts({ categoryId }: PropType) {
 
       <div>
         <div
-          className={`hidden md:block ${
-            bottomSideBar
+          className={
+            showSidebar
+              ? `transition-all duration-500 ease-in-out sidebar desktop:h-[1000px] overflow-y-auto w-[260px]  absolute `
+              : `  transition-all duration-700 ease-in-out desktop:ml-[-500px] absolute invisible` && bottomSideBar
               ? ` tablet:block between:block mobile:block transition-all duration-700 ease-in-out sidebar overflow-y-auto absolute  bg-white  top-0 w-full h-full `
               : " transition-all duration-700 ease-in-out absolute invisible mt-[1000px]"
-          }`}
+          }
         >
-          {bottomSideBar ? (
-            <div className="mt-10 mr-10">
-              <SideBar getProduct={filterProduct} categoryId={""} />
-            </div>
-          ) : (
-            <div
-              className={
-                showSidebar
-                  ? `transition-all duration-500 ease-in-out sidebar h-[1000px] overflow-y-auto w-[260px]  absolute `
-                  : ` transition-all duration-700 ease-in-out ml-[-500px] absolute invisible `
-              }
-            >
-              <SideBar getProduct={filterProduct} categoryId={""} />
-            </div>
-          )}
+          <SideBar getProduct={filterProduct} categoryId={""} />
         </div>
       </div>
 
