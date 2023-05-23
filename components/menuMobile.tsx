@@ -77,6 +77,7 @@ export default function MenuMobile({ categories, toggleSearch, handleSideMenuOpe
           </button>
         </div>
       </div>
+
       <div className={isSubCategoryActive ? "hidden" : ""}>
         <div className={isSideMenuActive ? `transition-all fixed duration-300 h-full w-[300px] ease-in-out bg-white top-0 right-0 p-8` : `w-0  `}>
           <div className="flex justify-between">
