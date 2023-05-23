@@ -15,7 +15,6 @@ export function SideBar({ getProduct, categoryId }: PropType) {
   const [color, setColor] = useState<any[]>([]);
   const [size, setSizes] = useState<any[]>([]);
   const [price, setPrices] = useState<any[]>([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const genderOptions = ["Men", "Women"];
   const colors = [
@@ -165,7 +164,7 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         <div>
           <h2 className="mt-6 text-xl">Size</h2>
         </div>
-        <div className="mt-4 grid-cols-3 grid gap-2 p-2  gap-y-2">
+        <div className="mt-4 desktop:grid-cols-3 grid gap-2 p-2  gap-y-2 mobile:grid-cols-7">
           {sizes.map((e: number) => (
             <div key={e}>
               <button
