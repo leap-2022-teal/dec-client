@@ -30,8 +30,7 @@ export interface Product {
 }
 export default function Checkout() {
   const [basket, setBasket] = useState([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [state, setState] = useState("");
   const [location, setLocation] = useState("");
   const [email, setEmail] = useState("");
@@ -40,7 +39,27 @@ export default function Checkout() {
   const [save, setSave] = useState(false);
   const [customer, setCustomer] = useState("");
   const [totalPrice, setTotalPrice] = useState<number>();
-  console.log(totalPrice, "total");
+  const [user, setUser] = useState<any>();
+  useEffect(() => {
+    const token = localStorage.getItem("loginToken");
+    if (token) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, { headers: { Authorization: token ? `Bearer ${token}` : "" } })
+        .then((res: any) => {
+          setUser(res.data);
+          setEmail(res.data.email);
+          setName(res.data.name);
+          setCustomer(res.data._id);
+        })
+        .catch((res) => {
+          const { status } = res;
+          if (status === 403) {
+            setUser(null);
+          }
+        });
+    }
+  }, []);
+
   useEffect(() => {
     const basketItems = localStorage.getItem("basket");
     if (basketItems) {
@@ -69,20 +88,23 @@ export default function Checkout() {
   }, [basket]);
 
   useEffect(() => {
-    if (firstName && lastName && email && phoneNumber && state && location) {
+    if (name && email && phoneNumber && state && location) {
       setShow(true);
     } else {
       setShow(false);
     }
-  }, [firstName, lastName, email, phoneNumber, state, location]);
+  }, [name, email, phoneNumber, state, location]);
 
   function createNewUsers() {
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, { firstName, lastName, email, phoneNumber, state, location }).then((res) => {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, { name, email, phoneNumber, state, location }).then((res) => {
       const { status } = res;
       if (status === 200) {
         setCustomer(res.data);
       }
     });
+  }
+  function updatedUser() {
+    axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users`, { name, email, phoneNumber, state, location });
   }
 
   function handleSave() {
@@ -179,9 +201,7 @@ export default function Checkout() {
           {save ? (
             <div className="flex justify-between border-solid border-2  border-black mt-4 rounded-xl p-2">
               <div>
-                <div>
-                  name : {firstName} {lastName}
-                </div>
+                <div>name : {name}</div>
                 <div>state : {state}</div>
                 <div>address : {location}</div>
                 <div>email : {email}</div>
@@ -198,26 +218,27 @@ export default function Checkout() {
             <div>
               <div>
                 {" "}
-                <div className="md:flex gap-8 ">
-                  <div className="md:w-full max-w-[95%] mt-4">
+                {user ? (
+                  <div className="md:w-full w-[95%] mt-4">
                     <input
                       type="text"
                       placeholder="First Name"
-                      onChange={(e) => setFirstName(e.target.value)}
-                      value={firstName}
+                      onChange={(e) => setName(e.target.value)}
+                      value={name}
                       className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none "
                     />
                   </div>
-                  <div className="md:w-full max-w-[95%] mt-4">
+                ) : (
+                  <div className="md:w-full w-[95%] mt-4">
                     <input
                       type="text"
-                      placeholder="Last Names"
-                      onChange={(e) => setLastName(e.target.value)}
-                      value={lastName}
-                      className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none"
+                      placeholder="First Name"
+                      onChange={(e) => setName(e.target.value)}
+                      value={name}
+                      className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none "
                     />
                   </div>
-                </div>
+                )}
                 <AddressSelector onChange={setState} value={state} />
                 <div className="mt-4 md:w-full w-[95%]">
                   <input
@@ -249,9 +270,15 @@ export default function Checkout() {
                       className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none "
                     />
                   </div>
-                  <div className="md:w-full max-w-[95%] mt-4">
-                    <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none" />
-                  </div>
+                  {user ? (
+                    <div className="md:w-full max-w-[95%] mt-4">
+                      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none" />
+                    </div>
+                  ) : (
+                    <div className="md:w-full max-w-[95%] mt-4">
+                      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} className="w-full py-4 pl-4 border border-black rounded-xl focus:outline-none" />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex justify-between mt-2">
@@ -262,9 +289,15 @@ export default function Checkout() {
                 <div></div>
                 <div>
                   {show ? (
-                    <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4" onClick={handleSave}>
-                      Save & Continue
-                    </button>
+                    user ? (
+                      <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4" onClick={handleSave}>
+                        Save & Continue
+                      </button>
+                    ) : (
+                      <button className="bg-black px-4 py-2 rounded-full text-white  text-center mt-4" onClick={handleSave}>
+                        Save & Continue
+                      </button>
+                    )
                   ) : (
                     <button className="bg-gray-200 px-4 py-2 rounded-full  text-center mt-4"> Continue</button>
                   )}
@@ -275,7 +308,15 @@ export default function Checkout() {
           <div className="mt-2">
             <div className="text-3xl ">Payment</div>
           </div>
-          {save ? <Payment createNewUsers={createNewUsers} customer={customer} products={basket} totalPrice={totalPrice} /> : <div></div>}
+          {save ? (
+            user ? (
+              <Payment createNewUsers={updatedUser} customer={customer} products={basket} totalPrice={totalPrice} />
+            ) : (
+              <Payment createNewUsers={createNewUsers} customer={customer} products={basket} totalPrice={totalPrice} />
+            )
+          ) : (
+            <div></div>
+          )}
         </div>
       </main>
     </div>

@@ -90,7 +90,7 @@ export default function AllProducts({ categoryId }: PropType) {
                   <div className=" d-inline-block  ">
                     <div className="products-image">
                       <div className="aspect-[1/1] overflow-hidden">
-                        <img src={products.image[0].path} alt="image" />
+                        <img src={products.image[0]?.path} alt="image" />
                       </div>
                       <div>
                         <h1 className="text-2xl mt-2">{products.name} </h1>

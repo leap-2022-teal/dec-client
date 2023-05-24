@@ -135,8 +135,8 @@ export default function Order() {
   }
   return (
     <div className="">
-      {user && <div>{user.name}</div>}
-      <OrdersReview />
+      {/* {user && <div>{user.name}</div>} */}
+
       <main className=" laptop:flex gap-10 max-w-[1000px] mx-auto mt-8">
         <div className="laptop:w-[600px] mt-4">
           <div className="laptop:text-left text-center text-xl ">Bag</div>
@@ -229,22 +229,6 @@ export default function Order() {
           </div>
         )}
       </main>
-    </div>
-  );
-}
-
-function OrdersReview() {
-  const [order, setOrder] = useState([]);
-  useEffect(() => {
-    const ordersItems = localStorage.getItem("orders");
-    if (ordersItems) {
-      setOrder(JSON.parse(ordersItems));
-    }
-  }, []);
-  return (
-    <div>
-      <div>Order Review</div>
-      {order ? <div>hi</div> : <div>sorry you dont purchase</div>}
     </div>
   );
 }

@@ -1,9 +1,6 @@
 import { Banner } from "@/components/Banner";
 import { Feature } from "@/components/Feature";
-import Menu from "@/components/menu";
-import NavBar from "@/components/navbar/Navbar";
 import { ProductsSlider } from "@/components/ProductsSlider";
-import SubBanner from "@/components/subBanner";
 export default function Home() {
   return (
     <div>
