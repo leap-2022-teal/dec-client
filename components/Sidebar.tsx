@@ -84,9 +84,11 @@ export function SideBar({ getProduct, categoryId }: PropType) {
 
     if (!isColorSelected) {
       setColor([...color, clickedColorName]);
+      setCheckedColor(clickedColorName);
     } else {
       const updatedColors = color.filter((c) => c !== clickedColorName);
       setColor(updatedColors);
+      setCheckedColor(null);
     }
   }
 
@@ -158,10 +160,16 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         <div>
           <h2 className="mt-4 text-xl text-[16px]">Color</h2>
         </div>
-        <div className="mt-4 w-[200px] grid gap-0 p-2 text-xs pl-0  grid-cols-3 ">
+        <div className="mt-4 w-[200px] grid gap-0 p-2 text-xs pl-0 grid-cols-3">
           {colors.map((color, index) => (
             <div className="justify-around mb-6 cursor-pointer group" onClick={() => handleColor(color)} key={index}>
-              {/* <div className={`w-7 h-7 mx-auto ${color.colorClass} rounded-full`}>{selectedColor === color && <AiOutlineCheck className="text-white absolute top-0 right-0" />}</div> */}
+              <div className={`w-7 h-7 mx-auto ${color.colorClass} rounded-full ${checkedColor === color.colorName.toLowerCase() ? "border-2 border-white" : ""}`}>
+                {checkedColor === color.colorName.toLowerCase() && (
+                  <div className="flex items-center justify-center w-full h-full">
+                    <AiOutlineCheck className="text-white text-xl" />
+                  </div>
+                )}
+              </div>
               <div className="text-center text-[12px] group-hover:opacity-50">{color.colorName}</div>
             </div>
           ))}
