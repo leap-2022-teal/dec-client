@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { NumberSelector } from "@/components/ReactSelect";
 import { SizeSelector } from "@/components/SizeSelector";
 import Link from "next/link";
@@ -31,7 +31,21 @@ export interface Product {
 export default function Order() {
   const [basket, setBasket] = useState([]);
   const [items, setItems] = useState<Product[]>([]);
-
+  const [user, setUser] = useState<any>();
+  useEffect(() => {
+    const token = localStorage.getItem("loginToken");
+    if (token) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, { headers: { Authorization: token ? `Bearer ${token}` : "" } })
+        .then((res: any) => setUser(res.data))
+        .catch((res) => {
+          const { status } = res;
+          if (status === 403) {
+            setUser(null);
+          }
+        });
+    }
+  }, []);
   useEffect(() => {
     const basketItems = localStorage.getItem("basket");
     if (basketItems) {
@@ -121,6 +135,7 @@ export default function Order() {
   }
   return (
     <div className="">
+      {user && <div>{user.name}</div>}
       <OrdersReview />
       <main className=" laptop:flex gap-10 max-w-[1000px] mx-auto mt-8">
         <div className="laptop:w-[600px] mt-4">
