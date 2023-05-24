@@ -49,15 +49,15 @@ export function Feature({ categoryId, position, name }: PropType) {
                           <p>{banner.name}</p>
                           <h3 className="font-black my-3 text-2xl">{banner.details}</h3>
                           <div>
-                            <button className="rounded-full bg-black text-white p-2 px-6"> Shop now</button>
+                            <button className="rounded-full bg-white text-black p-2 px-6"> Shop now</button>
                           </div>
                         </div>
                       </figcaption>
                     ) : (
                       <figcaption className=" mt-6 text-left ">
                         <div>
-                          <p className="text-white">{banner.details}</p>
-                          <h3 className=" text-white my-3 text-2xl">{banner.name}</h3>
+                          <p className="">{banner.details}</p>
+                          <h3 className="  my-3 text-2xl">{banner.name}</h3>
                           <div>
                             <button className="rounded-full bg-white text-black p-2 px-6">Shop now</button>
                           </div>
