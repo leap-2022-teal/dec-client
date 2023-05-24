@@ -4,25 +4,29 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import axios, { AxiosResponse } from "axios";
+import { useRouter } from "next/router";
 
 export default function Signin() {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   function handleSubmit(event: any) {
     event.preventDefault();
     if (email && password) {
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, { email, password })
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, { email, password })
         .then((res: AxiosResponse) => {
           const { data, status } = res;
           if (status === 200) {
+            localStorage.setItem("loginToken", res.data.accessToken);
+            router.push("/order");
           }
         })
-        .catch(({ response, code }) => {
-          if (response.status === 401) {
+        .catch(({ error, code }) => {
+          if (error.status === 401) {
             setError("Нэвтрэх нэр эсвэл нууц үг буруу байна");
           } else {
             setError(code);
@@ -84,53 +88,7 @@ export default function Signin() {
               onChange={(e) => setPassword(e.target.value)}
               id="password"
             />
-            {/* <span className="icon flex items-center px-4 ">
-              <HiAtSymbol size={25} />
-            </span> */}
           </div>
-          {/* <div className="flex border rounded-xl relative">
-            <label htmlFor="password">Password</label>
-            <input
-              type={`${show ? "text" : "password"}`}
-              name="password"
-              placeholder="password"
-              className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none
-                "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-            />
-            <span className="icon flex items-center px-4" onClick={() => setShow(!show)}>
-              <HiFingerPrint size={25} />
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <div>
-              <label htmlFor="remember-me">Remember me</label>
-              <input type="checkbox" id="remember-me" name="remember" className="ml-2" />
-            </div>
-            <div>
-              <Link href={"./resetpassword"} className={"text-blue-600"}>
-                Reset Password
-              </Link>
-            </div>
-          </div>
-
-          <div>
-            <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-800   rounded-md py-3 text-gray-50 text-lg " type="button" onClick={handleSubmit}>
-              Login
-            </button>
-          </div>
-          <div>
-            <button className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200" onClick={handleGoogleSignin} type="button">
-              Sign in with Google
-            </button>
-          </div>
-          <div>
-            <button className="w-full border py-3 flex justify-center gap-2 hover:bg-gray-200" onClick={handleGithubSignin} type="button">
-              Sign in with Github
-            </button>
-          </div> */}
         </form>
 
         <p className="text-gray-400 py-4">
@@ -141,7 +99,9 @@ export default function Signin() {
         </p>
         <div className="flex justify-between">
           <div></div>
-          <button className="bg-black text-white p-3 w-[90px] rounded-full">Sign In</button>
+          <button className="bg-black text-white p-3 w-[90px] rounded-full" onClick={handleSubmit}>
+            Sign In
+          </button>
         </div>
       </section>
     </Layout>

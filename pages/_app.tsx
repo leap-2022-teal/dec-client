@@ -2,7 +2,7 @@ import MainLayout from "@/layout/mainLayout";
 import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function App({ Component, pageProps: { session, ...pageProps } }: any) {
+export default function App({ Component, pageProps: { ...pageProps } }: any) {
   return (
     <>
       <div>

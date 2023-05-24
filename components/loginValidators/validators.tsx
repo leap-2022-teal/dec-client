@@ -1,6 +1,18 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export function emailValidator({ email }: any) {
+  // const [gmail, setGmail] = useState([]);
+  // useEffect(() => {
+  //   axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`).then((res) => setGmail(res.data));
+  // }, [email]);
+
+  // const list = gmail.filter((item: any) => {
+  //   if (item.email === email) {
+  //     return item.email;
+  //   }
+  // });
+  // console.log(list, "email");
   if (!email) {
     return "Emailee burtguulne uu";
   } else if (!new RegExp(/\S+@\S+\.\S+/).test(email)) {

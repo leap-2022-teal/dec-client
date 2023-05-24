@@ -2,24 +2,24 @@ import Layout from "@/layout/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { HiFingerPrint, HiAtSymbol } from "react-icons/hi";
-import { use, useState } from "react";
-import { confirmPasswordValidator, emailValidator, passwordValidator } from "@/components/loginValidators/validators";
+import { useState } from "react";
+import { emailValidator, passwordValidator } from "@/components/loginValidators/validators";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 interface IUser {
   name: string;
   email: string;
   password: string;
-  cpassword: string;
 }
 export default function Register() {
   // password haruulah
-  const [show, setShow] = useState<any>({ password: false, cpassword: false });
+  const [show, setShow] = useState<any>({ password: false });
+  const [copyPassword, setCopyPassword] = useState("");
   const [passErrorMsg, setPassErrorMsg] = useState<string>("");
-
-  <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />;
+  const router = useRouter();
 
   const notify = () =>
     toast("Амжилттай бүртгэгдлээ", {
@@ -44,59 +44,62 @@ export default function Register() {
       progress: undefined,
       theme: "light",
     });
-
+  const toastPasswordError = () =>
+    toast.error("passwordoo shalgana uu", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   // Register
   const [formData, setFormData] = useState<IUser>({
     name: "",
     email: "",
     password: "",
-    cpassword: "",
   });
 
   function handleSubmit() {
-    if (formData) {
+    if (formData && formData.password === copyPassword) {
       axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, { formData })
         .then((res) => {
           const { data, status } = res;
           if (status === 200) {
             notify();
+            router.push("/auth/signin");
           }
         })
-        .catch((error) => {
-          if (error.message) {
-            toastError();
-          }
+        .catch((status) => {
+          status === 400;
         });
+    } else {
+      toastPasswordError();
     }
   }
 
   function handleEmail(e: any) {
     const email: string = e.target.value;
+    emailValidator({ email });
     setFormData({ ...formData, email: e.target.value });
-    console.log(emailValidator({ email }));
   }
 
   function handlePassword(e: any) {
     const password: string = e.target.value;
-    // let errMsg = "";
-    // if (!password) {
-    //   setPassErrorMsg("");
-    // } else if (password.length < 8) {
-    //   setPassErrorMsg("nuuts ug 8 oron oos deesh baih estoi");
-    // } else {
-    //   setPassErrorMsg("");
-    // }
-    // console.log(passwordValidator({ password }));
+    if (!password) {
+      setPassErrorMsg("");
+    } else if (password.length < 8) {
+      setPassErrorMsg("nuuts ug 8 oron oos deesh baih estoi");
+    } else {
+      setPassErrorMsg("");
+    }
+    passwordValidator({ password });
     setFormData({ ...formData, password: e.target.value });
   }
   console.log(passErrorMsg);
-  function handleCpassword(e: any) {
-    const cpassword: string = e.target.value;
-    const password = formData.password;
-    setFormData({ ...formData, cpassword: e.target.value });
-    console.log(confirmPasswordValidator({ password, cpassword }));
-  }
 
   return (
     <Layout>
@@ -166,10 +169,10 @@ export default function Register() {
               placeholder="Confirm password"
               className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border-none
                 "
-              onChange={handleCpassword}
-              value={formData.cpassword}
+              onChange={(e) => setCopyPassword(e.target.value)}
+              value={copyPassword}
             />
-            <span className="icon flex items-center px-4" onClick={() => setShow({ cpassword: !show.cpassword, password: show.password })}>
+            <span className="icon flex items-center px-4" onClick={() => setShow({ password: show.password })}>
               <HiFingerPrint size={25} />
             </span>
           </div>
