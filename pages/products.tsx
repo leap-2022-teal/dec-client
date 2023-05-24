@@ -1,4 +1,3 @@
-import MyModal from "@/components/Dialog";
 import { SideBar } from "@/components/Sidebar";
 
 import axios from "axios";
@@ -47,7 +46,9 @@ export default function AllProducts({ categoryId }: PropType) {
           onClick={() => {
             setBottomSideBar(!bottomSideBar);
           }}
-          className={`absolute desktop:hidden laptop:hidden tablet:block between:block z-50 ${bottomSideBar ? "hidden top-5 " : ""}`}
+          className={`absolute desktop:hidden laptop:hidden tablet:block mobile:block  between:block z-50 border border-solid border-gray-300   ${
+            bottomSideBar ? "rounded-full hidden top-5 bg-black text-white h-[40px] w-[40px] " : "px-8 rounded-xl hover:border-black "
+          }`}
         >
           {bottomSideBar ? "X" : "Filter"}
         </button>
@@ -77,8 +78,8 @@ export default function AllProducts({ categoryId }: PropType) {
           showSidebar
             ? `laptop:ml-[300px] desktop:ml-[300px] mt-10 transition-all duration-500 ease-in-out`
             : `mt-10 transition-all duration-500 ease-in-out` && bottomSideBar
-            ? `hidden`
-            : `mt-10 transition-all duration-500 ease-in-out`
+            ? `hidden `
+            : `mt-10 transition-all duration-500 ease-in-out `
         }
       >
         <div className="text-left grid grid-cols-2 gap-4 laptop:grid-cols-3 mobile:grid-cols-2 ">

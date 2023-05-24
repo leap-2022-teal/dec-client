@@ -15,6 +15,7 @@ export function SideBar({ getProduct, categoryId }: PropType) {
   const [color, setColor] = useState<any[]>([]);
   const [size, setSizes] = useState<any[]>([]);
   const [price, setPrices] = useState<any[]>([]);
+  const [checkedColor, setCheckedColor] = useState(null);
 
   const genderOptions = ["Men", "Women"];
   const colors = [
@@ -78,11 +79,14 @@ export function SideBar({ getProduct, categoryId }: PropType) {
   }
 
   function handleColor(event: any) {
-    if (!color.includes(event.colorName.toLowerCase())) {
-      setColor([...color, event.colorName.toLowerCase()]);
+    const clickedColorName = event.colorName.toLowerCase();
+    const isColorSelected = color.includes(clickedColorName);
+
+    if (!isColorSelected) {
+      setColor([...color, clickedColorName]);
     } else {
-      const selectedColor = color.filter((e: any) => e !== event.colorName.toLowerCase());
-      setColor(selectedColor);
+      const updatedColors = color.filter((c) => c !== clickedColorName);
+      setColor(updatedColors);
     }
   }
 
@@ -121,9 +125,11 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         </div>
       </div>
 
+      <div className=" border-b-2 border-solid border-gray-300 mt-3"></div>
+
       <div>
         <div>
-          <h2 className="mt-6 text-xl text-[16px] bold">Shop By Price</h2>
+          <h2 className="mt-2 text-xl text-[16px] bold">Shop By Price</h2>
         </div>
         <div className="mt-4 grid-cols-1 grid gap-y-1 ">
           {prices.map((selectedPrice: any) => (
@@ -146,23 +152,27 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         </div>
       </div>
 
+      <div className=" border-b-2 border-solid border-gray-300 mt-3"></div>
+
       <div>
         <div>
-          <h2 className="mt-6 text-xl text-[16px]">Color</h2>
+          <h2 className="mt-4 text-xl text-[16px]">Color</h2>
         </div>
-        <div className="mt-4 w-[200px] grid-cols-3 grid gap-0 p-2 text-xs pl-0   ">
-          {colors.map((color: any, index: number) => (
-            <div className="justify-around mb-6 cursor-pointer group " onClick={() => handleColor(color)} key={index}>
-              <div className={`w-7 h-7 mx-auto  ${color.colorClass} rounded-full`}></div>
-              <div className="text-center text-[12px] group-hover:opacity-50   ">{color.colorName}</div>
+        <div className="mt-4 w-[200px] grid gap-0 p-2 text-xs pl-0  grid-cols-3 ">
+          {colors.map((color, index) => (
+            <div className="justify-around mb-6 cursor-pointer group" onClick={() => handleColor(color)} key={index}>
+              {/* <div className={`w-7 h-7 mx-auto ${color.colorClass} rounded-full`}>{selectedColor === color && <AiOutlineCheck className="text-white absolute top-0 right-0" />}</div> */}
+              <div className="text-center text-[12px] group-hover:opacity-50">{color.colorName}</div>
             </div>
           ))}
         </div>
       </div>
 
+      <div className=" border-b-2 border-solid border-gray-300"></div>
+
       <div>
         <div>
-          <h2 className="mt-6 text-xl">Size</h2>
+          <h2 className="mt-4 text-xl">Size</h2>
         </div>
         <div className="mt-4  grid gap-2 p-2  gap-y-2 md:grid-cols-3 sm:grid-cols-7">
           {sizes.map((e: number) => (
@@ -182,14 +192,16 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         </div>
       </div>
 
+      <div className=" border-b-2 border-solid border-gray-300 mt-3"></div>
+
       <div className="desktop:hidden laptop:hidden mobile:block ">
-        <div className="flex justify-between w-[800px] h-[50px] mt-10">
+        <div className="flex justify-between w-[800px] h-[50px] mt-10 gap-2">
           <div>
-            <button>Clear</button>
+            <button className="border border-solid px-[190px] rounded-full py-[7px]">Clear</button>
           </div>
 
           <div>
-            <button>Apply</button>
+            <button className="border border-solid px-[190px] rounded-full bg-black text-white py-[7px]">Apply</button>
           </div>
         </div>
       </div>
