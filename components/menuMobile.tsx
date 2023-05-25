@@ -32,7 +32,7 @@ export default function MenuMobile({ categories, toggleSearch, handleSideMenuOpe
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  console.log(isOnCategoryName);
+  // console.log(isOnCategoryName);
 
   return (
     <>

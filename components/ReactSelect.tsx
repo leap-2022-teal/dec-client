@@ -26,7 +26,7 @@ interface PropType {
 export function NumberSelector({ defaultValue, onChange, id }: PropType) {
   return (
     <>
-      <select name="Quantity" id="Quantity" defaultValue={defaultValue} className="" onChange={(e) => onChange({ productId: id, quantity: Number(e.target.value) })}>
+      <select name="Quantity" id="Quantity" defaultValue={defaultValue} className="" onChange={(e) => onChange({ id: id, quantity: Number(e.target.value) })}>
         {NumberOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
