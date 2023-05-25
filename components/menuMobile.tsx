@@ -32,8 +32,6 @@ export default function MenuMobile({ categories, toggleSearch, handleSideMenuOpe
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  // console.log(isOnCategoryName);
-
   return (
     <>
       <div className={` flex justify-between desktop:hidden laptop:hidden mx-6  ${visible ? `sticky top-0 bg-white ` : ``}`}>

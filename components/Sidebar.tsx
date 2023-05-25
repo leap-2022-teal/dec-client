@@ -1,23 +1,26 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 
 interface PropType {
   getProduct: (e: any) => void;
-  categoryId: undefined | string | string[];
 }
 
-export function SideBar({ getProduct, categoryId }: PropType) {
+export function SideBar({ getProduct }: PropType) {
   const [list, setList] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [gender, setGender] = useState<any[]>([]);
   const [color, setColor] = useState<any[]>([]);
   const [size, setSizes] = useState<any[]>([]);
   const [price, setPrices] = useState<any[]>([]);
   const [checkedColor, setCheckedColor] = useState(null);
+  const { query, isReady } = useRouter();
 
-  const genderOptions = ["Men", "Women"];
+  const genderOptions = [
+    { value: "6448e0424b4480c5bdf7de55", name: "Men" },
+    { value: "6448e04c4b4480c5bdf7de5b", name: "Women" },
+  ];
   const colors = [
     { colorClass: "bg-purple-500", colorName: "Purple" },
     { colorClass: "bg-slate-950 ", colorName: "Black" },
@@ -32,41 +35,46 @@ export function SideBar({ getProduct, categoryId }: PropType) {
     { colorClass: " bg-pink-500  ", colorName: "Pink" },
     { colorClass: " bg-green-600  ", colorName: "Green" },
   ];
-  console.log(categoryId, "cate");
+
   const sizes = [6, 7, 8, 9, 10, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 
   const prices = ["$0 - $25", "$25 - $50", "$50 - $100", "Over $150"];
 
   useEffect(() => {
-    if (filteredProducts) {
-      getProduct(filteredProducts);
-    }
-  }, [filteredProducts]);
+    if (isReady) {
+      const object: any = {
+        categoryId: [...gender],
+        color: color,
+        size: size,
+        price: price,
+      };
 
-  useEffect(() => {
-    const queryString = `categoryId=${categoryId}&color=${color.join("&color=")}&size=${size.join("&size=")}&price=${price.join("&price=")}`;
-    console.log(queryString);
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?${queryString}`).then((res) => {
-      const { data, status } = res;
-      if (status === 200) {
-        setFilteredProducts(data);
-      } else {
-        alert(`Aldaa garlaa: ${status}`);
+      if (query.categoryId) {
+        object.categoryId.push(query.categoryId);
       }
-    });
-  }, [gender, color, size, price]);
+
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`, { params: object }).then((res) => {
+        const { data, status } = res;
+        if (status === 200) {
+          getProduct(data);
+        } else {
+          alert(`Aldaa garlaa: ${status}`);
+        }
+      });
+    }
+  }, [color, gender, size, price, query.categoryId, isReady]);
 
   function handleGender(event: any) {
-    const selectedGender = event.target.name;
-    if (event.target.checked) {
-      setGender([...gender, selectedGender]);
+    const selectedGenderName = event.target.name;
+    const selectedGenderValue = genderOptions.find((option) => option.name === selectedGenderName)?.value;
+
+    if (event.target.checked && selectedGenderValue) {
+      setGender([...gender, selectedGenderValue]);
     } else {
-      const updatedGender = gender.filter((e) => e !== selectedGender);
+      const updatedGender = gender.filter((e) => e !== selectedGenderValue);
       setGender(updatedGender);
     }
   }
-
-  console.log({ price });
 
   function handlePrice(event: any) {
     const selectedPrice = event.target.name;
@@ -81,7 +89,6 @@ export function SideBar({ getProduct, categoryId }: PropType) {
   function handleColor(event: any) {
     const clickedColorName = event.colorName.toLowerCase();
     const isColorSelected = color.includes(clickedColorName);
-
     if (!isColorSelected) {
       setColor([...color, clickedColorName]);
       setCheckedColor(clickedColorName);
@@ -114,13 +121,12 @@ export function SideBar({ getProduct, categoryId }: PropType) {
         <div>
           <h2 className="mt-6 text-xl text-[16px] ">Gender</h2>
         </div>
-
         <div className="mt-4">
           {genderOptions.map((selectedGender) => (
-            <div onClick={handleGender} className="flex cursor-pointer" key={selectedGender}>
-              <input type="checkbox" className="cursor-pointer accent-black h-5 w-5" id={selectedGender} name={selectedGender} checked={gender.includes(selectedGender)} />
-              <label className={gender.includes(selectedGender) ? "ml-2 cursor-pointer text-[16px]" : "ml-2 cursor-pointer text-[16px] hover:opacity-50"} htmlFor={selectedGender}>
-                {selectedGender}
+            <div onClick={handleGender} className="flex cursor-pointer" key={selectedGender.value}>
+              <input type="checkbox" className="cursor-pointer accent-black h-5 w-5" id={selectedGender.name} name={selectedGender.name} checked={gender.includes(selectedGender.value)} />
+              <label className={gender.includes(selectedGender.value) ? "ml-2 cursor-pointer text-[16px]" : "ml-2 cursor-pointer text-[16px] hover:opacity-50"} htmlFor={selectedGender.name}>
+                {selectedGender.name}
               </label>
             </div>
           ))}
@@ -146,7 +152,7 @@ export function SideBar({ getProduct, categoryId }: PropType) {
                   handlePrice(e);
                 }}
               />
-              <label className={price.includes(selectedPrice) ? `ml-2 cursor-pointer` : `ml-2 cursor-pointer hover:opacity-50`} htmlFor={selectedPrice}>
+              <label className={price.includes(selectedPrice) ? `ml-2 cursor-pointer bg-slate-400` : `ml-2 cursor-pointer hover:opacity-50`} htmlFor={selectedPrice}>
                 {selectedPrice}
               </label>
             </div>
@@ -161,16 +167,17 @@ export function SideBar({ getProduct, categoryId }: PropType) {
           <h2 className="mt-4 text-xl text-[16px]">Color</h2>
         </div>
         <div className="mt-4 w-[200px] grid gap-0 p-2 text-xs pl-0 grid-cols-3">
-          {colors.map((color, index) => (
-            <div className="justify-around mb-6 cursor-pointer group" onClick={() => handleColor(color)} key={index}>
-              <div className={`w-7 h-7 mx-auto ${color.colorClass} rounded-full ${checkedColor === color.colorName.toLowerCase() ? "border-2 border-white" : ""}`}>
-                {checkedColor === color.colorName.toLowerCase() && (
+          {colors.map((singleColor, index) => (
+            <div className="justify-around mb-6 cursor-pointer group" onClick={() => handleColor(singleColor)} key={index}>
+              <div className={`w-7 h-7 mx-auto ${singleColor.colorClass} rounded-full`}>
+                {color.includes(singleColor.colorName.toLowerCase()) && (
                   <div className="flex items-center justify-center w-full h-full">
-                    <AiOutlineCheck className="text-white text-xl" />
+                    <AiOutlineCheck className={`${singleColor.colorName === "White" ? "text-black text-xl" : `text-white text-xl`}`} />
                   </div>
                 )}
               </div>
-              <div className="text-center text-[12px] group-hover:opacity-50">{color.colorName}</div>
+
+              <div className="text-center text-[12px] group-hover:opacity-50">{singleColor.colorName}</div>
             </div>
           ))}
         </div>

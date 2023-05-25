@@ -16,7 +16,6 @@ export function Payment({ createNewUsers, customer, products, totalPrice }: any)
   useEffect(() => {
     const orders = localStorage.getItem("orders");
     if (orders) {
-      console.log(orders);
     }
   }, []);
 
@@ -34,10 +33,15 @@ export function Payment({ createNewUsers, customer, products, totalPrice }: any)
   useEffect(() => {
     if (customer) {
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, { customer, products, totalPrice }).then((res) => {
+
+
+
+
         console.log(res, "this is orders id");
         setOrderId(res.data);
         // const orderId = customer;
         console.log(orderId, "orderid");
+
         const orders = localStorage.getItem("orders");
         if (orders) {
           const ordersItems = JSON.parse(orders);
