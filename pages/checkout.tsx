@@ -49,7 +49,7 @@ export default function Checkout() {
           setUser(res.data);
           setEmail(res.data.email);
           setName(res.data.name);
-          setCustomer(res.data._id);
+          // setCustomer(res.data._id);
         })
         .catch((res) => {
           const { status } = res;
@@ -104,7 +104,7 @@ export default function Checkout() {
     });
   }
   function updatedUser() {
-    axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users`, { name, email, phoneNumber, state, location });
+    axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`, { name, email, phoneNumber, state, location }).then((res) => setCustomer(res.data));
   }
 
   function handleSave() {
