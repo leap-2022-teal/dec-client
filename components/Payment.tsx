@@ -9,6 +9,7 @@ export function Payment({ createNewUsers, customer, products, totalPrice }: any)
   const [cvv, setCvv] = useState("");
   const [show, setShow] = useState(false);
   const router = useRouter();
+  const [orderId, setOrderId] = useState("");
   const { query } = router;
   console.log(customer, "customer id");
 
@@ -28,10 +29,18 @@ export function Payment({ createNewUsers, customer, products, totalPrice }: any)
       setShow(false);
     }
   }, [cart, cvv, date]);
+  console.log(products);
   useEffect(() => {
     if (customer) {
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, { customer, products, totalPrice }).then((res) => {
-        const orderId = customer;
+
+
+
+
+        console.log(res, "this is orders id");
+        setOrderId(res.data);
+        // const orderId = customer;
+        console.log(orderId, "orderid");
 
         const orders = localStorage.getItem("orders");
         if (orders) {
@@ -42,7 +51,7 @@ export function Payment({ createNewUsers, customer, products, totalPrice }: any)
           localStorage.setItem("orders", JSON.stringify([orderId]));
         }
         localStorage.removeItem("basket");
-        router.push("/order");
+        router.push("/user");
       });
     }
   }, [customer]);

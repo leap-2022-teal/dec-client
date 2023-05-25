@@ -51,7 +51,7 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
 
   const categoryInActive = "h-14 mobile:hidden tablet:hidden laptop:flex desktop:flex px-3 text-black text-base leading-10  items-center";
   const categoryActive = "h-14 relative px-3 text-black border-solid border-black border-b-2 text-base leading-10  items-center flex";
-  console.log(menu);
+  // console.log(menu);
   return (
     <>
       {/* desktop menu  */}

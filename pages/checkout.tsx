@@ -26,10 +26,15 @@ export interface Product {
     }
   ];
   _id: string;
+}
+interface PropType {
+  products: Product;
+  id: string;
   quantity: number;
+  size: number;
 }
 export default function Checkout() {
-  const [basket, setBasket] = useState([]);
+  const [basket, setBasket] = useState<PropType[]>([]);
   const [name, setName] = useState("");
   const [state, setState] = useState("");
   const [location, setLocation] = useState("");
@@ -49,6 +54,8 @@ export default function Checkout() {
           setUser(res.data);
           setEmail(res.data.email);
           setName(res.data.name);
+          setPhoneNumber(res.data.phoneNumber);
+          setLocation(res.data.location);
           // setCustomer(res.data._id);
         })
         .catch((res) => {
@@ -66,26 +73,6 @@ export default function Checkout() {
       setBasket(JSON.parse(basketItems));
     }
   }, []);
-  const [items, setItems] = useState<Product[]>([]);
-  useEffect(() => {
-    const fetchProductDetails = async () => {
-      const itemDetails = await Promise.all(
-        basket.map((product: any) =>
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => {
-            const singleItem = res.data;
-            singleItem.quantity = product.quantity;
-            singleItem.id = product.id;
-            return singleItem;
-          })
-        )
-      );
-      setItems(itemDetails);
-    };
-
-    if (basket.length > 0) {
-      fetchProductDetails();
-    }
-  }, [basket]);
 
   useEffect(() => {
     if (name && email && phoneNumber && state && location) {
@@ -118,8 +105,8 @@ export default function Checkout() {
   function totalAmount() {
     let totalAmount = 0;
 
-    items.forEach((product) => {
-      const productAmount = product.price * product.quantity;
+    basket.forEach((product: any) => {
+      const productAmount = product.products.price * product.quantity;
       totalAmount += productAmount;
     });
     // setTotalPrice(totalAmount);
@@ -128,7 +115,7 @@ export default function Checkout() {
   function totalQuantity() {
     let totalQuantity = 0;
 
-    items.forEach((product) => {
+    basket.forEach((product: any) => {
       totalQuantity += product.quantity;
     });
 
@@ -146,24 +133,23 @@ export default function Checkout() {
               <Link href={"/order"}>Edit</Link>
             </div>
           </div>
-          {items ? (
-            items.map((product) => (
-              <div className=" laptop:w-[300px] mt-4" key={product._id}>
+          {basket ? (
+            basket.map((product) => (
+              <div className=" laptop:w-[300px] mt-4" key={product.id}>
                 <div className="flex gap-5">
                   <div className="">
-                    <img src={product.image[0].path} alt="" width={100} />
+                    <img src={product.products.image[0].path} alt="" width={100} />
                   </div>
                   <div>
                     <div>
                       {" "}
-                      <h2 className="text-lg">{product.name}</h2>
+                      <h2 className="text-lg">{product.products.name}</h2>
                     </div>
                     <div>
-                      <div>{basket.map((basketItems: any) => (product.id === basketItems.id ? <div key={product._id}>size : {basketItems.size}</div> : ""))}</div>
+                      <div>{basket.map((basketItems: any) => (product.id === basketItems.id ? <div key={product.id}>size : {basketItems.size}</div> : ""))}</div>
                       <div>
-                        quantity : {product.quantity} @ ${product.price}
+                        quantity : {product.quantity} @ ${product.products.price}
                       </div>
-                      <div>${product.quantity * product.price}</div>
                     </div>
                   </div>
                 </div>
@@ -172,7 +158,7 @@ export default function Checkout() {
           ) : (
             <div></div>
           )}
-          {items.length == 0 ? (
+          {basket.length == 0 ? (
             <div className="laptop:w-[300px]">
               <div className="flex justify-between ">
                 <div>Total Shoes:</div>
