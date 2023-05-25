@@ -24,7 +24,7 @@ export default function Pages() {
       return category;
     }
   });
-  console.log("hi", filteredCategories);
+
   return (
     <>
       {filteredCategories.map((category: Categories) => {

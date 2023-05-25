@@ -31,7 +31,7 @@ export function Banner({ categoryId, position }: PropType) {
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/banner`).then((res) => setBanner(res.data));
   }, []);
-  console.log(banner);
+
   return (
     <>
       {banner.map((banner) => (

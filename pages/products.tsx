@@ -1,8 +1,8 @@
 import { SideBar } from "@/components/Sidebar";
 
-import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 interface PropType {
   categoryId?: string | undefined;
@@ -12,6 +12,7 @@ export default function AllProducts({ categoryId }: PropType) {
   const [products, setProducts] = useState<any>([]);
   const [showSidebar, setShowSidebar] = useState(false);
   const [bottomSideBar, setBottomSideBar] = useState(false);
+
   useEffect(() => {
     const filter = localStorage.getItem("sidebarFilter");
     var isTrueSet = filter === "true";
@@ -19,14 +20,13 @@ export default function AllProducts({ categoryId }: PropType) {
   }, [showSidebar]);
 
   function filterProduct(e: any) {
-    console.log(e, "parent");
     setProducts(e);
   }
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+  const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
 
-  useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=`).then((res) => setProducts(res.data));
-  }, []);
-  console.log(bottomSideBar, showSidebar);
   return (
     <div className="">
       <div className="flex justify-end mt-5">
@@ -60,8 +60,9 @@ export default function AllProducts({ categoryId }: PropType) {
             showSidebar ? `transition-all duration-500 ease-in-out sidebar h-[1000px] overflow-y-auto w-[260px]  absolute` : `transition-all duration-700 ease-in-out ml-[-500px] absolute invisible`
           }`}
         >
-          <SideBar getProduct={filterProduct} categoryId={""} />
+          <SideBar getProduct={filterProduct} />
         </div>
+
         <div
           className={`desktop:hidden laptop:hidden ${
             bottomSideBar
@@ -69,7 +70,7 @@ export default function AllProducts({ categoryId }: PropType) {
               : "transition-all duration-700 ease-in-out absolute invisible mt-[1000px]"
           }`}
         >
-          <SideBar getProduct={filterProduct} categoryId={""} />
+          <SideBar getProduct={filterProduct} />
         </div>
       </div>
 

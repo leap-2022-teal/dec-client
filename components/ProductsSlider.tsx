@@ -30,12 +30,12 @@ interface PropType {
 }
 export function ProductsSlider({ categoryId }: PropType) {
   const [products, setProducts] = useState<Product[]>([]);
-  console.log(categoryId);
+
   const limit: number = 9;
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products?searchQuery=&categoryId=${categoryId}&limit=${limit}`).then((res) => setProducts(res.data));
   }, []);
-  console.log(products);
+
   return (
     <div>
       <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll my-5 gap-3 ">

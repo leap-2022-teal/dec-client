@@ -30,7 +30,7 @@ export function BannerSlider({ categoryId, position }: PropType) {
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/banner`).then((res) => setBanner(res.data));
   }, []);
-  console.log(banner[0]?.name, name);
+
   return (
     <>
       <div className="snap-x mx-auto snap-mandatory flex w-[100%] overflow-scroll mt-4 gap-3">

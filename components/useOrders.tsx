@@ -13,11 +13,9 @@ export function useOrders() {
       .then((res) => {
         const { data, status } = res;
         if (status === 200) {
-          console.log(res, "jj");
         }
       });
   }
-  //   console.log(bag, "hi");
 
   return { bag, createNewProduct };
 }
