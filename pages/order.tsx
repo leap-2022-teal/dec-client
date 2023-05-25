@@ -28,9 +28,15 @@ export interface Product {
   _id: string;
   quantity: number;
 }
+interface PropType {
+  products: Product;
+  id: string;
+  quantity: number;
+  size: number;
+}
 export default function Order() {
-  const [basket, setBasket] = useState([]);
-  const [items, setItems] = useState<Product[]>([]);
+  const [basket, setBasket] = useState<PropType[]>([]);
+  // const [items, setItems] = useState<Product[]>([]);
   const [user, setUser] = useState<any>();
   useEffect(() => {
     const token = localStorage.getItem("loginToken");
@@ -52,26 +58,8 @@ export default function Order() {
       setBasket(JSON.parse(basketItems));
     }
   }, []);
+  // console.log(basket, "basket");
 
-  useEffect(() => {
-    const fetchProductDetails = async () => {
-      const itemDetails = await Promise.all(
-        basket.map((product: any) =>
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.productId}`).then((res) => {
-            const singleItem = res.data;
-            singleItem.quantity = product.quantity;
-            singleItem.id = product.id;
-            return singleItem;
-          })
-        )
-      );
-      setItems(itemDetails);
-    };
-
-    if (basket.length > 0) {
-      fetchProductDetails();
-    }
-  }, [basket]);
   function deleteItem(productId: any) {
     // Remove item from local storage
     // localStorage.removeItem(productId)
@@ -80,7 +68,7 @@ export default function Order() {
     localStorage.setItem("basket", JSON.stringify(updateBasket));
 
     // Remove item from items state
-    setItems(items.filter((product: any) => product._id !== productId));
+    setBasket(basket.filter((product: any) => product._id !== productId));
   }
   function changeSize(e: any) {
     const updatedBasket = basket.map((bag: any) => {
@@ -92,8 +80,9 @@ export default function Order() {
     localStorage.setItem("basket", JSON.stringify(updatedBasket));
   }
   function changeQuantity(e: any) {
+    console.log(e, "its e");
     const updatedBasket: any = basket.map((bag: any) => {
-      if (bag.productId === e.productId) {
+      if (bag.id === e.id) {
         bag.quantity = e.quantity;
       }
       return bag;
@@ -101,20 +90,20 @@ export default function Order() {
     setBasket(updatedBasket);
     localStorage.setItem("basket", JSON.stringify(updatedBasket));
 
-    const updatedItems = items.map((product: any) => {
+    const updatedItems: any = basket.map((product: any) => {
       if (product._id === e.productId) {
         product.quantity = e.quantity;
       }
       return product;
     });
-    setItems(updatedItems);
+    setBasket(updatedItems);
   }
 
   function totalAmount() {
     let totalAmount = 0;
 
-    items.forEach((product) => {
-      const productAmount = product.price * product.quantity;
+    basket.forEach((product: any) => {
+      const productAmount = product.products.price * product.quantity;
       totalAmount += productAmount;
     });
 
@@ -123,37 +112,32 @@ export default function Order() {
   function totalQuantity() {
     let totalQuantity = 0;
 
-    items.forEach((product) => {
+    basket.forEach((product: any) => {
       totalQuantity += product.quantity;
     });
 
     return totalQuantity;
   }
 
-  function deleteI() {
-    localStorage.removeItem("orders");
-  }
   return (
     <div className="">
-      {/* {user && <div>{user.name}</div>} */}
-
       <main className=" laptop:flex gap-10 max-w-[1000px] mx-auto mt-8">
         <div className="laptop:w-[600px] mt-4">
           <div className="laptop:text-left text-center text-xl ">Bag</div>
           <div>
-            {items.length == 0 ? (
+            {basket.length == 0 ? (
               <div className="text-base ">There are no items in your bag.</div>
             ) : (
-              items
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((product: Product) => (
-                  <div key={product._id} className="flex gap-5 mt-4 justify-between">
+              basket
+                .sort((a: any, b: any) => a.singleProduct.name.localeCompare(b.name))
+                .map((product: PropType) => (
+                  <div key={product.id} className="flex gap-5 mt-4 justify-between">
                     <div className="flex gap-5 ">
                       <div className="aspect-[1/1] ">
-                        <img src={product.image[0].path} alt="hi" width={150} height={150} />
+                        <img src={product.products.image[0].path} alt="hi" width={150} height={150} />
                       </div>
                       <div>
-                        <h3 className="text-base ">{product.name}</h3>
+                        <h3 className="text-base ">{product.products.name}</h3>
                         <div
                           className="flex gap-5 mot-italic font-sans"
                           style={{
@@ -163,14 +147,14 @@ export default function Order() {
                           <div className="flex sm:mt-4 mt-2 ">
                             <label htmlFor="Quantity">Quantity</label>
 
-                            {product.quantity ? <NumberSelector defaultValue={product.quantity} onChange={changeQuantity} id={product._id} /> : ""}
+                            {product.quantity ? <NumberSelector defaultValue={product.quantity} onChange={changeQuantity} id={product.id} /> : ""}
                           </div>
                           <div className="flex sm:mt-4 mt-2">
                             <label htmlFor="Size">Size</label>
                             {basket.map((item: any) =>
                               product.id === item.id ? (
                                 <div key={item.id}>
-                                  <SizeSelector key={item.productId} onChange={changeSize} id={item.id} quantity={item.quantity} defaultValue={item.size} sizes={product.sizes} />
+                                  <SizeSelector key={item.productId} onChange={changeSize} id={item.id} quantity={item.quantity} defaultValue={item.size} sizes={product.products.sizes} />
                                 </div>
                               ) : (
                                 ""
@@ -192,13 +176,13 @@ export default function Order() {
                         </button>
                       </div>
                     </div>
-                    <div>${product.price * product.quantity}</div>
+                    <div>${product.products.price}</div>
                   </div>
                 ))
             )}
           </div>
         </div>
-        {items.length == 0 ? (
+        {basket.length == 0 ? (
           <div className="laptop:w-[300px] mt-">
             <div className="text-xl">Summary</div>
 

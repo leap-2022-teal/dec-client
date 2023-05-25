@@ -36,14 +36,14 @@ const SingleProducts = () => {
       const products = {
         id: uuidv4(),
         quantity: count,
-        productId: singleProduct._id,
         size: sizes,
+        products: singleProduct,
       };
 
       const basket = localStorage.getItem("basket");
       if (basket) {
         const basketItems = JSON.parse(basket);
-        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.productId && item.size === products.size);
+        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.products._id && item.size === products.size);
 
         if (existingItemIndex !== -1) {
           basketItems[existingItemIndex].quantity += products.quantity;
