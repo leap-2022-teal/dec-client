@@ -103,7 +103,70 @@ export default function Register() {
 
   return (
     <Layout>
-      <Head>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+      <section className="desktop:w-[500px] laptop:w-[500px] mobile:w-full">
+        <div className="flex justify-between">
+          <div>
+            <svg aria-hidden="true" className="pre-logo-svg w-full  h-20 flex justify-start" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+              <path
+                fill="currentColor"
+                d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
+              ></path>
+            </svg>
+          </div>
+          <div></div>
+        </div>
+
+        <h1 className="text-gray-800  text-3xl py-4">Register</h1>
+
+        <form className="flex flex-col gap-5 py-8 w-full">
+          <div className="flex-col border rounded-xl ">
+            <input
+              onChange={(e: any) => {
+                setFormData({ ...formData, name: e.target.value });
+              }}
+              value={formData.name}
+              type="text"
+              placeholder="User Name"
+              className="w-full py-4 px-6 border border-black-800 rounded-xl focus:outline-none mb-8"
+              // value={email}
+              // onChange={(e) => setEmail(e.target.value)}
+            />
+            <input type="email" placeholder="Email" className="w-full py-4 px-6 border border-black-800 rounded-xl focus:outline-none mb-8" onChange={handleEmail} value={formData.email} />
+            <input
+              type={`${show.password ? "text" : "password"}`}
+              placeholder="Password"
+              className="w-full mb-8 py-4 px-6 border border-black-800 rounded-xl focus:outline-none 
+                "
+              onChange={handlePassword}
+              value={formData.password}
+            />
+
+            <input
+              type={`${show.password ? "text" : "password"}`}
+              placeholder="Confirm Password"
+              className="w-full py-4 px-6 border border-black-800 rounded-xl focus:outline-none 
+                "
+              onChange={(e) => setCopyPassword(e.target.value)}
+              value={copyPassword}
+            />
+          </div>
+        </form>
+
+        {/* <p className="text-gray-400 py-4">
+          Dont have account?{" "}
+          <Link className="text-slate-700 " href={"./register"}>
+            Register here
+          </Link>
+        </p> */}
+        <div className="flex justify-between">
+          <div></div>
+          <button type="button" className="bg-black text-white p-3 w-[130px] rounded-full" onClick={handleSubmit}>
+            Create Account
+          </button>
+        </div>
+      </section>
+      {/* <Head>
         <title>Register</title>
       </Head>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
@@ -190,7 +253,7 @@ export default function Register() {
             Sign in
           </Link>
         </p>
-      </section>
+      </section> */}
     </Layout>
   );
 }

@@ -38,14 +38,14 @@ export default function Signin() {
   }
 
   // Google Handle Fucntion
-  async function handleGoogleSignin() {
-    signIn("google", { callbackUrl: "http://localhost:3000/" });
-  }
+  // async function handleGoogleSignin() {
+  //   signIn("google", { callbackUrl: "http://localhost:3000/" });
+  // }
 
   // Github Login
-  async function handleGithubSignin() {
-    signIn("github", { callbackUrl: "http://localhost:3000/" });
-  }
+  // async function handleGithubSignin() {
+  //   signIn("github", { callbackUrl: "http://localhost:3000/" });
+  // }
 
   return (
     <Layout>

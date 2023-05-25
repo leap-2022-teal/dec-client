@@ -23,10 +23,14 @@ export default function NavBar({ isSideMenuActive }: any) {
             </div>
             {/* <span className={isSideMenuActive ? `hidden` : `block`}>|</span> */}
             <div className={`${isSideMenuActive ? ` flex mt-8` : ` flex `}`}>
-              <button className={isSideMenuActive ? `mr-2 text-sm bg-black text-white hover:bg-neutral-700 border-2 rounded-full p-2 border-black hover:border-neutral-700 w-20` : `hidden`}>
-                Sign Up
-              </button>
-              <p className={`${isSideMenuActive ? `hidden` : `cursor-pointer hover:text-neutral-500`}`}>Sign Up</p>
+              <Link href={"../auth/register"}>
+                <button className={isSideMenuActive ? `mr-2 text-sm bg-black text-white hover:bg-neutral-700 border-2 rounded-full p-2 border-black hover:border-neutral-700 w-20` : `hidden`}>
+                  Sign Up
+                </button>
+              </Link>
+              <Link href={"../auth/register"}>
+                <p className={`${isSideMenuActive ? `hidden` : `cursor-pointer hover:text-neutral-500`}`}>Sign Up</p>
+              </Link>
               <span className={isSideMenuActive ? `hidden` : `block mx-6 `}>|</span>
               <div>
                 <Link href={"../auth/signin"}>
