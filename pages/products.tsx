@@ -2,7 +2,6 @@ import { SideBar } from "@/components/Sidebar";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 
 interface PropType {
   categoryId?: string | undefined;
@@ -22,10 +21,6 @@ export default function AllProducts({ categoryId }: PropType) {
   function filterProduct(e: any) {
     setProducts(e);
   }
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
-  const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
 
   return (
     <div className="">
