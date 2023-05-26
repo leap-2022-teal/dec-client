@@ -51,11 +51,11 @@ export default function User() {
             {orderReview ? (
               <div>
                 {orderReview.map((orders: any) => (
-                  <div className="mt-8">
+                  <div key={orders._id} className="mt-8">
                     {orders.orderDate}
                     <div className="mt-4">
                       {orders.products.map((item: any) => (
-                        <div className="flex gap-5">
+                        <div key={item._id} className="flex gap-5">
                           <div className="w-[100px]">
                             <img src={item.products.image[0].path} alt="" />
                           </div>
