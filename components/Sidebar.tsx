@@ -123,8 +123,15 @@ export function SideBar({ getProduct }: PropType) {
         </div>
         <div className="mt-4">
           {genderOptions.map((selectedGender) => (
-            <div onClick={handleGender} className="flex cursor-pointer" key={selectedGender.value}>
-              <input type="checkbox" className="cursor-pointer accent-black h-5 w-5" id={selectedGender.name} name={selectedGender.name} checked={gender.includes(selectedGender.value)} />
+            <div className="flex cursor-pointer" key={selectedGender.value}>
+              <input
+                type="checkbox"
+                className="cursor-pointer accent-black h-5 w-5"
+                onClick={handleGender}
+                id={selectedGender.name}
+                name={selectedGender.name}
+                checked={gender.includes(selectedGender.value)}
+              />
               <label className={gender.includes(selectedGender.value) ? "ml-2 cursor-pointer text-[16px]" : "ml-2 cursor-pointer text-[16px] hover:opacity-50"} htmlFor={selectedGender.name}>
                 {selectedGender.name}
               </label>
@@ -208,18 +215,6 @@ export function SideBar({ getProduct }: PropType) {
       </div>
 
       <div className=" border-b-2 border-solid border-gray-300 mt-3"></div>
-
-      <div className="desktop:hidden laptop:hidden mobile:block ">
-        <div className="flex justify-between w-[800px] h-[50px] mt-10 gap-2">
-          <div>
-            <button className="border border-solid px-[190px] rounded-full py-[7px]">Clear</button>
-          </div>
-
-          <div>
-            <button className="border border-solid px-[190px] rounded-full bg-black text-white py-[7px]">Apply</button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
