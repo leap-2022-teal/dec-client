@@ -121,7 +121,24 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
             </div>
             <div className="desktop:flex laptop:flex mobile:hidden w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center">
               <Link href={"/user"}>
-                <PersonIcon />
+                {/* <PersonIcon /> */}
+                <div>
+                  <svg
+                    aria-hidden="true"
+                    className="pre-nav-design-icon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    width="24px"
+                    height="24px"
+                    fill="none"
+                    data-var="glyph"
+                    // style="display: inline-block;"
+                  >
+                    <path stroke="currentColor" stroke-width="2" d="M3.75 21v-3a3.75 3.75 0 013.75-3.75h9A3.75 3.75 0 0120.25 18v3"></path>
+                    <path stroke="currentColor" stroke-width="2" d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
               </Link>
             </div>
             {/* bag icon */}
