@@ -44,7 +44,7 @@ export function Feature({ categoryId, position, name }: PropType) {
                       <img src={banner?.image.path} alt="image" className="w-[100%]" />
                     </div>
                     {banner.name === name ? (
-                      <figcaption className=" mt-6 text-left   ">
+                      <figcaption className=" mt-6 text-left  ">
                         <div>
                           <p>{banner.name}</p>
                           <h3 className="font-black my-3 text-2xl">{banner.details}</h3>

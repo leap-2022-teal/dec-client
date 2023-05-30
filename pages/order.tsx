@@ -61,13 +61,9 @@ export default function Order() {
   // console.log(basket, "basket");
 
   function deleteItem(productId: any) {
-    // Remove item from local storage
-    // localStorage.removeItem(productId)
     const updateBasket = basket.filter((product: any) => product.id !== productId);
     setBasket(updateBasket);
     localStorage.setItem("basket", JSON.stringify(updateBasket));
-
-    // Remove item from items state
     setBasket(basket.filter((product: any) => product._id !== productId));
   }
   function changeSize(e: any) {
@@ -128,57 +124,55 @@ export default function Order() {
             {basket.length == 0 ? (
               <div className="text-base ">There are no items in your bag.</div>
             ) : (
-              basket
-                .sort((a: any, b: any) => a.singleProduct.name.localeCompare(b.name))
-                .map((product: PropType) => (
-                  <div key={product.id} className="flex gap-5 mt-4 justify-between">
-                    <div className="flex gap-5 ">
-                      <div className="aspect-[1/1] ">
-                        <img src={product.products.image[0].path} alt="hi" width={150} height={150} />
-                      </div>
-                      <div>
-                        <h3 className="text-base ">{product.products.name}</h3>
-                        <div
-                          className="flex gap-5 mot-italic font-sans"
-                          style={{
-                            color: "rgb(117, 117, 117)",
-                          }}
-                        >
-                          <div className="flex sm:mt-4 mt-2 ">
-                            <label htmlFor="Quantity">Quantity</label>
-
-                            {product.quantity ? <NumberSelector defaultValue={product.quantity} onChange={changeQuantity} id={product.id} /> : ""}
-                          </div>
-                          <div className="flex sm:mt-4 mt-2">
-                            <label htmlFor="Size">Size</label>
-                            {basket.map((item: any) =>
-                              product.id === item.id ? (
-                                <div key={item.id}>
-                                  <SizeSelector key={item.productId} onChange={changeSize} id={item.id} quantity={item.quantity} defaultValue={item.size} sizes={product.products.sizes} />
-                                </div>
-                              ) : (
-                                ""
-                              )
-                            )}
-                          </div>
-                        </div>
-
-                        <button onClick={() => deleteItem(product.id)} className="mt-2">
-                          {/* <DeleteIcon className="mt-2" /> */}
-                          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
-                            <path
-                              stroke="currentColor"
-                              stroke-miterlimit="10"
-                              stroke-width="1.5"
-                              d="M14.25 7.5v12m-4.5-12v12M5.25 6v13.5c0 1.24 1.01 2.25 2.25 2.25h9c1.24 0 2.25-1.01 2.25-2.25V5.25h2.75m-2.75 0H21m-12-3h5.25c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5H3"
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
+              basket.map((product: PropType) => (
+                <div key={product.id} className="flex gap-5 mt-4 justify-between">
+                  <div className="flex gap-5 ">
+                    <div className="aspect-[1/1] ">
+                      <img src={product.products.image[0].path} alt="hi" width={150} height={150} />
                     </div>
-                    <div>${product.products.price}</div>
+                    <div>
+                      <h3 className="text-base ">{product.products.name}</h3>
+                      <div
+                        className="flex gap-5 mot-italic font-sans"
+                        style={{
+                          color: "rgb(117, 117, 117)",
+                        }}
+                      >
+                        <div className="flex sm:mt-4 mt-2 ">
+                          <label htmlFor="Quantity">Quantity</label>
+
+                          {product.quantity ? <NumberSelector defaultValue={product.quantity} onChange={changeQuantity} id={product.id} /> : ""}
+                        </div>
+                        <div className="flex sm:mt-4 mt-2">
+                          <label htmlFor="Size">Size</label>
+                          {basket.map((item: any) =>
+                            product.id === item.id ? (
+                              <div key={item.id}>
+                                <SizeSelector key={item.productId} onChange={changeSize} id={item.id} quantity={item.quantity} defaultValue={item.size} sizes={product.products.sizes} />
+                              </div>
+                            ) : (
+                              ""
+                            )
+                          )}
+                        </div>
+                      </div>
+
+                      <button onClick={() => deleteItem(product.id)} className="mt-2">
+                        {/* <DeleteIcon className="mt-2" /> */}
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+                          <path
+                            stroke="currentColor"
+                            stroke-miterlimit="10"
+                            stroke-width="1.5"
+                            d="M14.25 7.5v12m-4.5-12v12M5.25 6v13.5c0 1.24 1.01 2.25 2.25 2.25h9c1.24 0 2.25-1.01 2.25-2.25V5.25h2.75m-2.75 0H21m-12-3h5.25c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5H3"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                ))
+                  <div>${product.products.price}</div>
+                </div>
+              ))
             )}
           </div>
         </div>
