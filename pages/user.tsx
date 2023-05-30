@@ -43,13 +43,16 @@ export default function User() {
   console.log(orders, "local orders");
   //   console.log(order, "order");
   return (
-    <div className="">
+    <div className="max-w-[1000px] mx-auto">
       {user ? (
         <div>
           <div className="flex justify-between">
             <div className="flex">
-              <div className="md:w-[100px] bg-gray-500 md:h-[100px] border rounded-full"></div>
-              <div className="items-center text-3xl"> {user.name}</div>
+              <div className="max-w-[40px]">
+                {" "}
+                <img src="imageProfile.png" alt="profile" />{" "}
+              </div>
+              <div className="items-center text-2xl ml-4"> {user.name}</div>
             </div>
 
             <div onClick={handleLogOut}>
@@ -58,13 +61,15 @@ export default function User() {
           </div>
           <div>
             {orderReview ? (
-              <div>
+              <div className="mt-4">
+                <div className="text-2xl text-center">Orders History</div>
+
                 {orderReview.map((orders: any) => (
                   <div className="mt-8">
                     {orders.orderDate}
                     <div className="mt-4">
                       {orders.products.map((item: any) => (
-                        <div className="flex gap-5">
+                        <div className="flex gap-5 mt-4">
                           <div className="w-[100px]">
                             <img src={item.products.image[0].path} alt="" />
                           </div>
@@ -83,7 +88,7 @@ export default function User() {
                 ))}
               </div>
             ) : (
-              <div></div>
+              <div>please checkout products</div>
             )}
           </div>
         </div>
@@ -93,7 +98,7 @@ export default function User() {
           {orders ? (
             <div>
               {orders.map((orderItems: any) => (
-                <div>
+                <div key={orderItems}>
                   {orderItems.map((item: any) => (
                     <div className="mt-8">
                       <div className="mt-4">
