@@ -1,10 +1,7 @@
 import axios from "axios";
-import Link from "next/link";
-import FaceIcon from "@mui/icons-material/Face";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import React from "react";
-import Order from "./order";
 export default function User() {
   const [user, setUser] = useState<any>();
   const [orderReview, setOrderReview] = useState<any>([]);
