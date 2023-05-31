@@ -65,7 +65,7 @@ export default function User() {
                 <div className="text-2xl text-center">Orders History</div>
 
                 {orderReview.map((orders: any) => (
-                  <div className="mt-8">
+                  <div key={orders._id} className="mt-8">
                     {orders.orderDate}
                     <div className="mt-4">
                       {orders.products.map((item: any) => (
@@ -79,7 +79,7 @@ export default function User() {
                               <div>size : {item.size}</div>
                               <div>quantity : {item.quantity}</div>
                             </div>
-                            <div className="mt-12">amount : {item.quantity * item.products.price}</div>
+                            <div className="mt-12">amount : ${item.quantity * item.products.price}</div>
                           </div>
                         </div>
                       ))}
