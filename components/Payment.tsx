@@ -38,16 +38,16 @@ export function Payment({ createNewUsers, customer, products, totalPrice }: any)
         // const orderId = customer;
         console.log(orderId, "orderid");
 
-        const orders = localStorage.getItem("orders");
-        if (orders) {
-          const ordersItems = JSON.parse(orders);
-          ordersItems.push(orderId);
-          localStorage.setItem("orders", JSON.stringify(ordersItems));
-        } else {
-          localStorage.setItem("orders", JSON.stringify([orderId]));
-        }
+        // const orders = localStorage.getItem("orders");
+        // if (orders) {
+        //   const ordersItems = JSON.parse(orders);
+        //   ordersItems.push(orderId);
+        //   localStorage.setItem("orders", JSON.stringify(ordersItems));
+        // } else {
+        //   localStorage.setItem("orders", JSON.stringify([orderId]));
+        // }
         localStorage.removeItem("basket");
-        // router.push("/user");
+        router.push("/user");
       });
     }
   }, [customer]);
