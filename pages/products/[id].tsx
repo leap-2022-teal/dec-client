@@ -43,7 +43,7 @@ const SingleProducts = () => {
       const basket = localStorage.getItem("basket");
       if (basket) {
         const basketItems = JSON.parse(basket);
-        const existingItemIndex = basketItems.findIndex((item: any) => item.productId === products.products._id && item.size === products.size);
+        const existingItemIndex = basketItems.findIndex((item: any) => item.products._id === products.products._id && item.size === products.size);
 
         if (existingItemIndex !== -1) {
           basketItems[existingItemIndex].quantity += products.quantity;
@@ -55,10 +55,10 @@ const SingleProducts = () => {
       } else {
         localStorage.setItem("basket", JSON.stringify([products]));
       }
+      notify();
     } else {
       setError(true);
     }
-    notify();
   }
 
   useEffect(() => {
