@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { NumberSelector } from "@/components/ReactSelect";
 import { SizeSelector } from "@/components/SizeSelector";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import { createContext } from "vm";
 export interface Stock {
   size: number;
@@ -38,6 +39,7 @@ export default function Order() {
   const [basket, setBasket] = useState<PropType[]>([]);
   // const [items, setItems] = useState<Product[]>([]);
   const [user, setUser] = useState<any>();
+  const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("loginToken");
     if (token) {
@@ -57,7 +59,7 @@ export default function Order() {
     if (basketItems) {
       setBasket(JSON.parse(basketItems));
     }
-  }, [basket]);
+  }, []);
   // console.log(basket, "basket");
 
   function deleteItem(productId: any) {
@@ -65,6 +67,7 @@ export default function Order() {
     setBasket(updateBasket);
     localStorage.setItem("basket", JSON.stringify(updateBasket));
     setBasket(basket.filter((product: any) => product._id !== productId));
+    router.reload();
   }
   function changeSize(e: any) {
     const updatedBasket = basket.map((bag: any) => {
