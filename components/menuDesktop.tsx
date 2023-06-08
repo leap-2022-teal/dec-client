@@ -19,7 +19,7 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
     if (basketItems) {
       setBasket(JSON.parse(basketItems));
     }
-  }, [basket]);
+  }, []);
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
 
