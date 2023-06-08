@@ -12,6 +12,7 @@ const SingleProducts = () => {
   const [singleProduct, setSingleProduct] = useState<any>();
   const [sizes, setSizes] = useState<number>();
   const [error, setError] = useState(false);
+  // const defaultSize = singleProduct.sizes.length > 0 ? singleProduct.sizes[0].size : null;
 
   useEffect(() => {
     const basket = localStorage.getItem("basket");
@@ -176,15 +177,17 @@ const SingleProducts = () => {
                 <p className={`font-medium text-base leading-4 text-black mb-4 ${error ? "text-red-600" : ""}`}> {!error ? "Гутлын размер" : "Размэр сонгоно уу?"} </p>
                 {/* {!error ? "" : <p className="text-red-600">select size please</p>} */}
                 <div className="flex gap-2">
-                  {singleProduct.sizes.map((size: any, index: any) => (
-                    <div
-                      key={index}
-                      onClick={() => selectSize(size.size)}
-                      className={`select-size flex items-center justify-center border-[1px] border-solid border-black w-8 h-8 ${size.size === sizes ? "bg-black text-white" : ""}`}
-                    >
-                      {size.size}
-                    </div>
-                  ))}
+                  {singleProduct.sizes
+                    .sort((a: any, b: any) => a.size - b.size)
+                    .map((size: any, index: any) => (
+                      <div
+                        key={index}
+                        onClick={() => selectSize(size.size)}
+                        className={`select-size flex items-center justify-center border-[1px] border-solid border-black w-8 h-8 ${size.size === sizes ? "bg-black text-white" : ""}`}
+                      >
+                        {size.size}
+                      </div>
+                    ))}
                 </div>
               </div>
               <hr className=" bg-gray-200 w-full mt-4" />

@@ -19,7 +19,7 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
     if (basketItems) {
       setBasket(JSON.parse(basketItems));
     }
-  }, []);
+  }, [basket]);
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
 
@@ -58,16 +58,17 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
       <div className={` ${visible ? `bg-white w-full top-0 sticky` : ``}`}>
         <div className={` h-16 justify-between items-center max-w-[1830px] desktop:mx-auto laptop:mx-6 mobile:hidden between:hidden tablet:hidden laptop:flex desltop:flex`}>
           {/* nike logo image */}
-          <div className="w-24 h-16">
+          <div className="w-28 h-18">
             <Link href={"/"}>
-              <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-[100%]" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
+              {/* <svg aria-hidden="true" className="pre-logo-svg w-[100%] h-[100%]" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
                 <path
                   fill="currentColor"
                   fill-rule="evenodd"
                   d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
                   clip-rule="evenodd"
                 ></path>
-              </svg>
+              </svg> */}
+              <img src="Screenshot.png" alt="sneaker" />
             </Link>
           </div>
 
@@ -107,7 +108,7 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
           <MenuSearch toggleSearch={toggleSearch} />
           <div className="flex ">
             {/* heart icon */}
-            <div className={`w-10 h-10 hover:bg-neutral-200 rounded-full  flex items-center justify-center `}>
+            <div className={`w-10 h-10 hover:bg-neutral-200 rounded-full relative  flex items-center justify-center `}>
               <Link href={"/order"}>
                 <svg aria-hidden="true" className="pre-nav-design-icon" focusable="false" viewBox="0 0 24 24" role="img" width="24px" height="24px" fill="none">
                   <path
@@ -116,6 +117,7 @@ export default function Menu({ toggleSearch, handleMenuDropDown, handleSideMenuO
                     d="M8.25 8.25V6a2.25 2.25 0 012.25-2.25h3a2.25 2.25 0 110 4.5H3.75v8.25a3.75 3.75 0 003.75 3.75h9a3.75 3.75 0 003.75-3.75V8.25H17.5"
                   ></path>
                 </svg>
+                {basket ? <div className="absolute bg-amber-300 rounded-full px-[6px] bottom-4 left-6 text-[14px]">{basket.length}</div> : <div></div>}
                 {/* <div className="relative left-2 bottom-5">{basket?.length}</div> */}
               </Link>
             </div>

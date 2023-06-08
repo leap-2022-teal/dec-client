@@ -66,7 +66,7 @@ export default function User() {
                     {orders.orderDate}
                     <div className="mt-4">
                       {orders.products.map((item: any) => (
-                        <div className="flex gap-5 mt-4">
+                        <div key={item.id} className="flex gap-5 mt-4">
                           <div className="w-[100px]">
                             <img src={item.products.image[0].path} alt="" />
                           </div>
@@ -97,7 +97,7 @@ export default function User() {
               {orders.map((orderItems: any) => (
                 <div key={orderItems}>
                   {orderItems.map((item: any) => (
-                    <div className="mt-8">
+                    <div key={item.id} className="mt-8">
                       <div className="mt-4">
                         <div className="flex gap-5">
                           <div className="w-[100px]">

@@ -2,7 +2,6 @@ import Layout from "@/layout/layout";
 import Link from "next/link";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/router";
 
@@ -36,17 +35,6 @@ export default function Signin() {
       alert("Нууц үг болон нэвтрэх нэрээ оруулна уу!!!");
     }
   }
-
-  // Google Handle Fucntion
-  // async function handleGoogleSignin() {
-  //   signIn("google", { callbackUrl: "http://localhost:3000/" });
-  // }
-
-  // Github Login
-  // async function handleGithubSignin() {
-  //   signIn("github", { callbackUrl: "http://localhost:3000/" });
-  // }
-
   return (
     <Layout>
       <section className="desktop:w-[500px] laptop:w-[500px] mobile:w-full">

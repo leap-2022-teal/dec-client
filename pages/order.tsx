@@ -57,7 +57,7 @@ export default function Order() {
     if (basketItems) {
       setBasket(JSON.parse(basketItems));
     }
-  }, []);
+  }, [basket]);
   // console.log(basket, "basket");
 
   function deleteItem(productId: any) {
@@ -201,9 +201,15 @@ export default function Order() {
               <div>Total Amount:</div>
               <div> ${totalAmount()}</div>
             </div>
-            <Link href={"/checkout"}>
-              <button className="bg-black text-white rounded-full py-4 w-full mt-8">Checkout</button>
-            </Link>{" "}
+            {user ? (
+              <Link href={"/checkout"}>
+                <button className="bg-black text-white rounded-full py-4 w-full mt-8">Checkout</button>
+              </Link>
+            ) : (
+              <Link href={"/auth/signin"}>
+                <button className="bg-black text-white rounded-full py-4 w-full mt-8">Checkout</button>
+              </Link>
+            )}
           </div>
         )}
       </main>
